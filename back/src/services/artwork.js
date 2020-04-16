@@ -11,11 +11,12 @@ module.exports = {
      * This function creates a subject
      * @returns {Promise} a promise
      */
-    searchArtwork : (params) => {
+    searchArtworks : (params) => {
         return new Promise(async (resolve, reject) => {
-            var artworkIds = await som.artwork.match(params)
-            if (artworkIds.length != 0) {
-                resolve(await som.artwork.getAll(artworkIds))
+            var artworkIds = await som.artwork.matchRequest(params)
+            // TODO reactivate cache after fix
+            if (false && artworkIds.length != 0) {
+                resolve(await som.artwork.getArtworkAll(artworkIds))
             }
             else {
                 var artworksData = await apimanager.search(params)

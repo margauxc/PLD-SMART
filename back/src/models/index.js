@@ -15,6 +15,7 @@ async function loadDbModels(sequelize) {
     //var sequelize = loaderSequelize()
     db['Artwork'] = await Artwork.model(sequelize, DataTypes)
     db['Music'] = await Music.model(sequelize, DataTypes)
+    await linker(sequelize, DataTypes, db)
 
     await Object.keys(db).forEach(async modelName => {
         if (db[modelName].associate) {

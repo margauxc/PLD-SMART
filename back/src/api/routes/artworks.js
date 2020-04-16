@@ -8,6 +8,7 @@ module.exports = (app) => {
 
     
     route.get('/:idArtwork', (req, res, next) => {
+        // TODO get the param in the url, no body in a get
         services.artwork.getArtworkById(req.body.artworkId).then((result) => {
             return res.json(result).status(200)
         }).catch((error) => {
@@ -16,7 +17,7 @@ module.exports = (app) => {
     })
     
     route.get('/', (req, res, next) => {
-        services.artwork.searchArtworks(req.body).then((result) => {
+        services.artwork.searchArtworks(req.query).then((result) => {
             return res.json(result).status(200)
         }).catch((error) => {
             next(error)

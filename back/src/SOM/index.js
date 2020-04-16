@@ -1,5 +1,5 @@
-const artwork = require('./artwork')
+const artworkSOM = require('./artwork')
 
 module.exports = {
-    'artworkSOM': artwork,
+    artwork: artworkSOM,
 }
