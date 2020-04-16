@@ -9,7 +9,7 @@ async function startServer() {
   loaders(app)
   await app.on("ready", async () => {
     if(process.env.NODE_ENV != 'test'){
-      await app.listen(config.port || 3000, async err => {
+      await app.listen(config.port, async err => {
         if (err) {
           Logger.error(err);
           process.exit(1);

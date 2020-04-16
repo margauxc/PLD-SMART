@@ -1,0 +1,35 @@
+swagger: "2.0"
+info:
+  description: "This is a sample server Petstore server.  You can find out more about     Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).      For this sample, you can use the api key `special-key` to test the authorization     filters."
+  version: "1.0.0"
+  title: "Smart"
+basePath: "/api"
+tags:
+- name: "base"
+  description: "This is great !"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "https"
+- "http"
+paths:
+  /baseofroute:
+    get:
+      tags:
+      - "base"
+      summary: "test get route"
+      description: ""
+      operationId: "testGet"
+      consumes:
+      - "application/json"
+      - "application/xml"
+      produces:
+      - "application/xml"
+      - "application/json"
+      responses:
+        200:
+          description: "OK"
+externalDocs:
+  description: "template for everything here"
+  url: "https://editor.swagger.io/"
