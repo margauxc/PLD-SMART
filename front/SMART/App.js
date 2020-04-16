@@ -6,17 +6,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import ArtworkChoice from './Components/ArtworkChoice'
+import Search from './Components/Search'
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
-    <NavigationContainer>
+    <Search/>
+    /*<NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="ArtworkChoice" component={ArtworkChoice} options={{ title: 'Choix de l\'oeuvre' }} />
+        <Stack.Screen name="Search" component = {Search} options = {{title : 'Rechercher une oeuvre'}} />
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer>*/
   );
 }
+
 
 export default App;
