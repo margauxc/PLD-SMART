@@ -17,12 +17,15 @@ module.exports = {
             if (artworkIds.length != 0) {
                 resolve(await som.artwork.getAll(artworkIds))
             }
-
-            var artworksData = await apimanager.search(params)
-            if (artworksData.length == 0) {
-                resolve([])
+            else {
+                var artworksData = await apimanager.search(params)
+                if (artworksData.length == 0) {
+                    resolve([])
+                }
+                else {
+                    resolve(await som.artwork.getOrInsertAll(artworksData))
+                }
             }
-            resolve(await som.artwork.getOrInsertAll(artworksData))
         })
     },
 

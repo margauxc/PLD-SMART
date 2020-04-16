@@ -1,6 +1,6 @@
-const artwork = require('./artwork')
-const music = require('./music')
+const artworkSB = require('./artwork')
+const musicSB = require('./music')
 module.exports = {
-    'artworkSB': artwork,
-    'musicSB': music
+    artwor : artworkSB,
+    music : musicSB
 }
