@@ -2,8 +2,8 @@ const { Sequelize, DataTypes } = require('sequelize')
 // const loaderSequelize = require('../loaders/db-sequelize')
 
 // sub models
-const OneModel = require('./oneModel')
-
+const Artwork = require('./artwork')
+const Music = require('./music')
 // association manager
 const linker = require('./linker')
 async function resetDatabase(){
@@ -13,7 +13,8 @@ async function resetDatabase(){
 var db = {}
 async function loadDbModels(sequelize) {
     //var sequelize = loaderSequelize()
-    db['OneModel'] = await OneModel.model(sequelize, DataTypes)
+    db['Artwork'] = await Artwork.model(sequelize, DataTypes)
+    db['Music'] = await Music.model(sequelize, DataTypes)
 
     await Object.keys(db).forEach(async modelName => {
         if (db[modelName].associate) {
