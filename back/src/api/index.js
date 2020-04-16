@@ -1,9 +1,9 @@
 
 var { Router } = require('express');
-var oneRouter = require('./routes/oneRouter')
+var artworks = require('./routes/artworks')
 // guaranteed to get dependencies
 module.exports = () => {
 	const app = Router();
-	oneRouter(app)
+	artworks(app)
 	return app
 }

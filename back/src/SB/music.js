@@ -10,6 +10,7 @@ module.exports = {
      * This function creates a subject in the database
      * @returns {Promise} a promise
      */
+    
     oneFunction : (user, urlSubject) => {
         return new Promise(async (resolve, reject) => {
             try {

@@ -1,5 +1,5 @@
-const oneSOM = require('./oneSOM')
+const artwork = require('./artwork')
 
 module.exports = {
-    'oneSOM': oneSOM,
+    'artworkSOM': artwork,
 }

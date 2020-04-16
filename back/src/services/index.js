@@ -1,4 +1,4 @@
-const oneModelServices = require('./oneModel')
+const artworkServices = require('./artwork')
 module.exports = {
-    'oneModel': oneModelServices,
+    'artwork': artworkServices,
 }
