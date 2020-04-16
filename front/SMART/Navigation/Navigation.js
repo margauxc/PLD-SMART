@@ -1,16 +1,16 @@
-import { createStackNavigator } from 'react-navigation-stack'
+import { createDrawerNavigator } from 'react-navigation-drawer'
 import { createAppContainer } from 'react-navigation'
-import ArtworkChoice from '../Components/ArtworkChoice'
 
-const screens = {
-    ArtworkChoice: {
-        screen: ArtworkChoice,
-        navigationOptions: {
-            title:"Choix de l'œuvre"
-        }
+import HomeStack from './HomeStack'
+import AboutStack from './AboutStack'
+
+const RootDrawerNavigator = createDrawerNavigator({
+    "Accueil": {
+        screen: HomeStack
+    },
+    "À propos": {
+        screen: AboutStack
     }
-}
+})
 
-const MainStack = createStackNavigator(screens)
-
-export default createAppContainer(MainStack)
+export default createAppContainer(RootDrawerNavigator)
