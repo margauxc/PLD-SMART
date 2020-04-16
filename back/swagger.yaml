@@ -58,6 +58,10 @@ components:
 paths:
   /artworks:
     get:
+      tags: 
+        - "artworks"
+      summary: "search for artworks"
+      operationId: "searchArtworks"
       description: "search for artworks"
       responses:
         '200':
@@ -98,7 +102,7 @@ paths:
   /artworks/{artworkId}:
     get:
       tags: 
-      - "artwork"
+      - "artworks"
       summary: "get artwork by Id"
       operationId: "getArworkById"
       parameters:
