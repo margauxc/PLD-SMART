@@ -6,6 +6,11 @@ var config = require('../config');
 var morgan = require('morgan')
 const logger = require('./logger')
 const { handleError, ErrorHandler } = require('../helpers/')
+
+var swaggerUi = require('swagger-ui-express')
+const YAML = require('yamljs');
+var swaggerDocument = YAML.load('./swagger.yaml');
+
 module.exports = (app) => {
   logger.info("starting express load")
   app.use(morgan("combined", { "stream": logger.stream }));
@@ -44,7 +49,10 @@ module.exports = (app) => {
   // Middleware that transforms the raw string of req.body into json
   app.use(bodyParser.json());
   // Load API routes
-  app.use(config.api.prefix, routes());
+  const mainRouter = routes()
+  app.use(config.api.prefix, mainRouter);
+  mainRouter.use('/api-docs', swaggerUi.serve);
+  mainRouter.get('/api-docs', swaggerUi.setup(swaggerDocument));
 
   /// catch 404 and forward to error handler
   app.use((req, res, next) => {
