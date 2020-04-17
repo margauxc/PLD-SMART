@@ -20,28 +20,26 @@ const screens = {
     ArtworkChoice: {
         screen: ArtworkChoice,
         navigationOptions: {
-            title: "Choix de l'œuvre",
-            headerStyle: {
-                backgroundColor: '#e67e22'
-            },
-            headerTintColor: '#fff',
-            headerTitleAlign: 'center'
+            title: "Choix de l'œuvre"
         }
     },
 
     AddText: {
         screen: AddText,
         navigationOptions: {
-            title: "Ajout du texte",
-            headerStyle: {
-                backgroundColor: '#e67e22'
-            },
-            headerTintColor: '#fff',
-            headerTitleAlign: 'center'
+            title: "Ajout du texte"
         }
     }
 }
 
-const HomeStack = createStackNavigator(screens)
+const HomeStack = createStackNavigator(screens, {
+    defaultNavigationOptions: {
+        headerStyle: {
+            backgroundColor: '#e67e22'
+        },
+        headerTintColor: '#fff',
+        headerTitleAlign: 'center'
+    }
+})
 
 export default HomeStack
