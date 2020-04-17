@@ -94,6 +94,18 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ArtworkDeposit"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                artworkId: 
+                  type: string
+                lat:
+                  type: number
+                long:
+                  type: number
   /artworks:
     get:
       tags: 
