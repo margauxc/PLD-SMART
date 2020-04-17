@@ -21,8 +21,7 @@ export default function Header({ navigation, title }) {
 const styles = StyleSheet.create({
     header: {
         width: '100%',
-        height: 70,
-        paddingTop: 20,
+        height: 60,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
@@ -36,7 +35,6 @@ const styles = StyleSheet.create({
     icon: {
         position: 'absolute',
         color: '#fff',
-        top: 30,
         left: 16
     }
 })
