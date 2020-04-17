@@ -15,6 +15,6 @@ const screens = {
     }
 }
 
-const AboutStack = createStackNavigator(screens)
+const AboutStack = createStackNavigator(screens, {headerLayoutPreset: 'center'})
 
 export default AboutStack

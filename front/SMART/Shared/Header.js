@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     },
     icon: {
         position: 'absolute',
+        color: '#fff',
         top: 30,
         left: 16
     }
