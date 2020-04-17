@@ -7,7 +7,7 @@ class ArtworkChoice extends React.Component {
             <View style={styles.container}>
                 <Text style={styles.Text}>Vous souhaitez ajouter</Text>
 
-                <TouchableOpacity style={styles.Button}>
+                <TouchableOpacity style={styles.Button} onPress={() => {this.props.navigation.navigate('AddText')}}>
                     <View style={styles.otherView}>
                         <Text style={styles.buttonText}>Un texte</Text>
                     </View>

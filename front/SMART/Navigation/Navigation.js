@@ -1,24 +1,8 @@
 import { createDrawerNavigator } from 'react-navigation-drawer'
 import { createAppContainer } from 'react-navigation'
-import ArtworkChoice from '../Components/ArtworkChoice'
-import AddText from '../Components/AddText'
 
-
-const screens = {
-    AddText: {
-        screen: AddText,
-        navigationOptions: {
-            title:"Ajout du texte"
-        }
-    },
-    
-    ArtworkChoice: {
-        screen: ArtworkChoice,
-        navigationOptions: {
-            title:"Choix de l'œuvre"
-        }
-    }
-}
+import HomeStack from './HomeStack'
+import AboutStack from './AboutStack'
 
 const RootDrawerNavigator = createDrawerNavigator({
     "Accueil": {
