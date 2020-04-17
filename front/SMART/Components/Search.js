@@ -6,16 +6,21 @@ import RNPickerSelect from 'react-native-picker-select'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 import {oeuvres, categories} from '../assets/SearchUtils'
+import {searchRequest} from '../API/APISearch'
 
 class Search extends React.Component {
+
+    _searchArtworks() {
+        searchRequest("Bohemian", "all")
+    }
     render() {
-        const onSubmitEditing = (text) => console.log(text)
+        const onSubmitEditing = (text) => console.log(text.nativeEvent.text)
         const chooseRender = (item) => {
             return <ImageItem artwork={item}/>
         }
         return (
             <View style = {styles.main_container}>
-                <TextInput style = {styles.search_bar} placeholder = "Rechercher une oeuvre..." onSubmitEditing = {onSubmitEditing}/>
+                <TextInput style = {styles.search_bar} placeholder = "Rechercher une oeuvre..." onSubmitEditing = {this._searchArtworks()}/>
                 <RNPickerSelect style = {pickerSelectStyles} placeholder = {{}} items = {categories} onValueChange = {value => {console.log(value)}} />
                 <FlatList 
                     data={oeuvres}
