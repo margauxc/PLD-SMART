@@ -15,7 +15,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             var artworkIds = await som.artwork.matchRequest(params)
             // TODO reactivate cache after fix
-            if (false && artworkIds.length != 0) {
+            if (artworkIds.length != 0) {
                 resolve(await som.artwork.getArtworkAll(artworkIds))
             }
             else {
