@@ -1,6 +1,9 @@
+
 export function searchRequest(query, category = null) {
+
+    const APIbaseURL = 'http://localhost:3000/api/'
     query = encodeURIComponent(query)
-    var url = 'http://localhost:3000/api/artworks?rawQuery='+query
+    var url = APIbaseURL + 'artworks?rawQuery='+query
     if(category != 'all') {
         url+='&category='+ encodeURIComponent(category)
     }

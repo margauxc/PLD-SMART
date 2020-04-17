@@ -8,6 +8,7 @@ class MusicItem extends React.Component {
         return (
             <TouchableOpacity style = {styles.image_item_container} onPress = {onPress}>
                 <View style = {styles.text_box}>
+                    <Image source = {{uri : artwork.image}} style = {styles.image_preview}/>
                     <Text style = {styles.title_text} numberOfLines = {2}>{artwork.title}</Text>
                     <Text style = {styles.artist_text} numberOfLines = {2}>{artwork.artist}</Text>
                 </View>
@@ -19,13 +20,20 @@ class MusicItem extends React.Component {
 const styles = StyleSheet.create({
     image_item_container : {
         flexDirection : 'row',
-        height : 70,
+        height : 100,
         padding : 10,
     },
-    text_box : {
+    image_preview  : {
         flex : 1,
+        marginRight : 10,
+        height : 80,
+        width : 80,
+        resizeMode : 'cover'
+    },
+    text_box : {
+        flex : 3,
         flexDirection : 'column',
-        justifyContent : 'center'
+        justifyContent : 'space-evenly'
     },
     title_text : {
         fontSize : 20,
@@ -33,9 +41,10 @@ const styles = StyleSheet.create({
         color : 'black',
         
     },
-    artist_state : {
+    artist_text : {
         fontSize : 16,
-        flexWrap : 'wrap'
+        flexWrap : 'wrap',
+        color : 'grey'
     },
 
 })

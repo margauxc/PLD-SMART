@@ -1,16 +1,18 @@
 import React from 'react'
 import { StyleSheet, View,TouchableOpacity, Image, Text } from 'react-native'
+import {fieldNames} from '../assets/SearchUtils' 
 
 class ImageItem extends React.Component {
     render() {
-        const artwork = this.props.image
+        const artwork = this.props.artwork
         const onPress = () => console.log('détails de l\'oeuvre ' + artwork.title)
+        
         return (
             <TouchableOpacity style = {styles.image_item_container} onPress = {onPress}>
-                <Image source = {{uri : artwork.image}} style = {styles.image_preview}/>
+                <Image source = {{uri : artwork[fieldNames[artwork.type]['image']]}} style = {styles.image_preview}/>
                 <View style = {styles.text_box}>
-                    <Text style = {styles.title_text} numberOfLines = {2}>{artwork.title}</Text>
-                    <Text style = {styles.artist_text} numberOfLines = {2}>{artwork.artist}</Text>
+                    <Text style = {styles.title_text} numberOfLines = {2}>{artwork[fieldNames[artwork.type]['title']]}</Text>
+                    <Text style = {styles.artist_text} numberOfLines = {2}>{artwork[fieldNames[artwork.type]['artist']]}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -20,13 +22,15 @@ class ImageItem extends React.Component {
 const styles = StyleSheet.create({
     image_item_container : {
         flexDirection : 'row',
-        height : 120,
+        height : 100,
         padding : 10,
     },
     image_preview  : {
         flex : 1,
         marginRight : 10,
-        height : 100
+        height : 80,
+        width : 80,
+        resizeMode : 'cover'
     },
     text_box : {
         flex : 3,
@@ -39,9 +43,10 @@ const styles = StyleSheet.create({
         color : 'black',
         
     },
-    artist_state : {
+    artist_text : {
         fontSize : 16,
-        flexWrap : 'wrap'
+        flexWrap : 'wrap',
+        color : 'grey'
     },
 
 })

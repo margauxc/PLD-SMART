@@ -5,18 +5,17 @@ import MusicItem from './MusicItem'
 import RNPickerSelect from 'react-native-picker-select'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
-import {oeuvres, categories} from '../assets/data'
+import {oeuvres, categories} from '../assets/SearchUtils'
 
 class Search extends React.Component {
     render() {
-        const textChanged = (text) => console.log(text)
+        const onSubmitEditing = (text) => console.log(text)
         const chooseRender = (item) => {
-            if(item.type == 'image') return <ImageItem image={item}/>
-            if(item.type == 'music') return <MusicItem music={item}/>
+            return <ImageItem artwork={item}/>
         }
         return (
             <View style = {styles.main_container}>
-                <TextInput style = {styles.search_bar} placeholder = "Rechercher une oeuvre..." onChangeText = {textChanged}/>
+                <TextInput style = {styles.search_bar} placeholder = "Rechercher une oeuvre..." onSubmitEditing = {onSubmitEditing}/>
                 <RNPickerSelect style = {pickerSelectStyles} placeholder = {{}} items = {categories} onValueChange = {value => {console.log(value)}} />
                 <FlatList 
                     data={oeuvres}
