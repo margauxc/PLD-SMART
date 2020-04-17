@@ -4,6 +4,17 @@ const {validation} = require('../helpers')
 const Logger = require("../loaders/logger")
 var moment = require('moment')
 
+function adapt(newDeposit) {
+    newDeposit.lat = newDeposit.geoloc.coordinates[0]
+    newDeposit.long = newDeposit.geoloc.coordinates[1]
+    newDeposit.depositId = newDeposit.id
+    delete newDeposit.id
+    delete newDeposit.geoloc
+    delete newDeposit.updatedAt
+    delete newDeposit.createdAt 
+    return newDeposit
+}
+
 module.exports = {
 
     getAll : () => {
@@ -18,17 +29,8 @@ module.exports = {
             expirationDate: moment().add(1, 'days').format("YYYY-MM-DD HH:mm:ss")
         }
         var newDepositSequelize = await models.Deposit.create(deposit)
-        var newDeposit = newDepositSequelize.dataValues
-
-        //TODO export to separated function
-        newDeposit.lat = newDeposit.geoloc.coordinates[0]
-        newDeposit.long = newDeposit.geoloc.coordinates[1]
-        newDeposit.depositId = newDeposit.id
-        delete newDeposit.id
-        delete newDeposit.geoloc
-        delete newDeposit.updatedAt
-        delete newDeposit.createdAt 
-        return newDeposit
+        var newDeposit = adapt(newDepositSequelize.dataValues)
+        return newDeposit        
     },
     findById : (depositId) => {
         return models.Deposit.findOne({
