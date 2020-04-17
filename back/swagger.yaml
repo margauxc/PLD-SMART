@@ -98,6 +98,10 @@ paths:
         content:
           application/json:
             schema:
+              required:
+                - artworkId
+                - lat
+                - long
               type: object
               properties:
                 artworkId: 
