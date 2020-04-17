@@ -33,6 +33,8 @@ components:
           type: integer
         link:
           type: string
+        pictureLink:
+          type: string
     CompleteArtwork:
       oneOf:
         - $ref: '#/components/schemas/MusicArtwork'

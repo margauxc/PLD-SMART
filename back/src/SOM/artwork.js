@@ -1,5 +1,4 @@
 const sb = require('../SB')
-const type = "music"
 function getArtworkById(artworkId){
     return new Promise(async (resolve,reject) => {
         const resArtwork = await sb.artwork.findById(artworkId)
@@ -25,19 +24,22 @@ function getOrInsertArtwork(data) {
             const artwork = await sb.artwork.insert(data)
             data.ArtworkId = artwork.id
             var resSpecific = await sb[category].insert(data)
-
             // select fields to return
 
             finalArtWork = resSpecific.dataValues
         }
-        // TODO export this in another module
-        delete finalArtWork.updatedAt
-        delete finalArtWork.createdAt
-        finalArtWork.category = category
-        finalArtWork.name = data.name
-        resolve(finalArtWork)
+        var result = adaptArtwork(finalArtWork, data)
+        resolve(result)
     })
 }
+function adaptArtwork(artwork, data) {
+    delete artwork.updatedAt
+    delete artwork.createdAt
+    artwork.category = data.category
+    artwork.name = data.name
+    return artwork
+}
+
 module.exports = {
 
     matchRequest : async (request, type) => {
