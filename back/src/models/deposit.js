@@ -3,7 +3,7 @@ const validator = require('validator');
 const {ErrorHandler} = require('../helpers')
 module.exports = {
     model: (sequelize, DataTypes) => {
-        const Subject = sequelize.define('Artwork', {
+        const Subject = sequelize.define('Deposit', {
             // Specific information for the subject
             id: {
                 type: DataTypes.UUID,
@@ -22,6 +22,7 @@ module.exports = {
                 allowNull: false,
                 defaultValue: DataTypes.NOW
             },
+            
             expirationDate : {
                 type: DataTypes.DATE,
                 allowNull: false,

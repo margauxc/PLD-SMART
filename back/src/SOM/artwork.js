@@ -35,6 +35,7 @@ function getOrInsertArtwork(data) {
 function adaptArtwork(artwork, data) {
     delete artwork.updatedAt
     delete artwork.createdAt
+    delete artwork.id
     artwork.category = data.category
     artwork.name = data.name
     return artwork

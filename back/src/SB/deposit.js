@@ -1,7 +1,8 @@
 const {models} = require('../models')
 const { ErrorHandler } = require('../helpers')
 const {validation} = require('../helpers')
-var moment = require('moment');
+const Logger = require("../loaders/logger")
+var moment = require('moment')
 
 module.exports = {
 
@@ -9,13 +10,25 @@ module.exports = {
         return  models.Deposit.findAll()
     },
 
-    createDeposit : (data) => {
+    createDeposit : async (data) => {
         var deposit = {
-            artworkId: data.artworkId,
+            //? avec une minuscule ça marche pas mais ça serait mieux
+            ArtworkId: data.artworkId,
             geoloc: { type: 'Point', coordinates: [data.lat, data.long]},
             expirationDate: moment().add(1, 'days').format("YYYY-MM-DD HH:mm:ss")
         }
-        return models.Deposit.create(create)
+        var newDepositSequelize = await models.Deposit.create(deposit)
+        var newDeposit = newDepositSequelize.dataValues
+
+        //TODO export to separated function
+        newDeposit.lat = newDeposit.geoloc.coordinates[0]
+        newDeposit.long = newDeposit.geoloc.coordinates[1]
+        newDeposit.depositId = newDeposit.id
+        delete newDeposit.id
+        delete newDeposit.geoloc
+        delete newDeposit.updatedAt
+        delete newDeposit.createdAt 
+        return newDeposit
     },
     findById : (depositId) => {
         return models.Deposit.findOne({

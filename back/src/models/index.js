@@ -15,8 +15,8 @@ var db = {}
 async function loadDbModels(sequelize) {
     //var sequelize = loaderSequelize()
     db['Artwork'] = await Artwork.model(sequelize, DataTypes)
-    db['Deposit'] = await Music.model(sequelize, DataTypes)
-    db['Music'] = await Deposit.model(sequelize, DataTypes)
+    db['Music'] = await Music.model(sequelize, DataTypes)
+    db['Deposit'] = await Deposit.model(sequelize, DataTypes)
 
     await linker(sequelize, DataTypes, db)
 

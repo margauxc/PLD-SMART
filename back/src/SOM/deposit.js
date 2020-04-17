@@ -5,8 +5,8 @@ module.exports = {
         return sb.deposit.getAll()
     },
     
-    createDeposit : () => {
-        return sb.deposit.createDeposit()
+    createDeposit : (deposit) => {
+        return sb.deposit.createDeposit(deposit)
     },
 
     getDeposit : (depositId) =>  {
