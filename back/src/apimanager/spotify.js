@@ -1,11 +1,13 @@
 // doc at https://www.npmjs.com/package/node-spotify-api
 const { ErrorHandler } = require('../helpers')
+const {TYPES} = require('../config')
 var Spotify = require('node-spotify-api');
+
 var spotify = new Spotify({
     id: process.env.SPOTIFY_ID,
     secret: process.env.SPOTIFY_SECRET
 });
-const API_TYPE = "music"
+const API_TYPE = TYPES.MUSIC
 function convertTrack (track) {
     var resTrack = {}
     // artwork fields
@@ -19,6 +21,10 @@ function convertTrack (track) {
     resTrack.album = track.album.name
     return resTrack
 }
+/*
+Recherche : titre, artiste
+Detail : image pochette, album, titre, artiste, année, extrait
+*/
 
 module.exports = {
     type : API_TYPE,

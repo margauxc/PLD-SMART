@@ -1,3 +1,4 @@
+const TYPES = require('./artworkType')
 var dotenv = require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
 if (!dotenv) {
   // This error should crash whole process
@@ -24,4 +25,6 @@ module.exports = {
   api: {
     prefix: '/api',
   },
+
+  TYPES
 };
