@@ -1,5 +1,6 @@
 const spotify = require("./spotify")
-const apiList = [spotify]
+const tmdb = require("./tmdb")
+const apiList = [spotify, tmdb]
 
 module.exports = {
     search: async (request, type) => {
