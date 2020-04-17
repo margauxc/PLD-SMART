@@ -27,5 +27,21 @@ const oeuvres = [
     }
 ]
 
-
-export {oeuvres}
+const categories = [
+    {
+        key : 'all',
+        label : 'Toutes les oeuvres', 
+        value : 'all'
+    },
+    {
+        key : 'painting',
+        label : 'Peinture',
+        value : 'painting'
+    },
+    {
+        key : 'music',
+        label : 'Musique',
+        value : 'music'
+    }
+]
+export {oeuvres, categories}

@@ -2,8 +2,10 @@ import React from 'react'
 import { StyleSheet, View, TextInput, FlatList } from 'react-native'
 import ImageItem from './ImageItem'
 import MusicItem from './MusicItem'
+import RNPickerSelect from 'react-native-picker-select'
+import Icon from 'react-native-vector-icons/FontAwesome'
 
-import {oeuvres} from '../assets/data'
+import {oeuvres, categories} from '../assets/data'
 
 class Search extends React.Component {
     render() {
@@ -15,6 +17,7 @@ class Search extends React.Component {
         return (
             <View style = {styles.main_container}>
                 <TextInput style = {styles.search_bar} placeholder = "Rechercher une oeuvre..." onChangeText = {textChanged}/>
+                <RNPickerSelect style = {pickerSelectStyles} placeholder = {{}} items = {categories} onValueChange = {value => {console.log(value)}} />
                 <FlatList 
                     data={oeuvres}
                     keyExtractor={(item) => item.id.toString()}
@@ -40,7 +43,25 @@ const styles = StyleSheet.create({
         borderColor : 'darkgrey',
         borderRadius : 5,  
         fontSize : 16      
-    }
+    },
+    
 })
+
+const pickerSelectStyles = StyleSheet.create({
+    inputIOS: {
+      fontSize: 16,
+      paddingVertical: 12,
+      paddingHorizontal: 10,
+      color: 'blue',
+      paddingRight: 30, // to ensure the text is never behind the icon
+    },
+    inputAndroid: {
+      fontSize: 16,
+      paddingHorizontal: 10,
+      paddingVertical: 8,
+      color: 'blue',
+      paddingRight: 30, // to ensure the text is never behind the icon
+    },
+  })
 
 export default Search
