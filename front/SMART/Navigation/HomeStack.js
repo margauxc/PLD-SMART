@@ -21,11 +21,12 @@ const screens = {
             headerStyle: {
                 backgroundColor: '#e67e22'
             },
-            headerTintColor: '#fff'
+            headerTintColor: '#fff',
+            headerTitleAlign: 'center'
         }
     }
 }
 
-const HomeStack = createStackNavigator(screens, {headerLayoutPreset: 'center'})
+const HomeStack = createStackNavigator(screens)
 
 export default HomeStack
