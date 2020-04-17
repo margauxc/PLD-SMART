@@ -32,7 +32,13 @@ module.exports = (app) => {
   // Alternate description:
   // Enable Cross Origin Resource Sharing to all origins by default
   var corsOptions = {
-    origin: ["http://127.0.0.1:5500","http://localhost:8080","http://35.181.59.14:8080"],
+    origin: [
+      "http://127.0.0.1:5500",
+      "http://localhost:8080",
+      "http://35.181.59.14:8080",
+      "http://127.0.0.1:3000",
+      "http://localhost:3000"
+    ],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS",
     credentials: true,
     allowedHeaders: ["Access-Control-Allow-Headers", "Origin", "X-Requested-With", "Content-Type", "Accept"]

@@ -1,71 +1,50 @@
-const https = require("https")
+// doc at https://www.npmjs.com/package/node-spotify-api
+const { ErrorHandler } = require('../helpers')
+const {TYPES} = require('../config')
+var Spotify = require('node-spotify-api');
 
-const baseUrl = "https://api.spotify.com/v1";
-const accessToken = "myToken";
-const nbreLimit = 1;
+var spotify = new Spotify({
+    id: process.env.SPOTIFY_ID,
+    secret: process.env.SPOTIFY_SECRET
+});
+const API_TYPE = TYPES.MUSIC
+function convertTrack (track) {
+    var resTrack = {}
+    // artwork fields
+    resTrack.name = track.name
+    resTrack.database = "spotify"
+    resTrack.category = API_TYPE
 
-var res = {
-    id : null,
-    name : null,
-    uri : null,
-    preview_url: null,
-    artist : null,
-    album : null,
-    description : null
+    // music fields
+    resTrack.url = track.uri
+    resTrack.artist = track.artists[0].name
+    resTrack.album = track.album.name
+    return resTrack
 }
-
-var options = {
-    hostname: baseUrl,
-    path: null,
-    method: null,
-    headers: {
-        'Content-Type': 'application/json',
-        'Authorization': accessToken
-    }
-}
+/*
+Recherche : titre, artiste
+Detail : image pochette, album, titre, artiste, année, extrait
+*/
 
 module.exports = {
-    type : 'music',
-
+    type : API_TYPE,
     getTrack : (id) => {
-        return new Promise(async (resolve, reject) => {
-            options.path = "/tracks/{"+id+"}"
-            options.method="GET"
-            https.request(options, (responseJson) => {
-                
-                responseJson.on('end', () => {
-                    //renvoyer les data ici
-                    let response = JSON.parse(data);
-                    res.name = response.name;
-                    res.uri = response.uri;
-                    res.preview_url = response.preview_url;
-                    res.album = response.album.name;
-                    res.artist = response.artist.name;
-                    resolve(res);
-                });
-            }).on("error", (err) => {
-                reject(err.message);
+        return new Promise((resolve,reject) => {
+            spotify
+                .request('https://api.spotify.com/v1/tracks/'+id)
+                .then((data) => {
+                    console.log(data)
+                    //TODO read and select
+                    resolve(data)
                 })
         })
     },
-
-// GET https://api.spotify.com/v1/search --> search
-//! Encode spaces with the hex code %20 or +
-    getSearch : (query, type) => {
-        return new Promise(async (resolve, reject) => {
-            options.path = "/search?q="+query+"&type=track,album,artist&limit="+nbreLimit
-            options.method="GET"
-            https.request(options, (responseJson) => {
-                responseJson.on('end', () => {
-                    //TODO : renvoyer les data ici --> array ? forEach ?
-                    // For each type provided in the type parameter, the response body contains an array of  : 
-                    //artist objects / simplified album objects / track objects / simplified show objects / simplified episode objects wrapped in a paging object in JSON.
-                    var response = JSON.parse(data);
-                    resolve(response)
-                });
-            }).on("error", (err) => {
-                reject(err.message);
-                })
-       })
-    }
+    search : (query, type) => {
+        // TODO get all fields of the query
+        const rawQueryTitle = query.rawQuery
+        return new Promise(async (resolve,reject) => {
+            const data = await spotify.search({ type: 'track', query: rawQueryTitle, limit: 5 });
+            resolve(data.tracks.items.map((track) => convertTrack(track)))
+        })
+    },
 }

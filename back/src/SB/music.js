@@ -4,7 +4,7 @@ const { validation } = require('../helpers')
 
 module.exports = {
     findByArtworkId : (artworkIdSearch) => {
-        return models.music.findOne({
+        return models.Music.findOne({
             where : {
                 artworkId : artworkIdSearch
             }
@@ -12,13 +12,13 @@ module.exports = {
     },
     findExactMatch : (data) => {
         const urlSearch = data.url
-        return models.music.findOne({
+        return models.Music.findOne({
             where : {
                 url : urlSearch
             }
         })
     },
     insert : (data) => {
-        return models.music.create(data)
+        return models.Music.create(data)
     }
 }

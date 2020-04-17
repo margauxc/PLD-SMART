@@ -46,7 +46,8 @@ module.exports = {
 
             importDate: {
                 type: DataTypes.DATE,
-                allowNull: false,
+                allowNull: true,
+                defaultValue: DataTypes.NOW,
                 validate : {
                     notEmpty : true
                 }

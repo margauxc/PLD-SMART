@@ -7,20 +7,20 @@ const {validation} = require('../helpers')
 module.exports = {
 
     findByName : (nameArtwork) => {
-        return  models.artwork.find({
+        return  models.Artwork.findAll({
             where: {
                 name: nameArtwork,
             }
         })
     },
     findById : (idArtwork) => {
-        return models.artwork.findOne({
+        return models.Artwork.findOne({
             where : {
                 id : idArtwork
             }
         })
     },
     insert : (data) => {
-        return models.artwork.create(data)
+        return models.Artwork.create(data)
     }
 }

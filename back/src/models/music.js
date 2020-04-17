@@ -37,7 +37,7 @@ module.exports = {
 
             description: {
                 type: DataTypes.STRING,
-                allowNull: false,
+                allowNull: true,
                 validate : {
                     notEmpty : true
                 }
