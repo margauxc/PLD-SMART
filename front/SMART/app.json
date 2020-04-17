@@ -23,11 +23,11 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "infoPlist" : {
-        "NSAppTransportSecurity" : {
-          "NSAllowsArbitraryLoads" : true
-        }
-      }
-    }
+      "bundleIdentifier": "SMART"
+    },
+    "android": {
+      "package": "SMART"
+    },
+    "entryPoint": "node_modules/expo/AppEntry.js"
   }
 }
