@@ -27,12 +27,7 @@ const screens = {
     AddText: {
         screen: AddText,
         navigationOptions: {
-            title: "Ajout du texte",
-            headerStyle: {
-                backgroundColor: '#e67e22'
-            },
-            headerTintColor: '#fff',
-            headerTitleAlign: 'center'
+            title: "Ajout du texte"
         }
     }
 }
