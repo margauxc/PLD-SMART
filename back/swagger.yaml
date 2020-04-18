@@ -110,6 +110,40 @@ paths:
                   type: number
                 long:
                   type: number
+    get:
+        tags:
+        - "deposits"
+        summary: "get all deposits"
+        description: "get all deposits active in the DB"
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: "array"
+                  items:
+                    $ref: "#/components/schemas/ArtworkDeposit"
+  /artworkDeposits/{depositId}:
+    get:
+      tags: 
+      - "deposits"
+      summary: "get artwork deposit by Id"
+      operationId: "getArworkDepositById"
+      parameters:
+      - name: "depositId"
+        in: "path"
+        description: "ID of deposit to return"
+        required: true 
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtworkDeposit"
   /artworks:
     get:
       tags: 

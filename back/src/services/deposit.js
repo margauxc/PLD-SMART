@@ -6,6 +6,17 @@ const {validation} = require('../helpers')
 /**
  * This is the artwork services
  */
+function adapt(newDeposit) {
+    const formatted = newDeposit.dataValues
+    formatted.lat = newDeposit.geoloc.coordinates[0]
+    formatted.long = newDeposit.geoloc.coordinates[1]
+    formatted.depositId = newDeposit.id
+    delete formatted.id
+    delete formatted.geoloc
+    delete formatted.updatedAt
+    delete formatted.createdAt 
+    return formatted
+}
 module.exports = {
     /**
      * This function creates a subject
@@ -19,13 +30,19 @@ module.exports = {
                 lat : params.lat,
                 long :  params.long
             }  
-            resolve(som.deposit.createDeposit(deposit))
+            resolve(adapt(await som.deposit.createDeposit(deposit)))
         })
     },
     getAll :() => {
-        return som.deposit.getAll();
+        return new Promise(async (resolve,reject) =>{
+            const allRes = await som.deposit.getAll()
+            console.log(allRes)
+            resolve(allRes.map(x => adapt(x)))
+        })
     },
     getDeposit : (depositId) =>  {
-        return som.deposit.getDeposit(depositId);
+        return new Promise(async (resolve,reject) =>{
+            resolve(adapt(await som.deposit.getDeposit(depositId)))
+        })
     }
 }
