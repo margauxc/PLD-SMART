@@ -36,13 +36,15 @@ module.exports = {
     getAll :() => {
         return new Promise(async (resolve,reject) =>{
             const allRes = await som.deposit.getAll()
-            console.log(allRes)
             resolve(allRes.map(x => adapt(x)))
         })
     },
     getDeposit : (depositId) =>  {
         return new Promise(async (resolve,reject) =>{
-            resolve(adapt(await som.deposit.getDeposit(depositId)))
+            const deposit = adapt(await som.deposit.getDeposit(depositId))
+            // get associated artwork
+            const artwork = (await som.artwork.getArtwork(deposit.ArtworkId))
+            resolve({...deposit,...artwork})
         })
     }
 }

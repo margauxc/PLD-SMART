@@ -25,6 +25,7 @@ module.exports = (app) => {
 
     route.get('/:depositId', (req, res, next) => {
         const { depositId } = req.params
+        console.log(depositId)
         services.deposit.getDeposit(depositId).then((result) => {
             return res.json(result).status(200)
         }).catch((error) => {
