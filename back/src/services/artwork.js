@@ -32,7 +32,6 @@ module.exports = {
 
     getArtworkById : (artworkId) => {
         return new Promise(async (resolve, reject) => {
-            console.log(artworkId)
             resolve(await som.artwork.getArtwork(artworkId))
         })
     }
