@@ -1,13 +1,11 @@
 const sb = require('../SB')
 function getArtworkById(artworkId){
     return new Promise(async (resolve,reject) => {
-        const resArtwork = await sb.artwork.findById(artworkId)
+        const globalArtwork = await sb.artwork.findById(artworkId)
         // find appropriate DB
-        const category = resArtwork.category
-        var fullArtwork = await sb[category].findByArtworkId(artworkId)
-        fullArtwork = fullArtwork.dataValues
-        fullArtwork.category = resArtwork.category
-        resolve(fullArtwork)
+        const category = globalArtwork.category
+        var specificArtwork = (await sb[category].findByArtworkId(artworkId)).dataValues
+        resolve(adaptArtwork(specificArtwork,globalArtwork))
     })
 }
 function getOrInsertArtwork(data) {
@@ -32,12 +30,14 @@ function getOrInsertArtwork(data) {
         resolve(result)
     })
 }
-function adaptArtwork(artwork, data) {
-    delete artwork.updatedAt
-    delete artwork.createdAt
-    artwork.category = data.category
-    artwork.name = data.name
-    return artwork
+function adaptArtwork(specificArtwork, globalArtwork) {
+    var fullArtwork = {...specificArtwork}
+    delete fullArtwork.updatedAt
+    delete fullArtwork.createdAt
+    delete fullArtwork.id
+    fullArtwork.category = globalArtwork.category
+    fullArtwork.name = globalArtwork.name
+    return fullArtwork
 }
 
 module.exports = {

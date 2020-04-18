@@ -24,7 +24,10 @@ components:
       - painting
       - photography
     BasicArtwork:
+      type: object
       properties:
+        id:
+          type: string
         name: 
           type: string
         artists:
@@ -41,7 +44,8 @@ components:
     MusicArtwork:
       allOf:
       - $ref: '#/components/schemas/BasicArtwork'
-      - properties:
+      - type: object
+        properties:
           category: 
             type: string
             enum:
@@ -56,8 +60,86 @@ components:
             type: string
           author:
             type: string
+    ArtworkDeposit:
+      type: object
+      properties:
+        lat:
+          type: number
+        long:
+          type: number
+        date:
+          type: string
+          format: date 
+        expirationDate:
+          type: string
+          format: date
+        numberOfViews:
+          type: integer
+        artworkId:
+          type: string
+        depositId:
+          type: string
         
 paths:
+  /artworkDeposits:
+    post:
+      tags:
+      - "deposits"
+      summary: "create a new deposit for an artwork"
+      description: "create a new deposit for an artwork"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtworkDeposit"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - artworkId
+                - lat
+                - long
+              type: object
+              properties:
+                artworkId: 
+                  type: string
+                lat:
+                  type: number
+                long:
+                  type: number
+    get:
+        tags:
+        - "deposits"
+        summary: "get all deposits"
+        description: "get all deposits active in the DB"
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: "array"
+                  items:
+                    $ref: "#/components/schemas/ArtworkDeposit"
+  /artworkDeposits/{depositId}:
+    get:
+      tags: 
+      - "deposits"
+      summary: "get artwork deposit by Id"
+      operationId: "getArworkDepositById"
+      parameters:
+      - name: "depositId"
+        in: "path"
+        description: "ID of deposit to return"
+        required: true 
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
   /artworks:
     get:
       tags: 
@@ -115,7 +197,7 @@ paths:
         schema:
           type: string
       responses:
-        200:
+        '200':
           description: OK
           content:
             application/json:
