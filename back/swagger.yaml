@@ -124,6 +124,23 @@ paths:
                   type: "array"
                   items:
                     $ref: "#/components/schemas/ArtworkDeposit"
+        parameters:
+          - name: long
+            in: query
+            description: "longitude"
+            schema:
+              type: number
+          - name: lat
+            in: query
+            description: "latitude"
+            schema:
+              type: number
+          - name: limit
+            in: query
+            description: "max number of results"
+            schema:
+              type: number
+              default: 1
   /artworkDeposits/{depositId}:
     get:
       tags: 

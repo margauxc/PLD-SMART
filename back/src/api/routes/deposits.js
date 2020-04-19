@@ -16,11 +16,20 @@ module.exports = (app) => {
     })
 
     route.get('/', (req, res, next) => {
-        services.deposit.getAll().then((result) => {
-            return res.json(result).status(200)
-        }).catch((error) => {
-            next(error)
-        })
+        const {long, limit , lat} = req.query
+        if (long && lat) {
+            services.deposit.getNearestDeposits(long, lat, limit).then((result) => {
+                return res.json(result).status(200)
+            }).catch((error) => {
+                next(error)
+            })
+        } else {
+            services.deposit.getAll().then((result) => {
+                return res.json(result).status(200)
+            }).catch((error) => {
+                next(error)
+            })
+        }
     })
 
     route.get('/:depositId', (req, res, next) => {
