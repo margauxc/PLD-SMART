@@ -127,12 +127,12 @@ paths:
         parameters:
           - name: long
             in: query
-            description: "longitude"
+            description: "longitude (deg)"
             schema:
               type: number
           - name: lat
             in: query
-            description: "latitude"
+            description: "latitude (deg)"
             schema:
               type: number
           - name: limit
@@ -141,6 +141,12 @@ paths:
             schema:
               type: number
               default: 1
+          - name: distance
+            in: query
+            description: "max distance (meters) between artwork deposit and specified point"
+            schema:
+              type: number
+              default: 20
   /artworkDeposits/{depositId}:
     get:
       tags: 

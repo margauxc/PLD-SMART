@@ -32,7 +32,7 @@ module.exports = {
         })
     },
 
-    findNearest: (long, lat, nbDeposit) => {
+    findNearest: (long, lat, nbDeposit, maxDistance) => {
         const location = sequelize.literal(`ST_GeomFromText('POINT(${long} ${lat})')`);
         return models.Deposit.findAll({
             attributes: {
@@ -40,7 +40,7 @@ module.exports = {
                     [sequelize.fn('ST_Distance_Sphere', location, sequelize.col("geoloc")),'distance']
                 ]
             },
-            // where: sequelize.where(sequelize.fn('ST_Distance_Sphere', sequelize.literal('geoloc'), location))
+            having: sequelize.where(sequelize.col('distance'), {[sequelize.Op.lte]: maxDistance}),
             order: [
                 [sequelize.col('distance'), 'ASC']
             ],

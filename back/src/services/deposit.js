@@ -47,12 +47,18 @@ module.exports = {
             resolve({...deposit,...artwork})
         })
     },
-    getNearestDeposits: async (long, lat, nbDeposits) => {
+    getNearestDeposits: async (long, lat, nbDeposits, distance) => {
         if (!nbDeposits) {
             nbDeposits = 1
         } else {
             nbDeposits = parseInt(nbDeposits,10)
         }
-        return await som.deposit.getNearestDeposits(long, lat, nbDeposits)
+        if(!distance) {
+            distance = 20
+        } else {
+            distance = parseInt(distance, 10)
+        }
+        const result =  await som.deposit.getNearestDeposits(long, lat, nbDeposits, distance)
+        return result.map(deposit => adapt(deposit))
     }
 }
