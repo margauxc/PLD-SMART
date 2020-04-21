@@ -8,6 +8,7 @@ class AddText extends React.Component {
                 <Text style={styles.Text}>Saisissez votre texte</Text>
 
                 <TextInput multiline={true} numberOfLines={10} style={styles.textField} />
+                
                 <TouchableOpacity style={styles.Button}>
                     <View style={styles.otherView}>
                         <Text style={styles.buttonText}>Valider</Text>

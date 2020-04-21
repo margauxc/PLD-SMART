@@ -7,6 +7,7 @@ class ArtworkChoice extends React.Component {
             <View style={styles.container}>
                 <Text style={styles.Text}>Vous souhaitez ajouter</Text>
 
+
                 <TouchableOpacity style={styles.Button} onPress={() => {this.props.navigation.navigate('AddText')}}>
                     <View style={styles.otherView}>
                         <Text style={styles.buttonText}>Un texte</Text>
@@ -14,7 +15,7 @@ class ArtworkChoice extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.Button}>
                     <View style={styles.otherView}>
-                        <Text style={styles.buttonText}>Une oeuvre d'art existante</Text>
+                        <Text style={styles.buttonText} onPress={() => {this.props.navigation.navigate('Search')}}>Une oeuvre d'art existante</Text>
                     </View>
                 </TouchableOpacity>
 

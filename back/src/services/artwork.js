@@ -27,7 +27,7 @@ module.exports = {
                     resolve(await som.artwork.getOrInsertAll(artworksData))
                 }
             }
-        })
+        }).catch((err) => reject(err))
     },
 
     getArtworkById : (artworkId) => {
