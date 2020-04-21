@@ -10,6 +10,10 @@ module.exports = {
     },
 
     getDeposit : (depositId) =>  {
-        return sb.deposit.findById(depositId);
+        return sb.deposit.findById(depositId)
+    },
+
+    getNearestDeposits: (long, lat, nbDeposits, distance) => {
+        return sb.deposit.findNearest(long, lat, nbDeposits, distance)
     }
 }
