@@ -14,7 +14,7 @@ class ArtworkChoice extends React.Component {
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.Button}>
                     <View style={styles.otherView}>
-                        <Text style={styles.buttonText}>Une oeuvre d'art existante</Text>
+                        <Text style={styles.buttonText} onPress={() => {this.props.navigation.navigate('Search')}}>Une oeuvre d'art existante</Text>
                     </View>
                 </TouchableOpacity>
 

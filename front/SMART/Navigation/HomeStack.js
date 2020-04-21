@@ -5,6 +5,7 @@ import Header from '../Shared/Header'
 import Home from '../Components/Home'
 import ArtworkChoice from '../Components/ArtworkChoice'
 import AddText from '../Components/AddText'
+import Search from '../Components/Search'
 
 
 const screens = {
@@ -29,7 +30,14 @@ const screens = {
         navigationOptions: {
             title: "Ajout du texte"
         }
-    }
+    },
+
+    Search: {
+        screen: Search,
+        navigationOptions: {
+            title: "Rechercher une oeuvre"
+        }
+    },
 }
 
 const HomeStack = createStackNavigator(screens, {
