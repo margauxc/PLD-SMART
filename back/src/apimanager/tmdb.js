@@ -6,15 +6,17 @@ const Tmdb = require('tmdb-v3');
 const tmdb = new Tmdb({ apiKey: process.env.TMDB_SECRET });
 
 const API_TYPE = TYPES.MOVIE
-
+const POSTER_BASE = "https://image.tmdb.org/t/p/original"
 function convertMovie (movie) {
     var resMovie = {}
     // artwork fields
     resMovie.name = movie.title
     resMovie.database = "tmdb"
     resMovie.category = API_TYPE
-    resMovie.pictureLink = movie.poster_path
+    if (movie.poster_path != null) {
+        resMovie.pictureLink = POSTER_BASE+movie.poster_path
 
+    }
     // movie fields
     // todo deal with no description
     resMovie.description = movie.overview
