@@ -64,8 +64,8 @@ const fieldNames = {
         'image' : 'image',
     },
     'music' : {
-        'title' : 'title',
-        'artist' : 'singer',
+        'title' : 'name',
+        'artist' : 'artist',
         'image' : 'image',
     },
 }

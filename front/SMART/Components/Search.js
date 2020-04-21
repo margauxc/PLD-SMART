@@ -10,21 +10,46 @@ import {searchRequest} from '../API/APISearch'
 
 class Search extends React.Component {
 
+    constructor(props){
+        super(props)
+        this.state = {artworks : [], 
+                    searchedText : "",
+                    searchedCategory : ""}
+    }
+
     _searchArtworks() {
-        searchRequest("Bohemian", "all")
+        searchRequest(this.state.searchedText, this.state.searchedCategory).then( (data) => {
+            console.log(data)
+            this.setState({artworks : data})
+        })
+    }
+    _textInputChanged(text){
+        this.setState({searchedText : text})
+    }
+
+    _categoryPickerChanged(value){
+        console.log("-----------PICKER VALUE : " + value)
+        this.setState({searchedCategory : value})
     }
     render() {
-        const onSubmitEditing = (text) => console.log(text.nativeEvent.text)
         const chooseRender = (item) => {
             return <ImageItem artwork={item}/>
         }
         return (
             <View style = {styles.main_container}>
-                <TextInput style = {styles.search_bar} placeholder = "Rechercher une oeuvre..." onSubmitEditing = {this._searchArtworks()}/>
-                <RNPickerSelect style = {pickerSelectStyles} placeholder = {{}} items = {categories} onValueChange = {value => {console.log(value)}} />
+                <TextInput 
+                    style = {styles.search_bar} 
+                    placeholder = "Rechercher une oeuvre..." 
+                    onChangeText = {(text) => this._textInputChanged(text)} 
+                    onSubmitEditing = {()=>this._searchArtworks()}/>
+                <RNPickerSelect 
+                    style = {pickerSelectStyles} 
+                    placeholder = {{}} 
+                    items = {categories} 
+                    onValueChange = {value => this._categoryPickerChanged(value)} />
                 <FlatList 
-                    data={oeuvres}
-                    keyExtractor={(item) => item.id.toString()}
+                    data={this.state.artworks}
+                    keyExtractor={(item) => item.ArtworkId.toString()}
                     renderItem={({item}) => 
                         chooseRender(item)
                     }

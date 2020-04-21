@@ -1,18 +1,23 @@
 
 export function searchRequest(query, category = null) {
 
-    const APIbaseURL = 'http://127.0.0.1:3000/api/'
+    const APIbaseURL = 'http://192.168.1.26:3000/api/'
     query = encodeURIComponent(query)
     var url = APIbaseURL + 'artworks?rawQuery='+query
-    if(category != 'all') {
+    if(category.length>0) {
         url+='&category='+ encodeURIComponent(category)
     }
 
     console.log(url)
 
-    fetch(url)
-    .then((response) => response.json())
-    .then((json) => {return json})
+    return fetch(url, {
+        headers : {
+            'accept' : 'application/json'
+        }
+    })
+    .then((response) => {return response.json()})
+    .then((json) => {
+        return json})
     .catch((error) => {console.log(error)})
     
 }

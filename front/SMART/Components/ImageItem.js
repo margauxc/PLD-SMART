@@ -5,14 +5,14 @@ import {fieldNames} from '../assets/SearchUtils'
 class ImageItem extends React.Component {
     render() {
         const artwork = this.props.artwork
+        const artstring = JSON.stringify(artwork)
         const onPress = () => console.log('détails de l\'oeuvre ' + artwork.title)
-        
         return (
             <TouchableOpacity style = {styles.image_item_container} onPress = {onPress}>
-                <Image source = {{uri : artwork[fieldNames[artwork.type]['image']]}} style = {styles.image_preview}/>
+                <Image source = {require('../assets/imagefiller.jpg')} style = {styles.image_preview}/>
                 <View style = {styles.text_box}>
-                    <Text style = {styles.title_text} numberOfLines = {2}>{artwork[fieldNames[artwork.type]['title']]}</Text>
-                    <Text style = {styles.artist_text} numberOfLines = {2}>{artwork[fieldNames[artwork.type]['artist']]}</Text>
+                    <Text style = {styles.title_text} numberOfLines = {2}>{artwork.name}</Text>
+                    <Text style = {styles.artist_text} numberOfLines = {2}>{artwork.artist}</Text>
                 </View>
             </TouchableOpacity>
         )
