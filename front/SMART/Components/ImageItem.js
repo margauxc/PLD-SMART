@@ -12,13 +12,14 @@ class ImageItem extends React.Component {
     }
     render() {
         const artwork = this.props.artwork
-        const onPress = () => console.log('détails de l\'oeuvre ' + artwork.title)
+        const onPress = () => console.log('détails de l\'oeuvre ' + artwork.name)
         return (
             <TouchableOpacity style = {styles.image_item_container} onPress = {onPress}>
                 <Image source = {{uri : this._getImage()}} style = {styles.image_preview}/>
                 <View style = {styles.text_box}>
                     <Text style = {styles.title_text} numberOfLines = {2}>{artwork.name}</Text>
                     <Text style = {styles.artist_text} numberOfLines = {2}>{artwork.artist}</Text>
+                    <Text style = {styles.description_text} numberOfLines = {3}>{artwork.description}</Text>
                 </View>
             </TouchableOpacity>
         )
@@ -54,6 +55,12 @@ const styles = StyleSheet.create({
         flexWrap : 'wrap',
         color : 'grey'
     },
+
+    description_text : {
+        fontSize : 14,
+        flexWrap : 'wrap',
+        color : 'grey'
+    }
 
 })
 
