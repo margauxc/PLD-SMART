@@ -37,6 +37,7 @@ function adaptArtwork(specificArtwork, globalArtwork) {
     delete fullArtwork.id
     fullArtwork.category = globalArtwork.category
     fullArtwork.name = globalArtwork.name
+    fullArtwork.pictureLink = globalArtwork.pictureLink
     return fullArtwork
 }
 
