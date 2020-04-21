@@ -60,6 +60,18 @@ module.exports = {
                     notEmpty : true
                 }
             },
+            artists: {
+                type: DataTypes.STRING,
+                allowNull: false,
+                validate: {
+                    notEmpty: true
+                }
+            }
+        },
+        {
+            indexes: [
+                {type: 'FULLTEXT', name: 'seach_index', fields: ['name', 'artists']}
+            ]
         })
 
         return Subject;
