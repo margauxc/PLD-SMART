@@ -1,5 +1,6 @@
 const spotify = require("./spotify")
-const apiList = [spotify]
+const metMuseum = require("./metMuseum")
+const apiList = [spotify, metMuseum]
 
 module.exports = {
     search: async (request, type) => {
