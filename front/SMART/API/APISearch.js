@@ -8,8 +8,6 @@ export function searchRequest(query, category = null) {
         url+='&category='+ encodeURIComponent(category)
     }
 
-    console.log(url)
-
     return fetch(url, {
         headers : {
             'accept' : 'application/json'

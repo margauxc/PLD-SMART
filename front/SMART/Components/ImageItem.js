@@ -1,15 +1,21 @@
 import React from 'react'
 import { StyleSheet, View,TouchableOpacity, Image, Text } from 'react-native'
-import {fieldNames} from '../assets/SearchUtils' 
 
 class ImageItem extends React.Component {
+
+    _getImage(){
+        if(this.props.artwork.pictureLink == null) {
+            return '../assets/imageFiller.jpg'
+        }else{
+            return this.props.artwork.pictureLink
+        }
+    }
     render() {
         const artwork = this.props.artwork
-        const artstring = JSON.stringify(artwork)
         const onPress = () => console.log('détails de l\'oeuvre ' + artwork.title)
         return (
             <TouchableOpacity style = {styles.image_item_container} onPress = {onPress}>
-                <Image source = {require('../assets/imagefiller.jpg')} style = {styles.image_preview}/>
+                <Image source = {{uri : this._getImage()}} style = {styles.image_preview}/>
                 <View style = {styles.text_box}>
                     <Text style = {styles.title_text} numberOfLines = {2}>{artwork.name}</Text>
                     <Text style = {styles.artist_text} numberOfLines = {2}>{artwork.artist}</Text>

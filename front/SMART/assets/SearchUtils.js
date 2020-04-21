@@ -57,16 +57,4 @@ const categories = [
     }
 ]
 
-const fieldNames = {
-    'painting' : {
-        'title' : 'title',
-        'artist' : 'artist',
-        'image' : 'image',
-    },
-    'music' : {
-        'title' : 'name',
-        'artist' : 'artist',
-        'image' : 'image',
-    },
-}
-export {oeuvres, categories, fieldNames}
+export {oeuvres, categories}

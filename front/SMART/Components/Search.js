@@ -1,11 +1,9 @@
 import React from 'react'
 import { StyleSheet, View, TextInput, FlatList } from 'react-native'
 import ImageItem from './ImageItem'
-import MusicItem from './MusicItem'
 import RNPickerSelect from 'react-native-picker-select'
-import Icon from 'react-native-vector-icons/FontAwesome'
 
-import {oeuvres, categories} from '../assets/SearchUtils'
+import {categories} from '../assets/SearchUtils'
 import {searchRequest} from '../API/APISearch'
 
 class Search extends React.Component {
@@ -19,7 +17,6 @@ class Search extends React.Component {
 
     _searchArtworks() {
         searchRequest(this.state.searchedText, this.state.searchedCategory).then( (data) => {
-            console.log(data)
             this.setState({artworks : data})
         })
     }
@@ -28,13 +25,9 @@ class Search extends React.Component {
     }
 
     _categoryPickerChanged(value){
-        console.log("-----------PICKER VALUE : " + value)
         this.setState({searchedCategory : value})
     }
     render() {
-        const chooseRender = (item) => {
-            return <ImageItem artwork={item}/>
-        }
         return (
             <View style = {styles.main_container}>
                 <TextInput 
@@ -51,7 +44,7 @@ class Search extends React.Component {
                     data={this.state.artworks}
                     keyExtractor={(item) => item.ArtworkId.toString()}
                     renderItem={({item}) => 
-                        chooseRender(item)
+                        <ImageItem artwork={item}/>
                     }
                 />
             </View>
