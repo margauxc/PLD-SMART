@@ -18,7 +18,7 @@ class ArtworkChoice extends React.Component {
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.cancelButton} onPress={() => {this.props.navigation.navigate('Home')}}>
+                <TouchableOpacity style={styles.cancelButton} onPress={() => {this.props.navigation.goBack()}}>
                     <View style={styles.otherView}>
                         <Text style={styles.buttonText}>Annuler</Text>
                     </View>

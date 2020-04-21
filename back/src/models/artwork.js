@@ -59,7 +59,15 @@ module.exports = {
                 validate : {
                     notEmpty : true
                 }
-            }
+            },
+            
+            pictureLink: {
+                type: DataTypes.STRING,
+                allowNull: true,
+                validate : {
+                    notEmpty : true
+                }
+            },
         })
 
         return Subject;
