@@ -21,8 +21,9 @@ components:
       - music
       - movie
       - freeText
+      - museum
       - painting
-      - photography
+      - sculpture
     BasicArtwork:
       type: object
       properties:

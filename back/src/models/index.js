@@ -7,6 +7,7 @@ const FreeText = require('./freeText')
 const Music = require('./music')
 const Movie = require('./movie')
 const Deposit = require('./deposit')
+const Museum = require('./museum')
 // association manager
 const linker = require('./linker')
 async function resetDatabase(){
@@ -21,6 +22,7 @@ async function loadDbModels(sequelize) {
     db['FreeText'] = await FreeText.model(sequelize, DataTypes)
     db['Movie'] = await Movie.model(sequelize, DataTypes)
     db['Deposit'] = await Deposit.model(sequelize, DataTypes)
+    db['Museum'] = await Museum.model(sequelize, DataTypes)
 
     await linker(sequelize, DataTypes, db)
 

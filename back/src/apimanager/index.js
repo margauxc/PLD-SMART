@@ -1,8 +1,11 @@
 const spotify = require("./spotify")
+const metMuseum = require("./metMuseum")
 const tmdb = require("./tmdb")
-const apiList = [spotify, tmdb]
-var Logger = require('../loaders/logger');
+
+const Logger = require("../loaders/logger")
 const ErrorHandler = require('../helpers/')
+
+const apiList = [spotify, tmdb, metMuseum]
 module.exports = {
     search: async (request) => {
         // define all the apis that should be called 
