@@ -4,5 +4,6 @@ module.exports = (sequelize, DataTypes, database) => {
     database['Music'].belongsTo(database['Artwork'], {foreignKey : {allowNull : false}})
     database['Museum'].belongsTo(database['Artwork'], {foreignKey : {allowNull : false}})
     database['Deposit'].belongsTo(database['Artwork'], {foreignKey : {allowNull : false}})
-
+    database['FreeText'].belongsTo(database['Artwork'], {foreignKey : {allowNull : false}})
+ 
 }

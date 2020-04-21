@@ -3,6 +3,7 @@ const { Sequelize, DataTypes } = require('sequelize')
 
 // sub models
 const Artwork = require('./artwork')
+const FreeText = require('./freeText')
 const Music = require('./music')
 const Movie = require('./movie')
 const Deposit = require('./deposit')
@@ -18,6 +19,7 @@ async function loadDbModels(sequelize) {
     //var sequelize = loaderSequelize()
     db['Artwork'] = await Artwork.model(sequelize, DataTypes)
     db['Music'] = await Music.model(sequelize, DataTypes)
+    db['FreeText'] = await FreeText.model(sequelize, DataTypes)
     db['Movie'] = await Movie.model(sequelize, DataTypes)
     db['Deposit'] = await Deposit.model(sequelize, DataTypes)
     db['Museum'] = await Museum.model(sequelize, DataTypes)

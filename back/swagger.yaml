@@ -80,7 +80,7 @@ components:
           type: string
         depositId:
           type: string
-        
+
 paths:
   /artworkDeposits:
     post:
@@ -227,7 +227,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CompleteArtwork"
-
+  /artworks/text:
+    post:
+      tags:
+      - "artworks"
+      summary: "create a free text artwork"
+      description: "create a free text artwork"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompleteArtwork"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - author
+                - text
+              type: object
+              properties:
+                name: 
+                  type: string
+                author:
+                  type: string
+                text:
+                  type: string
 externalDocs:
   description: "template for everything here"
   url: "https://editor.swagger.io/"
