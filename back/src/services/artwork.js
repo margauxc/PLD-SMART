@@ -34,5 +34,11 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             resolve(await som.artwork.getArtwork(artworkId))
         })
+    },
+
+    addFreeText: (params) => {
+        // todo sanitize 
+        validation.includeFields(params,['name','author','text'])
+        return som.artwork.addFreeText(params)
     }
 }

@@ -24,5 +24,13 @@ module.exports = (app) => {
             next(error)
         })
     })
+
+    route.post('/text', (req, res, next) => {
+        services.artwork.addFreeText(req.body).then((result) => {
+            return res.json(result).status(200)
+        }).catch((error) => {
+            next(error)
+        })
+    })
     
 };
