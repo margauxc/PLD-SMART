@@ -14,7 +14,7 @@ class AddText extends React.Component {
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.cancelButton}>
+                <TouchableOpacity style={styles.cancelButton} onPress={() => {this.props.navigation.goBack()}}>
                     <View style={styles.otherView}>
                         <Text style={styles.buttonText}>Annuler</Text>
                     </View>
