@@ -5,6 +5,7 @@ const { Sequelize, DataTypes } = require('sequelize')
 const Artwork = require('./artwork')
 const Music = require('./music')
 const Deposit = require('./deposit')
+const Museum = require('./museum')
 // association manager
 const linker = require('./linker')
 async function resetDatabase(){
@@ -17,6 +18,7 @@ async function loadDbModels(sequelize) {
     db['Artwork'] = await Artwork.model(sequelize, DataTypes)
     db['Music'] = await Music.model(sequelize, DataTypes)
     db['Deposit'] = await Deposit.model(sequelize, DataTypes)
+    db['Museum'] = await Museum.model(sequelize, DataTypes)
 
     await linker(sequelize, DataTypes, db)
 

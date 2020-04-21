@@ -1,9 +1,11 @@
 const artworkSB = require('./artwork')
 const musicSB = require('./music')
 const depositSB = require('./deposit')
+const museumSB = require('./museum')
 
 module.exports = {
     artwork : artworkSB,
     music : musicSB,
-    deposit : depositSB
+    deposit : depositSB,
+    museum : museumSB
 }

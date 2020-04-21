@@ -19,12 +19,15 @@ module.exports = {
                     notEmpty : true
                 }
             },
+
             artist : {
                 type: DataTypes.STRING,
-                allowNull: false,
-                validate : {
-                    notEmpty : true
-                }
+                allowNull: true,
+            },
+
+            classification: {
+                type: DataTypes.STRING,
+                allowNull: true
             },
 
             medium : {
@@ -41,9 +44,9 @@ module.exports = {
                 validate : {
                     notEmpty : true
                 }
-            },
+            }
         })
 
-        return Music;
+        return Museum;
     }
 }

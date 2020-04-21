@@ -5,18 +5,21 @@ const request = require('request-promise-native')
 const Logger = require("../loaders/logger")
 
 const API_TYPE = TYPES.MUSEUM
-function convertTrack (track) {
-    var resTrack = {}
+function convert (artwork) {
+    var res = {}
     // artwork fields
-    resTrack.name = track.name
-    resTrack.database = "spotify"
-    resTrack.category = API_TYPE
+    res.name = artwork.title
+    res.database = "metMuseum"
+    res.category = API_TYPE
+    res.pictureLink = artwork.primaryImageSmall
 
-    // music fields
-    resTrack.url = track.uri
-    resTrack.artist = track.artists[0].name
-    resTrack.album = track.album.name
-    return resTrack
+    // museum fields
+    res.medium = artwork.medium
+    res.url = artwork.objectURL
+    res.artist = artwork.artistDisplayName
+    res.classification = artwork.classification
+
+    return res
 }
 /*
 Recherche : titre, artiste
@@ -25,51 +28,31 @@ Detail : image pochette, album, titre, artiste, année, extrait
 
 module.exports = {
     type : API_TYPE,
-    getTrack : (id) => {
-        return new Promise((resolve,reject) => {
-            spotify
-                .request('https://api.spotify.com/v1/tracks/'+id)
-                .then((data) => {
-                    console.log(data)
-                    //TODO read and select
-                    resolve(data)
-                })
-        })
-    },
-    search : async (query, type) => {
-        const urlQuery = encodeURIComponent(query)
+
+    search : async (query) => {
+        var {rawQuery, artist, category} = query
+        // TODO corriger mais pas utile pour l'instant
+        // if (category && category != TYPES.MUSEUM) {
+        //     rawQuery += ` ${encodeURIComponent(category)}`
+        // }
+        // if (artist) {
+        //     rawQuery += ` ${encodeURIComponent(artist)}`            
+        // }
+        const uri = `https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${encodeURIComponent(rawQuery)}`
         try {
             var res = await request({
-                uri:`https://collectionapi.metmuseum.org/public/collection/v1/search?q=${urlQuery}`,
+                uri: uri,
                 json: true
             })
-            var artworks = []
-            Logger.debug(JSON.stringify(res))
-            res.objectIDs.forEach(async (id, index) => {
-                if(index < 5) {
-                    var artwork = await request({
-                        uri: `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
-                        json: true
-                    })
-                    Logger.debug(JSON.stringify(artwork))
-                    artworks.push(artwork)
-                }
-            })
-            return artworks
+            artworks = await Promise.all(res.objectIDs.slice(0,5).map((id,index) => {
+                return request({
+                    uri: `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
+                    json: true
+                })
+            }))
+            return artworks.map(artwork => convert(artwork))
         } catch (err) {
             Logger.error(err)
         }
-        
-        // const req = https.request(options, res => {
-        //     Logger.debug(JSON.stringify(res))
-        //     res.on('data', d => {
-        //       process.stdout.write(d)
-        //     })
-        //   })
-        // const rawQueryTitle = query.rawQuery
-        // return new Promise(async (resolve,reject) => {
-        //     const data = await spotify.search({ type: 'track', query: rawQueryTitle, limit: 5 });
-        //     resolve(data.tracks.items.map((track) => convertTrack(track)))
-        // })
     },
 }
