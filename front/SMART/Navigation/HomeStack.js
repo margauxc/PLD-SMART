@@ -2,18 +2,28 @@ import { createStackNavigator } from 'react-navigation-stack'
 import React from 'react'
 
 import Header from '../Shared/Header'
+import Consult from '../Components/Consult'
 import Home from '../Components/Home'
 import ArtworkChoice from '../Components/ArtworkChoice'
 import AddText from '../Components/AddText'
+import Search from '../Components/Search'
 
 
 const screens = {
+    
     Home: {
         screen: Home,
         navigationOptions: ({ navigation }) => {
             return {
                 header: () => <Header navigation={navigation} title='SMART'/>
             }
+        }
+    },
+
+    Consult: {
+        screen: Consult,
+        navigationOptions: {
+            title: "Consultation d'une oeuvre"
         }
     },
 
@@ -29,7 +39,14 @@ const screens = {
         navigationOptions: {
             title: "Ajout du texte"
         }
-    }
+    },
+
+    Search: {
+        screen: Search,
+        navigationOptions: {
+            title: "Rechercher une oeuvre"
+        }
+    },
 }
 
 const HomeStack = createStackNavigator(screens, {

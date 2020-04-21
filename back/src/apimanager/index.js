@@ -1,26 +1,35 @@
 const spotify = require("./spotify")
 const metMuseum = require("./metMuseum")
-const Logger = require("../loaders/logger")
-const {TYPES} = require("../config")
-const apiList = [spotify, metMuseum]
+const tmdb = require("./tmdb")
 
+const Logger = require("../loaders/logger")
+const ErrorHandler = require('../helpers/')
+
+const apiList = [spotify, tmdb, metMuseum]
 module.exports = {
     search: async (request) => {
-        // define all the apis that should be called
-        const type = TYPES[request.category.toUpperCase()]
+        // define all the apis that should be called 
         let requiredAPIs = []
-        if(type == null) {
+        if(request.category == null) {
             requiredAPIs = apiList
         }
         else {
-            requiredAPIs = apiList.filter((api) => {return api.type == type})
+            requiredAPIs = apiList.filter((api) => {
+                return api.type == request.category})
         }
+        Logger.info(requiredAPIs)
         // make the calls
         let result = []
-        await Promise.all(requiredAPIs.map(async (api) => {
-            const resOneApi = await api.search(request)
-            // Logger.debug(JSON.stringify(resOneApi.map(res => {return `${res.url}-----${res.artist}`})))
-            result.push(...resOneApi)
+        await Promise.all(requiredAPIs.map( (api) => {
+            return new Promise((resolve,reject) => {
+                api.search(request).then((resOneApi) => {
+                    result.push(...resOneApi)
+                    resolve()
+                }).catch((err) => {
+                    Logger.warn("call to api failed")
+                    reject()
+                })
+            })
         }))
         return(result)
     }
