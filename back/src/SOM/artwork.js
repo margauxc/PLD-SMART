@@ -67,7 +67,7 @@ module.exports = {
             return getOrInsertArtwork(oneArtwork)
         }))
     },
-    addFreeText : (data) => {
+    addFreeText : async (data) => {
         const finalText = {
             name : data.name,
             database : TYPES.FREETEXT,
@@ -82,6 +82,6 @@ module.exports = {
 
         var finalArtWork = resText.dataValues
         var result = adaptArtwork(finalArtWork, finalText)
-        resolve(result)
+        return result
     }   
 }
