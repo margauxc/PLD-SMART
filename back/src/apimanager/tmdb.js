@@ -1,5 +1,6 @@
 // doc at https://github.com/dezitter/tmdb-v3 & https://developers.themoviedb.org/3/getting-started/introduction 
 const { ErrorHandler } = require('../helpers')
+var Logger = require('../loaders/logger');
 const {TYPES} = require('../config')
 const Tmdb = require('tmdb-v3');
 const tmdb = new Tmdb({ apiKey: process.env.TMDB_SECRET });
@@ -12,9 +13,10 @@ function convertMovie (movie) {
     resMovie.name = movie.title
     resMovie.database = "tmdb"
     resMovie.category = API_TYPE
+    resMovie.pictureLink = movie.poster_path
 
     // movie fields
-    resMovie.image = movie.poster_path
+    // todo deal with no description
     resMovie.description = movie.overview
     return resMovie
 }
@@ -40,14 +42,14 @@ module.exports = {
         })
     },
     search : (query)=> {
-        return new Promise(async (resolve,reject) => {
-            const data = await tmdb
-                                    .searchMovie(query, {page : 3})
-                                    .then(response => {
-                                        console.log(response.body);
-                                        //TODO do the response
-                                    });;
-            resolve(data.movies.items.map((movie) => convertMovie(movie)))
+        return new Promise((resolve,reject) => {
+            tmdb.searchMovie(query.rawQuery, { page : 1 }).then((data) => {
+                const response = JSON.parse(data.body)
+                resolve(response.results.map((movie) => convertMovie(movie)))
+            }).catch((err) => {
+                Logger.error(err)
+                reject(err)
+            })
         })
     },
 }
