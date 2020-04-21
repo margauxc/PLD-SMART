@@ -1,10 +1,12 @@
 const spotify = require("./spotify")
 const metMuseum = require("./metMuseum")
+const Logger = require("../loaders/logger")
 const apiList = [spotify, metMuseum]
 
 module.exports = {
-    search: async (request, type) => {
-        // define all the apis that should be called 
+    search: async (request) => {
+        // define all the apis that should be called
+        const type = request.category
         let requiredAPIs = []
         if(type == null) {
             requiredAPIs = apiList

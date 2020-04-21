@@ -21,7 +21,7 @@ components:
       - music
       - movie
       - freeText
-      - museumrs
+      - museum
     BasicArtwork:
       type: object
       properties:

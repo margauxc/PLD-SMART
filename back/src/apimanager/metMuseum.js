@@ -39,11 +39,19 @@ module.exports = {
     search : async (query, type) => {
         const urlQuery = encodeURIComponent(query)
         try {
-            var res = await request(`https://collectionapi.metmuseum.org/public/collection/v1/search?q=${urlQuery}`)
+            var res = await request({
+                uri:`https://collectionapi.metmuseum.org/public/collection/v1/search?q=${urlQuery}`,
+                json: true
+            })
             var artworks = []
-            res.objectIDs.forEach((id, index) => {
+            Logger.debug(JSON.stringify(res))
+            res.objectIDs.forEach(async (id, index) => {
                 if(index < 5) {
-                    var artwork = await request(`https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`)
+                    var artwork = await request({
+                        uri: `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
+                        json: true
+                    })
+                    Logger.debug(JSON.stringify(artwork))
                     artworks.push(artwork)
                 }
             })
