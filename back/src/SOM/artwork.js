@@ -1,4 +1,5 @@
 const sb = require('../SB')
+const {TYPES} = require('../config')
 function getArtworkById(artworkId){
     return new Promise(async (resolve,reject) => {
         const globalArtwork = await sb.artwork.findById(artworkId)
@@ -65,5 +66,22 @@ module.exports = {
         return Promise.all(data.map((oneArtwork) => {
             return getOrInsertArtwork(oneArtwork)
         }))
-    }
+    },
+    addFreeText : (data) => {
+        const finalText = {
+            name : data.name,
+            database : TYPES.FREETEXT,
+            category : TYPES.FREETEXT,
+            author : data.author,
+            text : data.text
+        }
+        const artwork = await sb.artwork.insert(finalText)
+        finalText.ArtworkId = artwork.id
+        var resText = await sb[TYPES.FREETEXT].insert(finalText)
+        // select fields to return
+
+        var finalArtWork = resText.dataValues
+        var result = adaptArtwork(finalArtWork, finalText)
+        resolve(result)
+    }   
 }

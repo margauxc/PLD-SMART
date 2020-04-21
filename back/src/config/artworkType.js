@@ -1,6 +1,7 @@
 const TYPES = {
     MUSIC:"music",
     MOVIE:"movie",
-    PAINTING:"painting"
+    PAINTING:"painting",
+    FREETEXT:"freeText"
 }
 module.exports = TYPES
