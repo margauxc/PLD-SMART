@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text } from 'react-native'
+import {searchRequest} from '../API/APIAddText'
 
 class About extends React.Component{
   render() {
