@@ -32,21 +32,7 @@ module.exports = {
 
     getArtworkById : (artworkId) => {
         return new Promise(async (resolve, reject) => {
-                resolve(await som.artwork.get(artworkId))
+            resolve(await som.artwork.getArtwork(artworkId))
         })
     }
 }
-
-/**
- * services -> somArtwork : match(request)
- * if match
- *  services -> somArtwork : get(artworkId)
- *  somArtwork -> sbSpecifique : get(artworkId)
- * else
- *  services -> apiManager : search(request)
- *  services -> somArtwork : getOrInsert(apiManagerResponse)
- *  if dejaPresent
- *      somArtwork -> sbSpecifique : get(artworkId)
- *  else 
- *      somArtwork -> sbSpecifique : insert(artworkData)
- */
