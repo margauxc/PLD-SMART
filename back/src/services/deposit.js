@@ -39,12 +39,26 @@ module.exports = {
             resolve(allRes.map(x => adapt(x)))
         })
     },
-    getDeposit : (depositId) =>  {
+    getDeposit: (depositId) =>  {
         return new Promise(async (resolve,reject) =>{
             const deposit = adapt(await som.deposit.getDeposit(depositId))
             // get associated artwork
             const artwork = (await som.artwork.getArtwork(deposit.ArtworkId))
             resolve({...deposit,...artwork})
         })
+    },
+    getNearestDeposits: async (long, lat, nbDeposits, distance) => {
+        if (!nbDeposits) {
+            nbDeposits = 1
+        } else {
+            nbDeposits = parseInt(nbDeposits,10)
+        }
+        if(!distance) {
+            distance = 20
+        } else {
+            distance = parseInt(distance, 10)
+        }
+        const result =  await som.deposit.getNearestDeposits(long, lat, nbDeposits, distance)
+        return result.map(deposit => adapt(deposit))
     }
 }
