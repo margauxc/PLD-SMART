@@ -1,6 +1,10 @@
+import baseUrl from './BaseUrl'
+
 export function sendText(text, name) {
-    const APIbaseURL = 'http://192.168.0.22:3000/api/'
+
+    const APIbaseURL = baseUrl
     var url = APIbaseURL + 'artworks/text'
+
     return fetch(url, {
         method: 'POST',
         headers: {
@@ -12,12 +16,12 @@ export function sendText(text, name) {
             "author": name,
             "text": text,
         }),
+    }).then((response) => {
+        return response.json()
+    }).then((json) => {
+        return json
+    }).catch((error) => {
+        console.log(error)
     })
-        .then((response) => { return response.json() })
-        .then((json) => {
-            console.log("envoyé")
-
-            return json
-        })
-        .catch((error) => { console.log(error) })
+    
 }
