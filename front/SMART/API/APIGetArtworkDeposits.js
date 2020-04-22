@@ -1,5 +1,10 @@
+import baseUrl from './BaseUrl'
+
 export function getArtworkDeposits() {
-    return fetch('http://10.0.2.2:3000/api/artworkDeposits', {
+
+    const url = baseUrl + "artworkDeposits"
+
+    return fetch(url, {
         method: 'GET',
         headers: {
             'accept': 'application/json'
@@ -9,6 +14,7 @@ export function getArtworkDeposits() {
     }).then((json) => {
         return json
     }).catch((error) => {
-        console.error(error)
+        console.log(error)
     })
+
 }
