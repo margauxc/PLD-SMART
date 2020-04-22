@@ -1,15 +1,42 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native'
 
+import {sendText} from '../API/APIAddText'
+
 class AddText extends React.Component {
+
+    constructor(props){
+        super(props)
+        this.state = {searchedText : "",
+                      author : ""}
+    }
+
+    _textInputChanged(text){
+        this.setState({searchedText : text})
+    }
+
+    _nameInputChanged(name){
+        this.setState({author : name})
+    }
+
+    _sendText(){
+        sendText(this.state.searchedText, this.state.author).then(this.props.navigation.navigate('Home'));
+    }
+
     render() {
         return (
             <View style={styles.container}>
+                <Text style={styles.Text}>Nom de l'auteur</Text>
+
+                <TextInput style={styles.nameField} 
+                onChangeText = {(name) => this._nameInputChanged(name)}/>
+
                 <Text style={styles.Text}>Saisissez votre texte</Text>
 
-                <TextInput multiline={true} numberOfLines={10} style={styles.textField} />
+                <TextInput multiline={true} numberOfLines={10} style={styles.textField} 
+                onChangeText = {(text) => this._textInputChanged(text)}/>
                 
-                <TouchableOpacity style={styles.Button}>
+                <TouchableOpacity style={styles.Button} onPress={() => {this._sendText()}}>
                     <View style={styles.otherView}>
                         <Text style={styles.buttonText}>Valider</Text>
                     </View>
@@ -30,6 +57,15 @@ class AddText extends React.Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1, alignItems: 'center', justifyContent: 'center', height: 500, width: "100%"
+    },
+    nameField: {
+        textAlignVertical: 'top',
+        marginBottom: '4%',
+        padding: '2%',
+        height: '10%',
+        width: '90%',
+        backgroundColor :'white',
+        borderRadius : 10,
     },
     textField: {
         textAlignVertical: 'top',
