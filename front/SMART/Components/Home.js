@@ -1,11 +1,40 @@
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+/* Code temporaire qui sera remplacé par la map */
+import { FlatList } from 'react-native'
+/* -------------------------------------------- */
+
+import { getArtworkDeposits } from '../API/APIGetArtworkDeposits'
 
 class Home extends React.Component{
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      artworkDeposits: []
+    }
+  }
+
+  componentDidMount() {
+    this._getArtworkDeposits()
+  }
+
+  _getArtworkDeposits() {
+    getArtworkDeposits().then((data) => {
+      this.setState({artworkDeposits : data})
+    })
+  }
+
   render() {
     return (
       <View style={styles.mainContainer}>
-        <Text>Ici il y aura une map</Text>
+        {/* Code temporaire qui sera remplacé par la map */}
+        <FlatList
+          data={this.state.artworkDeposits}
+          keyExtractor={(item) => item.depositId}
+          renderItem={({item}) => <Text>{item.depositId}</Text>}
+        />
+        {/* -------------------------------------------- */}
         <TouchableOpacity style={styles.addButton} onPress={() => {this.props.navigation.navigate('ArtworkChoice')}}>
           <Text style={styles.textButton}>+</Text>
         </TouchableOpacity>
