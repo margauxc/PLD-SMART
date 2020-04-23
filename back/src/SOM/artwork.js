@@ -2,11 +2,15 @@ const sb = require('../SB')
 const {TYPES} = require('../config')
 function getArtworkById(artworkId){
     return new Promise(async (resolve,reject) => {
-        const globalArtwork = await sb.artwork.findById(artworkId)
-        // find appropriate DB
-        const category = globalArtwork.category
-        var specificArtwork = (await sb[category].findByArtworkId(artworkId)).dataValues
-        resolve(adaptArtwork(specificArtwork,globalArtwork))
+        try{
+            const globalArtwork = await sb.artwork.findById(artworkId)
+            // find appropriate DB
+            const category = globalArtwork.category
+            var specificArtwork = (await sb[category].findByArtworkId(artworkId)).dataValues
+            resolve(adaptArtwork(specificArtwork,globalArtwork))
+        } catch(error){
+            reject(error)
+        }
     })
 }
 function getOrInsertArtwork(data) {
@@ -44,9 +48,9 @@ function adaptArtwork(specificArtwork, globalArtwork) {
 
 module.exports = {
 
-    matchRequest : async (request, type) => {
+    matchRequest : async (request) => {
         // search in artwork DB
-        const resRequest = await sb.artwork.findByName(request.rawQuery || request.name)
+        const resRequest = await sb.artwork.findByName(request.rawQuery,request.category)
         // if there is a match for request + type, return all the IDs
         return resRequest.map(x => x.id)
     },

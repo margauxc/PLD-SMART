@@ -14,7 +14,6 @@ module.exports = {
     searchArtworks : (params) => {
         return new Promise(async (resolve, reject) => {
             var artworkIds = await som.artwork.matchRequest(params)
-            // TODO reactivate cache after fix
             if (artworkIds.length != 0) {
                 resolve(await som.artwork.getArtworkAll(artworkIds))
             }
@@ -31,9 +30,7 @@ module.exports = {
     },
 
     getArtworkById : (artworkId) => {
-        return new Promise(async (resolve, reject) => {
-            resolve(await som.artwork.getArtwork(artworkId))
-        })
+        return som.artwork.getArtwork(artworkId)
     },
 
     addFreeText: (params) => {
