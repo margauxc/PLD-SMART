@@ -31,9 +31,7 @@ module.exports = {
     },
 
     getArtworkById : (artworkId) => {
-        return new Promise(async (resolve, reject) => {
-            resolve(await som.artwork.getArtwork(artworkId))
-        })
+        return som.artwork.getArtwork(artworkId)
     },
 
     addFreeText: (params) => {

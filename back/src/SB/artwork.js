@@ -14,10 +14,19 @@ module.exports = {
         })
     },
     findById : (idArtwork) => {
-        return models.Artwork.findOne({
-            where : {
-                id : idArtwork
-            }
+        return new Promise((resolve,reject) => {
+            models.Artwork.findOne({
+                where : {
+                    id : idArtwork
+                }
+            }).then((res) => {
+                if( res != null) {
+                    resolve(res)
+                }
+                else{
+                    throw new ErrorHandler(404, "No artwork with this id")
+                }
+            }).catch((err) => reject(err))
         })
     },
     insert : (data) => {
