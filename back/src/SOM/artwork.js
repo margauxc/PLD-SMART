@@ -48,9 +48,9 @@ function adaptArtwork(specificArtwork, globalArtwork) {
 
 module.exports = {
 
-    matchRequest : async (request, type) => {
+    matchRequest : async (request) => {
         // search in artwork DB
-        const resRequest = await sb.artwork.findByName(request.rawQuery || request.name)
+        const resRequest = await sb.artwork.findByName(request.rawQuery,request.category)
         // if there is a match for request + type, return all the IDs
         return resRequest.map(x => x.id)
     },
