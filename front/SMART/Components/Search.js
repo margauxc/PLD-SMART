@@ -4,7 +4,7 @@ import ImageItem from './ImageItem'
 import RNPickerSelect from 'react-native-picker-select'
 
 import {categories} from '../assets/SearchUtils'
-import {searchRequest} from '../API/APISearch'
+import {searchRequest, searchById} from '../API/APISearch'
 
 class Search extends React.Component {
 
@@ -27,6 +27,13 @@ class Search extends React.Component {
     _categoryPickerChanged(value){
         this.setState({searchedCategory : value})
     }
+
+    _displayDetail = (id) => {
+        searchById(id).then((artwork) => {
+            this.props.navigation.navigate("MusicDetails", {artwork : artwork}) 
+        })
+    }
+
     render() {
         return (
             <View style = {styles.main_container}>
@@ -44,7 +51,7 @@ class Search extends React.Component {
                     data={this.state.artworks}
                     keyExtractor={(item) => item.ArtworkId.toString()}
                     renderItem={({item}) => 
-                        <ImageItem artwork={item}/>
+                        <ImageItem artwork={item} navigation = {this.props.navigation} displayDetail = {this._displayDetail}/>
                     }
                 />
             </View>

@@ -1,4 +1,5 @@
 import React from 'react'
+import MusicDetails from './MusicDetails'
 import { StyleSheet, View,TouchableOpacity, Image, Text } from 'react-native'
 
 class ImageItem extends React.Component {
@@ -10,11 +11,17 @@ class ImageItem extends React.Component {
             return this.props.artwork.pictureLink
         }
     }
+
+    _onPress(){
+        if(this.props.artwork.category == 'music'){
+            this.props.navigation.navigate('MusicDetails', {id : this.props.artwork.ArtworkId.toString()})
+        }
+    }
+
     render() {
-        const artwork = this.props.artwork
-        const onPress = () => console.log('détails de l\'oeuvre ' + artwork.name)
+        const {artwork, displayDetail} = this.props
         return (
-            <TouchableOpacity style = {styles.image_item_container} onPress = {onPress}>
+            <TouchableOpacity style = {styles.image_item_container} onPress = {() => displayDetail(artwork.ArtworkId)}>
                 <Image source = {{uri : this._getImage()}} style = {styles.image_preview}/>
                 <View style = {styles.text_box}>
                     <Text style = {styles.title_text} numberOfLines = {2}>{artwork.name}</Text>

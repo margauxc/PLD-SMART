@@ -7,6 +7,7 @@ import Home from '../Components/Home'
 import ArtworkChoice from '../Components/ArtworkChoice'
 import AddText from '../Components/AddText'
 import Search from '../Components/Search'
+import MusicDetails from '../Components/MusicDetails'
 
 
 const screens = {
@@ -47,6 +48,13 @@ const screens = {
             title: "Rechercher une oeuvre"
         }
     },
+
+    MusicDetails : {
+        screen : MusicDetails,
+        navigationOptions : {
+            title : "Ajouter une musique"
+        }
+    }
 }
 
 const HomeStack = createStackNavigator(screens, {
