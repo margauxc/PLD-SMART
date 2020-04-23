@@ -50,7 +50,13 @@ module.exports = {
 
     matchRequest : async (request) => {
         // search in artwork DB
-        const resRequest = await sb.artwork.findByName(request.rawQuery,request.category)
+        var resRequest;
+        if (request.category != null){
+            resRequest = await sb.artwork.findByNameCategory(request.rawQuery,request.category)
+        }
+        else{
+            resRequest = await sb.artwork.findByNameOnly(request.rawQuery)
+        }
         // if there is a match for request + type, return all the IDs
         return resRequest.map(x => x.id)
     },
