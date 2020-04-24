@@ -24,13 +24,17 @@ module.exports = {
      */
     createDeposit : (params) => {
         return new Promise(async (resolve, reject) => {
-            validation.includeFields(params, ["artworkId"])
-            var deposit = {
-                artworkId : params.artworkId,
-                lat : params.lat,
-                long :  params.long
-            }  
-            resolve(adapt(await som.deposit.createDeposit(deposit)))
+            try{
+                validation.includeFields(params, ["artworkId"])
+                var deposit = {
+                    artworkId : params.artworkId,
+                    lat : params.lat,
+                    long :  params.long
+                }  
+                resolve(adapt(await som.deposit.createDeposit(deposit)))
+            }catch(err){
+                reject(err)
+            }
         })
     },
     getAll :() => {
