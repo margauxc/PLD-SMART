@@ -30,6 +30,14 @@ class Search extends React.Component {
 
     _displayDetail = (id) => {
         searchById(id).then((artwork) => {
+            //standardize artwork
+            if(artwork.category == 'museum'){
+                artwork['more_info']  = artwork.medium
+            } else if (artwork.category == 'music') {
+                artwork['more_info'] = artwork.album
+            } else if (artwork.category == 'movie'){
+                artwork['more_info'] = artwork.description
+            }
             this.props.navigation.navigate("MusicDetails", {artwork : artwork}) 
         })
     }

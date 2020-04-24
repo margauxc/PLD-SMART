@@ -17,7 +17,7 @@ class MusicDetails extends React.Component {
                     <Text style = {styles.name_text}>{artwork.name}</Text>
                     <Text style = {styles.artist_text}>{artwork.artist}</Text>
                     <Text style = {styles.year_text}>2020</Text>
-                    <Text style = {styles.more_info}>{artwork.album}</Text>
+                    <Text style = {styles.more_info}>{artwork.more_info}</Text>
                     </View>
                     <Button title = "Ajouter à la carte" color = 'orange'/>
                 </ScrollView>
