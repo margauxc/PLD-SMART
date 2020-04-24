@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, FlatList } from 'react-native'
+import { StyleSheet, View, TextInput, FlatList, ActivityIndicator } from 'react-native'
 import ImageItem from './ImageItem'
 import RNPickerSelect from 'react-native-picker-select'
 
@@ -12,12 +12,14 @@ class Search extends React.Component {
         super(props)
         this.state = {artworks : [], 
                     searchedText : "",
-                    searchedCategory : ""}
+                    searchedCategory : "",
+                    isLoading : false}
     }
 
     _searchArtworks() {
+        this.setState({isLoading : true})
         searchRequest(this.state.searchedText, this.state.searchedCategory).then( (data) => {
-            this.setState({artworks : data})
+            this.setState({artworks : data, isLoading : false})
         })
     }
     _textInputChanged(text){
@@ -43,7 +45,18 @@ class Search extends React.Component {
         })
     }
 
+    _displayLoading() {
+        if (this.state.isLoading) {
+          return (
+            <View style={styles.loading_container}>
+              <ActivityIndicator size='large' />
+            </View>
+          )
+        }
+      }
+
     render() {
+        console.log('---- is Loading : ' + this.state.isLoading)
         return (
             <View style = {styles.main_container}>
                 <TextInput 
@@ -63,6 +76,7 @@ class Search extends React.Component {
                         <ImageItem artwork={item} navigation = {this.props.navigation} displayDetail = {this._displayDetail}/>
                     }
                 />
+                {this._displayLoading()}
             </View>
         )
     }
@@ -82,6 +96,15 @@ const styles = StyleSheet.create({
         borderRadius : 5,  
         fontSize : 16      
     },
+    loading_container : {
+        position : 'absolute',
+        right : 0,
+        left : 0,
+        bottom : 0,
+        top : 100,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
     
 })
 

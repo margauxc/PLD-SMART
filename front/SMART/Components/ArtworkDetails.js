@@ -11,7 +11,7 @@ class ArtworkDetails extends React.Component {
     _onPress = (artwork) => {
         depositArtwork(artwork.ArtworkId).then((response) => {
             if(response.ok) {
-                console.log('deposit ok ' + response.body.depositId)
+                console.log('deposit ok')
             } else {
                 console.log('deposit pas ok')
             }
