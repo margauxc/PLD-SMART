@@ -16,7 +16,10 @@ class ImageItem extends React.Component {
         const {artwork, displayDetail} = this.props
         return (
             <TouchableOpacity style = {styles.image_item_container} onPress = {() => displayDetail(artwork.ArtworkId)}>
-                <Image source = {{uri : this._getImage()}} style = {styles.image_preview}/>
+                {artwork.pictureLink == null? 
+                    <Image source={require('../assets/imagefiller.jpg')} style = {styles.image_preview}/>
+                    : <Image source = {{uri : artwork.pictureLink}} style = {styles.image_preview}/>
+                }
                 <View style = {styles.text_box}>
                     <Text style = {styles.title_text} numberOfLines = {2}>{artwork.name}</Text>
                     <Text style = {styles.artist_text} numberOfLines = {2}>{artwork.artist}</Text>

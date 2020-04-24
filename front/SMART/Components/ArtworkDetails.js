@@ -40,7 +40,10 @@ class ArtworkDetails extends React.Component {
         const artwork = this.props.navigation.state.params.artwork
         return (
             <View style={styles.main_container}>
-                <Image style={styles.image} source={{ uri: artwork.pictureLink }} />
+                {artwork.pictureLink == null? 
+                    <Image source={require('../assets/imagefiller.jpg')} style = {styles.image}/>
+                    : <Image source = {{uri : artwork.pictureLink}} style = {styles.image}/>
+                }                
                 <ScrollView contentContainerStyle={styles.scroll_view}>
                     <View style={styles.text_container}>
                         <Text style={styles.name_text}>{artwork.name}</Text>
