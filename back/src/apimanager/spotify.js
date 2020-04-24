@@ -15,7 +15,7 @@ function convertTrack (track) {
     resTrack.database = "spotify"
     resTrack.category = API_TYPE
     resTrack.pictureLink = track.album.images[0].url
-
+    resTrack.date = track.album.release_date
     // music fields
     resTrack.url = track.uri
     resTrack.artist = track.artists[0].name

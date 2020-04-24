@@ -12,7 +12,7 @@ function convert (artwork) {
     res.database = "metMuseum"
     res.category = API_TYPE
     res.pictureLink = artwork.primaryImageSmall
-
+    res.date = artwork.accessionYear+'-01-01'
     // museum fields
     res.medium = artwork.medium
     res.url = artwork.objectURL

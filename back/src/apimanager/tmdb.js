@@ -12,10 +12,13 @@ function convertMovie (movie) {
     resMovie.name = movie.title
     resMovie.database = "tmdb"
     resMovie.category = API_TYPE
+    resMovie.date = movie.release_date
+
     if (movie.poster_path != null) {
         resMovie.pictureLink = POSTER_BASE+movie.poster_path
 
     }
+    // MOVIE TYEP
     if( movie.overview) {
         resMovie.description = movie.overview
     }

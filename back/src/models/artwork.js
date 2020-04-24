@@ -53,6 +53,14 @@ module.exports = {
                 }
             },
 
+            date: {
+                type: DataTypes.DATEONLY,
+                allowNull: true,
+                validate : {
+                    notEmpty : true
+                }
+            },
+
             category: {
                 type: DataTypes.STRING,
                 allowNull: false,

@@ -40,9 +40,10 @@ function adaptArtwork(specificArtwork, globalArtwork) {
     delete fullArtwork.updatedAt
     delete fullArtwork.createdAt
     delete fullArtwork.id
-    fullArtwork.category = globalArtwork.category
-    fullArtwork.name = globalArtwork.name
-    fullArtwork.pictureLink = globalArtwork.pictureLink
+    const copyFields = ['category','name','pictureLink','date']
+    copyFields.forEach((field) => {
+        fullArtwork[field] = globalArtwork[field]
+    })
     return fullArtwork
 }
 
