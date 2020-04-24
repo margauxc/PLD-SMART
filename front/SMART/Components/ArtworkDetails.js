@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, Button, ScrollView , ActivityIndicator} from 'react-native'
+import { View, Text, Image, StyleSheet, Button, ScrollView , ActivityIndicator, Alert} from 'react-native'
 import { depositArtwork } from '../API/APIDeposit'
 
 class ArtworkDetails extends React.Component {
@@ -26,12 +26,35 @@ class ArtworkDetails extends React.Component {
         }
     }
 
+    _createAlertOK = () => {
+        Alert.alert(
+            "Succès",
+            "L'oeuvre " + this.props.navigation.state.params.artwork.name + " a été ajoutée à la map ! ",
+            [
+                { text: "OK", onPress: () => this.props.navigation.navigate('Home')}
+            ],
+            {cancelable : false}
+        )
+    }
+
+    _createAlertError = () => {
+        Alert.alert(
+            "Échec",
+            "Une erreur s'est produite. L'oeuvre " + this.props.navigation.state.params.artwork.name + " n'a pas été ajoutée à la map.",
+            [
+                { text: "OK", onPress: () => this.props.navigation.navigate('Home')}
+            ],
+            {cancelable : false}
+        )
+    }
+
     _onPress = (artwork) => {
+
         depositArtwork(artwork.ArtworkId).then((response) => {
             if (response.ok) {
-                console.log('deposit ok')
+                this._createAlertOK()
             } else {
-                console.log('deposit pas ok')
+                this._createAlertError()
             }
         })
     }
