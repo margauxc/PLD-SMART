@@ -17,3 +17,4 @@ back/package-lock.json
 **/docs
 *.pem
 front/SMART/android/java_pid4110.hprof
+front/SMART/API/BaseUrl.js
