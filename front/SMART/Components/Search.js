@@ -1,9 +1,10 @@
 import React from 'react'
-import { StyleSheet, View, TextInput, FlatList, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, TextInput, FlatList, ActivityIndicator , Text} from 'react-native'
 import ImageItem from './ImageItem'
 import RNPickerSelect from 'react-native-picker-select'
 
-import {categories} from '../assets/SearchUtils'
+import {categories} from '../Utils/SearchUtils'
+import {standardizeArtwork} from '../Utils/StandardizeArtworks'
 import {searchRequest, searchById} from '../API/APISearch'
 
 class Search extends React.Component {
@@ -13,13 +14,14 @@ class Search extends React.Component {
         this.state = {artworks : [], 
                     searchedText : "",
                     searchedCategory : "",
-                    isLoading : false}
+                    isLoading : false,
+                    alreadySearched : false}
     }
 
     _searchArtworks() {
         this.setState({isLoading : true})
         searchRequest(this.state.searchedText, this.state.searchedCategory).then( (data) => {
-            this.setState({artworks : data, isLoading : false})
+            this.setState({artworks : data, isLoading : false, alreadySearched : true})
         })
     }
     _textInputChanged(text){
@@ -32,15 +34,7 @@ class Search extends React.Component {
 
     _displayDetail = (id) => {
         searchById(id).then((artwork) => {
-            //standardize artwork
-            const museumCategories = ['museum', 'painting', 'sculpture']
-            if(museumCategories.includes(artwork.category)){
-                artwork['more_info']  = artwork.medium
-            } else if (artwork.category == 'music') {
-                artwork['more_info'] = artwork.album
-            } else if (artwork.category == 'movie'){
-                artwork['more_info'] = artwork.description
-            }
+            artwork = standardizeArtwork(artwork)
             this.props.navigation.navigate("ArtworkDetails", {artwork : artwork}) 
         })
     }
@@ -54,6 +48,16 @@ class Search extends React.Component {
           )
         }
       }
+
+    _displayNoResults(){
+        if (this.state.isLoading == false && this.state.alreadySearched == true && this.state.artworks.length == 0){
+            return(
+                <View style = {styles.no_result}>
+                    <Text>Aucun résultat</Text>
+                </View>
+            )
+        }
+    }
 
     render() {
         console.log('---- is Loading : ' + this.state.isLoading)
@@ -77,6 +81,7 @@ class Search extends React.Component {
                     }
                 />
                 {this._displayLoading()}
+                {this._displayNoResults()}
             </View>
         )
     }
@@ -97,6 +102,15 @@ const styles = StyleSheet.create({
         fontSize : 16      
     },
     loading_container : {
+        position : 'absolute',
+        right : 0,
+        left : 0,
+        bottom : 0,
+        top : 100,
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    no_result : {
         position : 'absolute',
         right : 0,
         left : 0,
