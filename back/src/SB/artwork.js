@@ -6,11 +6,18 @@ const {validation} = require('../helpers')
  */
 module.exports = {
 
-    findByName : (nameArtwork,category) => {
+    findByNameCategory : (nameArtwork,category) => {
         return  models.Artwork.findAll({
             where: {
                 name: nameArtwork,
                 category : category
+            }
+        })
+    },
+    findByNameOnly : (nameArtwork) => {
+        return  models.Artwork.findAll({
+            where: {
+                name: nameArtwork,
             }
         })
     },
