@@ -25,7 +25,7 @@ export function searchRequest(query, category = null) {
 }
 
 export function searchById(id){
-    var url = APIbaseURL + '/artworks/'+id
+    var url = baseUrl + '/artworks/'+id
     return fetch(url,{
         headers : {
             'accept': 'application/json'
