@@ -36,25 +36,31 @@ const categories = [
         value : 'all'
     },
     {
-        key : 'painting',
-        label : 'Peinture',
-        value : 'painting'
-    },
-    {
         key : 'music',
         label : 'Musique',
         value : 'music'
     },
     {
-        key : 'photo',
-        label : 'Photographie',
-        value : 'photography'
-    },
-    {
         key : 'movie',
         label : 'Film',
         value : 'movie'
-    }
+    },
+    {
+        key : 'painting',
+        label : 'Peinture',
+        value : 'painting'
+    },
+    {
+        key : 'sculpture',
+        label : 'Sculpture',
+        value : 'sculpture'
+    },
+    {
+        key : 'museum',
+        label : 'Oeuvres de musée : peintures, photographies, ...',
+        value : 'museum'
+    },
+   
 ]
 
 export {oeuvres, categories}
