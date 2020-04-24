@@ -1,5 +1,5 @@
 import React from 'react'
-import MusicDetails from './MusicDetails'
+import ArtworkDetails from './ArtworkDetails'
 import { StyleSheet, View,TouchableOpacity, Image, Text } from 'react-native'
 
 class ImageItem extends React.Component {
@@ -9,12 +9,6 @@ class ImageItem extends React.Component {
             return '../assets/imageFiller.jpg'
         }else{
             return this.props.artwork.pictureLink
-        }
-    }
-
-    _onPress(){
-        if(this.props.artwork.category == 'music'){
-            this.props.navigation.navigate('MusicDetails', {id : this.props.artwork.ArtworkId.toString()})
         }
     }
 

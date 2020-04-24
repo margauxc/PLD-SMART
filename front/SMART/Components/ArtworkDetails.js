@@ -1,10 +1,21 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, Button, ScrollView } from 'react-native'
+import {depositArtwork} from '../API/APIDeposit'
 
-class MusicDetails extends React.Component {
+class ArtworkDetails extends React.Component {
 
     constructor(props) {
         super(props)
+    }
+
+    _onPress = (artwork) => {
+        depositArtwork(artwork.ArtworkId).then((response) => {
+            if(response.ok) {
+                console.log('deposit ok ' + response.body.depositId)
+            } else {
+                console.log('deposit pas ok')
+            }
+        })
     }
 
     render() {
@@ -19,7 +30,7 @@ class MusicDetails extends React.Component {
                     <Text style = {styles.year_text}>2020</Text>
                     <Text style = {styles.more_info}>{artwork.more_info}</Text>
                     </View>
-                    <Button title = "Ajouter à la carte" color = 'orange'/>
+                    <Button title = "Ajouter à la carte" color = 'orange' onPress = {() => this._onPress(artwork)}/>
                 </ScrollView>
             </View>
         )
@@ -71,4 +82,4 @@ const styles = StyleSheet.create({
 })
 
 
-export default MusicDetails
+export default ArtworkDetails
