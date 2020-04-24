@@ -21,5 +21,17 @@ export function searchRequest(query, category = null) {
     }).catch((error) => {
         console.log(error)
     })
+    
+}
 
+export function searchById(id){
+    var url = baseUrl + '/artworks/'+id
+    return fetch(url,{
+        headers : {
+            'accept': 'application/json'
+        }
+    })
+    .then((response) => {return response.json()})
+    .then((json) => {return json})
+    .catch((error) => console.log(error))
 }

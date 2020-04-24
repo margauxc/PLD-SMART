@@ -1,4 +1,5 @@
 import React from 'react'
+import ArtworkDetails from './ArtworkDetails'
 import { StyleSheet, View,TouchableOpacity, Image, Text } from 'react-native'
 
 class ImageItem extends React.Component {
@@ -10,12 +11,15 @@ class ImageItem extends React.Component {
             return this.props.artwork.pictureLink
         }
     }
+
     render() {
-        const artwork = this.props.artwork
-        const onPress = () => console.log('détails de l\'oeuvre ' + artwork.name)
+        const {artwork, displayDetail} = this.props
         return (
-            <TouchableOpacity style = {styles.image_item_container} onPress = {onPress}>
-                <Image source = {{uri : this._getImage()}} style = {styles.image_preview}/>
+            <TouchableOpacity style = {styles.image_item_container} onPress = {() => displayDetail(artwork.ArtworkId)}>
+                {artwork.pictureLink == null? 
+                    <Image source={require('../assets/imagefiller.jpg')} style = {styles.image_preview}/>
+                    : <Image source = {{uri : artwork.pictureLink}} style = {styles.image_preview}/>
+                }
                 <View style = {styles.text_box}>
                     <Text style = {styles.title_text} numberOfLines = {2}>{artwork.name}</Text>
                     <Text style = {styles.artist_text} numberOfLines = {2}>{artwork.artist}</Text>
