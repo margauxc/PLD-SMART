@@ -1,6 +1,8 @@
 import baseUrl from './BaseUrl'
+import { depositArtwork } from '../API/APIDeposit'
 
-export function sendText(text, name) {
+
+export function sendText(title, text, name) {
 
     const APIbaseURL = baseUrl
     var url = APIbaseURL + 'artworks/text'
@@ -12,14 +14,15 @@ export function sendText(text, name) {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            "name": "anonymous",
+            "name": title,
             "author": name,
             "text": text,
         }),
     }).then((response) => {
         return response.json()
     }).then((json) => {
-        return json
+        depositArtwork(json.ArtworkId)
+        //return json
     }).catch((error) => {
         console.log(error)
     })

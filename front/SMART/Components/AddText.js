@@ -7,8 +7,12 @@ class AddText extends React.Component {
 
     constructor(props){
         super(props)
-        this.state = {searchedText : "",
+        this.state = {name : "", searchedText : "",
                       author : ""}
+    }
+
+    _titleInputChanged(title){
+        this.setState({name : title})
     }
 
     _textInputChanged(text){
@@ -20,7 +24,7 @@ class AddText extends React.Component {
     }
 
     _sendText(){
-        sendText(this.state.searchedText, this.state.author).then(this.props.navigation.navigate('Home'));
+        sendText(this.state.name, this.state.searchedText, this.state.author).then(this.props.navigation.navigate('Home'));
     }
 
     render() {
@@ -31,9 +35,13 @@ class AddText extends React.Component {
                 <TextInput style={styles.nameField} 
                 onChangeText = {(name) => this._nameInputChanged(name)}/>
 
+                <Text style={styles.Text}>Nom de l'oeuvre</Text>
+                <TextInput style={styles.nameField} 
+                onChangeText = {(title) => this._titleInputChanged(title)}/>
+
                 <Text style={styles.Text}>Saisissez votre texte</Text>
 
-                <TextInput multiline={true} numberOfLines={10} style={styles.textField} 
+                <TextInput multiline={true} numberOfLines={5} style={styles.textField} 
                 onChangeText = {(text) => this._textInputChanged(text)}/>
                 
                 <TouchableOpacity style={styles.Button} onPress={() => {this._sendText()}}>
@@ -69,9 +77,9 @@ const styles = StyleSheet.create({
     },
     textField: {
         textAlignVertical: 'top',
-        marginBottom: '4%',
+        marginBottom: '3%',
         padding: '2%',
-        height: '25%',
+        height: '20%',
         width: '90%',
         backgroundColor :'white',
         borderRadius : 10,
@@ -81,19 +89,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         textAlignVertical: 'center',
-        marginBottom : "4%"
+        marginBottom : "2%"
     },
     Text: {
-        fontSize: 30,
+        fontSize: 20,
         fontWeight: "bold",
-        marginBottom: "5%",
+        marginBottom: "2%",
         textAlign: "center",
         color: "black",
     },
     Button: {
         height: "8%",
         width: "85%",
-        marginBottom: "4%",
+        marginBottom: "2%",
         backgroundColor: "orange",
         borderRadius: 15,
     },
