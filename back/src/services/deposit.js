@@ -31,7 +31,9 @@ module.exports = {
                     lat : params.lat,
                     long :  params.long
                 }  
-                resolve(adapt(await som.deposit.createDeposit(deposit)))
+                const result = await som.deposit.createDeposit(deposit)
+                resolve(adapt(result))
+
             }catch(err){
                 reject(err)
             }

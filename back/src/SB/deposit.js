@@ -13,15 +13,20 @@ module.exports = {
         return  models.Deposit.findAll()
     },
 
-    createDeposit : async (data) => {
-        var deposit = {
-            //? avec une minuscule ça marche pas mais ça serait mieux
-            ArtworkId: data.artworkId,
-            geoloc: { type: 'Point', coordinates: [data.lat, data.long]},
-            expirationDate: moment().add(1, 'days').format("YYYY-MM-DD HH:mm:ss")
-        }
-        var newDeposit = await models.Deposit.create(deposit)
-        return newDeposit
+    createDeposit : (data) => {
+        return new Promise(async (resolve,reject) => {
+            var deposit = {
+                //? avec une minuscule ça marche pas mais ça serait mieux
+                ArtworkId: data.artworkId,
+                geoloc: { type: 'Point', coordinates: [data.lat, data.long]},
+                expirationDate: moment().add(1, 'days').format("YYYY-MM-DD HH:mm:ss")
+            }
+            var newDeposit = await models.Deposit.create(deposit).catch((err) => 
+            {
+                reject(new ErrorHandler(404,"no arrtwork with this ID"))
+            })
+            resolve(newDeposit)
+        })
     },
 
     findById : (depositId) => {
