@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     },
     nameField: {
         textAlignVertical: 'top',
-        marginBottom: '4%',
+        marginBottom: '2%',
         padding: '2%',
         height: '10%',
         width: '90%',
