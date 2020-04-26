@@ -24,7 +24,7 @@ class AddText extends React.Component {
     }
 
     _sendText(){
-        sendText(this.state.name, this.state.searchedText, this.state.author).then(this.props.navigation.navigate('Home'));
+        sendText(this.state.name, this.state.searchedText, this.state.author, this.props.navigation)
     }
 
     render() {

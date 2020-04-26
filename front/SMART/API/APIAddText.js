@@ -2,7 +2,7 @@ import baseUrl from './BaseUrl'
 import { depositArtwork } from '../API/APIDeposit'
 
 
-export function sendText(title, text, name) {
+export function sendText(title, text, name, nav) {
 
     const APIbaseURL = baseUrl
     var url = APIbaseURL + 'artworks/text'
@@ -21,7 +21,7 @@ export function sendText(title, text, name) {
     }).then((response) => {
         return response.json()
     }).then((json) => {
-        depositArtwork(json.ArtworkId)
+        depositArtwork(json.ArtworkId).then(nav.navigate('Home'))
         //return json
     }).catch((error) => {
         console.log(error)
