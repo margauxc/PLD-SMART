@@ -14,7 +14,6 @@ function adapt(newDeposit) {
     delete formatted.id
     delete formatted.geoloc
     delete formatted.updatedAt
-    delete formatted.createdAt 
     return formatted
 }
 module.exports = {
