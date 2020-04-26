@@ -24,6 +24,22 @@ class Consult extends React.Component {
         })
     }
 
+    _displayMusicAlbum() {
+        if(this.state.artworkDeposit.album !== null) {
+            return (
+                <Text style={styles.musicAlbumText}>Album : {this.state.artworkDeposit.album}</Text>
+            )
+        }
+    }
+
+    _displayMusicDescription() {
+        if(this.state.artworkDeposit.description !== null) {
+            return (
+                <Text>{this.state.artworkDeposit.description}</Text>
+            )
+        }
+    }
+
     render() {
         if(this.state.isLoading) {
             return (
@@ -32,19 +48,29 @@ class Consult extends React.Component {
                 </View>
             )
         } else {
+            var createdAt = new Date(this.state.artworkDeposit.createdAt)
             if(this.state.artworkDeposit.category == "freeText") {
-                return (
-                    <View style={styles.mainContainer}>
-                        <Text>Ceci est un texte</Text>
-                    </View>
-                )
-            } else if(this.state.artworkDeposit.category == "music") {
-                var createdAt = new Date(this.state.artworkDeposit.createdAt)
                 return (
                     <View style={styles.mainContainer}>
         
                         <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.toLocaleDateString()}</Text>
+                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()}</Text>
+                        </View>
+        
+                        <View style={styles.borderImage}>
+                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.author}</Text>
+                        </View>
+
+                        <Text>{this.state.artworkDeposit.text}</Text>
+
+                    </View>
+                )
+            } else if(this.state.artworkDeposit.category == "music") {
+                return (
+                    <View style={styles.mainContainer}>
+        
+                        <View style={styles.borderText}>
+                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()}</Text>
                         </View>
         
                         <View style={styles.borderImage}>
@@ -55,11 +81,9 @@ class Consult extends React.Component {
                             <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.artist}</Text>
                         </View>
 
-                        <Text>Album : {this.state.artworkDeposit.album}</Text>
+                        {this._displayMusicAlbum()}
 
-                        <Text></Text>
-        
-                        <Text>{this.state.artworkDeposit.description}</Text>
+                        {this._displayMusicDescription()}
 
                     </View>
                 )
@@ -79,15 +103,15 @@ const styles = StyleSheet.create({
         padding: "3%",
         borderWidth: 1,
         borderRadius: 10,
-        alignItems : "center",
+        alignItems : "center"
     },
     borderImage: {
         padding: "3%",
-        alignItems : "center",
+        alignItems : "center"
     },
     dateText: {
         fontSize: 20,
-        fontWeight: "bold",
+        fontWeight: "bold"
     },
     mainContainer: {
         flex: 1,
@@ -97,6 +121,7 @@ const styles = StyleSheet.create({
     logo: {
         width: 90,
         height: 130,
+        marginBottom: 10
     },
     loadingContainer: {
         position : 'absolute',
@@ -106,6 +131,9 @@ const styles = StyleSheet.create({
         top : 0,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    musicAlbumText: {
+        marginBottom: 10
     }
 })
 
