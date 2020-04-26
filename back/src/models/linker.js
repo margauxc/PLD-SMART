@@ -5,5 +5,9 @@ module.exports = (sequelize, DataTypes, database) => {
     database['Museum'].belongsTo(database['Artwork'], {foreignKey : {allowNull : false}})
     database['Deposit'].belongsTo(database['Artwork'], {foreignKey : {allowNull : false}})
     database['FreeText'].belongsTo(database['Artwork'], {foreignKey : {allowNull : false}})
- 
+
+    // setup cache
+    database['SearchRequest'].belongsToMany(database['Artwork'],{ through: 'CacheSearch' })
+    database['Artwork'].belongsToMany(database['SearchRequest'],{ through: 'CacheSearch' })
+
 }
