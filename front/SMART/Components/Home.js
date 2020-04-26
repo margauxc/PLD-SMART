@@ -1,5 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import { withNavigationFocus } from 'react-navigation'
 /* Code temporaire qui sera remplacé par la map */
 import { FlatList } from 'react-native'
 /* -------------------------------------------- */
@@ -19,6 +20,12 @@ class Home extends React.Component{
     this._getArtworkDeposits()
   }
 
+  componentDidUpdate(prevProps) {
+    if(this.props.isFocused && !prevProps.isFocused) {
+      this._getArtworkDeposits()
+    }
+  }
+
   _getArtworkDeposits() {
     getArtworkDeposits().then((data) => {
       this.setState({artworkDeposits : data})
@@ -32,7 +39,7 @@ class Home extends React.Component{
         <FlatList
           data={this.state.artworkDeposits}
           keyExtractor={(item) => item.depositId}
-          renderItem={({item}) => <Text>{item.depositId}</Text>}
+          renderItem={({item}) => <TouchableOpacity onPress={() => {this.props.navigation.navigate('Consult', { depositId: item.depositId })}}><Text>{item.depositId}</Text></TouchableOpacity>}
         />
         {/* -------------------------------------------- */}
         <TouchableOpacity style={styles.addButton} onPress={() => {this.props.navigation.navigate('ArtworkChoice')}}>
@@ -65,4 +72,4 @@ const styles = StyleSheet.create({
   }
 })
 
-export default Home
+export default withNavigationFocus(Home)
