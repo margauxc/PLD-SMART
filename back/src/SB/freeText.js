@@ -11,7 +11,7 @@ module.exports = {
         })
     },
     findExactMatch : (data) => {
-       return false
+       return null
     },
     insert : (data) => {
         return models.FreeText.create(data)

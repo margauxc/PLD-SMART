@@ -70,7 +70,10 @@ module.exports = {
         return Promise.all(artworkIds.map((artworkId) => getArtworkById(artworkId)))
     },
 
-
+    getOrInsert : async (data,request) => {
+        const requestCache = await sb.searchRequest.insertEntry(hashRequest(request))
+        return await getOrInsertArtwork(data,requestCache)
+    },
     getOrInsertAll : async (data,request) => {
         const requestCache = await sb.searchRequest.insertEntry(hashRequest(request))
         const res = await Promise.all(data.map((oneArtwork) => {

@@ -9,6 +9,9 @@
     "prod": "env NODE_ENV=production nodemon --ignore sessions/"
   },
   "jest": {
+    "setupFiles": [
+      "./__test__/config/jest.setup.js"
+    ],
     "collectCoverage": false,
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
