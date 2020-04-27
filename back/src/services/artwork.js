@@ -14,7 +14,7 @@ module.exports = {
     searchArtworks : (params) => {
         return new Promise(async (resolve, reject) => {
             var artworkIds = await som.artwork.matchRequest(params)
-            if (artworkIds.length != 0) {
+            if (artworkIds != null) {
                 resolve(await som.artwork.getArtworkAll(artworkIds))
             }
             else {
@@ -23,7 +23,7 @@ module.exports = {
                     resolve([])
                 }
                 else {
-                    resolve(await som.artwork.getOrInsertAll(artworksData))
+                    resolve(await som.artwork.getOrInsertAll(artworksData, params))
                 }
             }
         }).catch((err) => reject(err))
