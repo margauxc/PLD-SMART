@@ -1,6 +1,6 @@
 import React from 'react'
 import { StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native'
-
+import Geolocation from 'react-native-geolocation-service'
 import {sendText} from '../API/APIAddText'
 
 class AddText extends React.Component {
@@ -22,9 +22,13 @@ class AddText extends React.Component {
     _nameInputChanged(name){
         this.setState({author : name})
     }
+    
 
     _sendText(){
-        sendText(this.state.name, this.state.searchedText, this.state.author, this.props.navigation)
+        Geolocation.getCurrentPosition((position => {
+            sendText(this.state.name, this.state.searchedText, this.state.author, this.props.navigation, position)
+        }))
+        
     }
 
     render() {
