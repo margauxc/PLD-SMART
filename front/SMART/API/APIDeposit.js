@@ -1,6 +1,6 @@
 import baseUrl from './BaseUrl'
 
-export function depositArtwork(artworkId) {
+export function depositArtwork(artworkId, position) {
     const url = baseUrl + 'artworkDeposits'
     return fetch(url, {
         method : 'POST',
@@ -10,8 +10,8 @@ export function depositArtwork(artworkId) {
         },
         body : JSON.stringify({
             "artworkId" : artworkId,
-            "lat" : "350",
-            "long" : "4"
+            "lat" : position.coords.latitude,
+            "long" : position.coords.longitude
         }),
     }).then((response) => {
         return response
