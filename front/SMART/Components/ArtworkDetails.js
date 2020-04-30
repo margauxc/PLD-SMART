@@ -1,6 +1,7 @@
 import React from 'react'
 import { View, Text, Image, StyleSheet, Button, ScrollView , ActivityIndicator, Alert} from 'react-native'
 import { depositArtwork } from '../API/APIDeposit'
+import Geolocation from 'react-native-geolocation-service'
 
 class ArtworkDetails extends React.Component {
 
@@ -49,14 +50,18 @@ class ArtworkDetails extends React.Component {
     }
 
     _onPress = (artwork) => {
-
-        depositArtwork(artwork.ArtworkId).then((response) => {
-            if (response.ok) {
-                this._createAlertOK()
-            } else {
-                this._createAlertError()
-            }
-        })
+        Geolocation.getCurrentPosition((position)=>{
+            console.log(position)
+            depositArtwork(artwork.ArtworkId, position).then((response) => {
+                if (response.ok) {
+                    this._createAlertOK()
+                } else {
+                    this._createAlertError()
+                }
+            })
+        }, (error) => {
+            this._createAlertError
+        }) 
     }
 
     render() {
