@@ -12,26 +12,24 @@ import { getArtworkDeposits } from '../API/APIGetArtworkDeposits'
 
 class Home extends React.Component {
 
-    
+
     constructor(props) {
         super(props)
-        
+
         this.state = {
             artworkDeposits: [],
-            latitude : 0,
-            longitude : 0,
+            latitude: 0,
+            longitude: 0,
         }
         Geolocation.getCurrentPosition((position => {
             this.fillData(Number(position.coords.latitude), Number(position.coords.longitude));
-            console.log(position.coords.latitude)
-            console.log(position.coords.longitude)
+
         }))
-       
+
     }
 
-    fillData(lat, long){
-        this.setState({latitude:Number(lat), longitude:Number(long)})
-        console.log(this.state.latitude)
+    fillData(lat, long) {
+        this.setState({ latitude: Number(lat), longitude: Number(long) })
     }
 
 
@@ -53,8 +51,9 @@ class Home extends React.Component {
 
     render() {
         return (
+
             <MapView
-                style={{ flex: 1 }}
+                style={{ flex: 1, elevation : 1}}
                 provider={PROVIDER_GOOGLE}
                 showsUserLocation
                 region={{
@@ -64,6 +63,11 @@ class Home extends React.Component {
                     longitudeDelta: 0.0421
                 }}
             />
+                /*<TouchableOpacity style={{position : 'absolute', bottom: 0, elevation : 10}} onPress={() => { this.props.navigation.navigate('ArtworkChoice') }}>
+                    <Text style={styles.textButton}>+</Text>
+                </TouchableOpacity>*/
+            
+
         )
     }
 }
