@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
 import { withNavigationFocus } from 'react-navigation'
-import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service'
 
 import { getArtworkDeposits } from '../API/APIGetArtworkDeposits'
@@ -18,12 +18,8 @@ class Home extends React.Component {
         }
 
         Geolocation.getCurrentPosition((position => {
-            this.fillData(Number(position.coords.latitude), Number(position.coords.longitude));
+            this._fillData(Number(position.coords.latitude), Number(position.coords.longitude));
         }))
-    }
-
-    fillData(lat, long) {
-        this.setState({ latitude: Number(lat), longitude: Number(long) })
     }
 
     componentDidMount() {
@@ -38,8 +34,13 @@ class Home extends React.Component {
 
     _getArtworkDeposits() {
         getArtworkDeposits().then((data) => {
+            console.log("data = " + JSON.stringify(data))
             this.setState({ artworkDeposits: data })
         })
+    }
+
+    _fillData(lat, long) {
+        this.setState({ latitude: Number(lat), longitude: Number(long) })
     }
 
     render() {
@@ -55,7 +56,15 @@ class Home extends React.Component {
                         latitudeDelta: 0.0922,
                         longitudeDelta: 0.0421
                     }}
-                />
+                >
+                    {this.state.artworkDeposits.map(marker => (
+                        <Marker
+                            key={marker.depositId}
+                            coordinate={{ latitude: marker.lat, longitude: marker.long}}
+                            onPress={() => {this.props.navigation.navigate('Consult', { depositId: marker.depositId })}}
+                        />
+                    ))}
+                </MapView>
                 <TouchableOpacity style={styles.addButton} onPress={() => { this.props.navigation.navigate('ArtworkChoice') }}>
                     <Text style={styles.textButton}>+</Text>
                 </TouchableOpacity>

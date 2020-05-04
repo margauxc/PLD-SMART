@@ -5,7 +5,7 @@ var logLevel = process.env.LOG_LEVEL
 if (process.env.NODE_ENV === 'test') {
   logLevel = 'error'
 }
-if (process.env.NODE_ENV !== 'development') {
+if (process.env.NODE_ENV == 'test') {
   transports.push(
     new winston.transports.Console({
       level : logLevel
