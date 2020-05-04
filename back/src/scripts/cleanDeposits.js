@@ -15,7 +15,7 @@ async function run() {
         where: {
             expirationDate : 
             {
-                [Op.lte]: moment().add(1,'days').toDate()
+                [Op.lte]: moment().toDate()
             }
         }
     })
