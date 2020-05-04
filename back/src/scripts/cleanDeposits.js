@@ -24,5 +24,3 @@ async function run() {
 }
 
 run()
-
-// */5 * * * * node ./src/scripts/cleanDeposits
