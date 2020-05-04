@@ -54,5 +54,7 @@ module.exports = async (app) => {
         .authenticate()
        
     await loadDbModels(sequelizeItem)
-    app.emit("ready")
+    if(app) {
+        app.emit("ready")
+    }
 }
