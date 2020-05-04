@@ -26,6 +26,14 @@ module.exports = {
             expirationDate : {
                 type: DataTypes.DATE,
                 allowNull: false,
+            },
+            reported : {
+                type : DataTypes.STRING
+            },
+            isReported : {
+                type : DataTypes.BOOLEAN,
+                allowNull : false,
+                defaultValue : false
             }
         })
 

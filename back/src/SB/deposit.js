@@ -51,6 +51,36 @@ module.exports = {
             ],
             limit: nbDeposit
         })
+    }, 
+
+    addReport: (nameReporter, depositId) => {
+        return new Promise(async (resolve, reject) => {
+            await model.deposit.update(
+                {reported : reported+";"+nameReporter},
+                {returning : true, where : {id : depositId}}
+            ).then(function([ rowUpdate, [updatedDeposit] ]) {
+                resolve(updatedDeposit)
+            }).catch( (err) => {
+                reject(err)
+            })
+        })
+    }, 
+
+    isReported: (updatedDeposit) => {
+        return new Promise((resolve, reject) => {
+            if (updatedDeposit.reported.split(";").length == 3) {
+                model.deposit.update(
+                    {isReported : true},
+                    {where : {id : updatedDeposit.id}}
+                ).then((res) => {
+                    if(res == 0) {
+                        throw new ErrorHandler(404, "No deposit found")
+                    }
+                }).catch( (err) => {
+                    reject(err)
+                })
+            }
+            resolve()
+        })
     }
-    
 }

@@ -65,5 +65,16 @@ module.exports = {
         }
         const result =  await som.deposit.getNearestDeposits(long, lat, nbDeposits, distance)
         return result.map(deposit => adapt(deposit))
+    }, 
+    addOneReport: (nameReporter, depositId) => {
+        //? async ?
+        return new Promise( (resolve, reject) => {
+            try {
+                som.deposit.addOneReport(nameReporter,depositId)
+                resolve()
+            } catch(error) {
+                reject(error)
+            }
+        })
     }
 }

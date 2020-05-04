@@ -15,5 +15,12 @@ module.exports = {
 
     getNearestDeposits: (long, lat, nbDeposits, distance) => {
         return sb.deposit.findNearest(long, lat, nbDeposits, distance)
+    },
+
+    addOneReport: (nameReporter, depositId) => {
+        sb.deposit.addReport(nameReporter,depositId).then((response) => {
+            return sb.deposit.isReported(response)
+        })
+
     }
 }
