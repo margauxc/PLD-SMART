@@ -4,14 +4,9 @@ import { withNavigationFocus } from 'react-navigation'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service'
 
-/* Code temporaire qui sera remplacé par la map */
-import { FlatList } from 'react-native'
-/* -------------------------------------------- */
-
 import { getArtworkDeposits } from '../API/APIGetArtworkDeposits'
 
 class Home extends React.Component {
-
 
     constructor(props) {
         super(props)
@@ -19,19 +14,17 @@ class Home extends React.Component {
         this.state = {
             artworkDeposits: [],
             latitude: 0,
-            longitude: 0,
+            longitude: 0
         }
+
         Geolocation.getCurrentPosition((position => {
             this.fillData(Number(position.coords.latitude), Number(position.coords.longitude));
-
         }))
-
     }
 
     fillData(lat, long) {
         this.setState({ latitude: Number(lat), longitude: Number(long) })
     }
-
 
     componentDidMount() {
         this._getArtworkDeposits()
@@ -51,23 +44,22 @@ class Home extends React.Component {
 
     render() {
         return (
-
-            <MapView
-                style={{ flex: 1, elevation : 1}}
-                provider={PROVIDER_GOOGLE}
-                showsUserLocation
-                region={{
-                    latitude: Number(this.state.latitude),
-                    longitude: Number(this.state.longitude),
-                    latitudeDelta: 0.0922,
-                    longitudeDelta: 0.0421
-                }}
-            />
-                /*<TouchableOpacity style={{position : 'absolute', bottom: 0, elevation : 10}} onPress={() => { this.props.navigation.navigate('ArtworkChoice') }}>
+            <View style={{flex: 1}}>
+                <MapView
+                    style={{flex: 1}}
+                    provider={PROVIDER_GOOGLE}
+                    showsUserLocation
+                    region={{
+                        latitude: Number(this.state.latitude),
+                        longitude: Number(this.state.longitude),
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421
+                    }}
+                />
+                <TouchableOpacity style={styles.addButton} onPress={() => { this.props.navigation.navigate('ArtworkChoice') }}>
                     <Text style={styles.textButton}>+</Text>
-                </TouchableOpacity>*/
-            
-
+                </TouchableOpacity>
+            </View>
         )
     }
 }
