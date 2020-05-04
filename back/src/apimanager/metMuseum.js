@@ -44,13 +44,18 @@ module.exports = {
                 uri: uri,
                 json: true
             })
-            artworks = await Promise.all(res.objectIDs.slice(0,5).map((id,index) => {
-                return request({
-                    uri: `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
-                    json: true
-                })
-            }))
-            return artworks.map(artwork => convert(artwork))
+
+            if (res.objectIDs) {
+                artworks = await Promise.all(res.objectIDs.slice(0,5).map((id,index) => {
+                    return request({
+                        uri: `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`,
+                        json: true
+                    })
+                }))
+                return artworks.map(artwork => convert(artwork))
+            } else {
+                return []
+            }
         } catch (err) {
             Logger.error(err)
         }
