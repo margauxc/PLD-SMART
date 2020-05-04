@@ -59,7 +59,7 @@ module.exports = {
             nbDeposits = parseInt(nbDeposits,10)
         }
         if(!distance) {
-            distance = 20
+            distance = 100
         } else {
             distance = parseInt(distance, 10)
         }
