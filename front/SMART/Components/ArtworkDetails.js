@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, Button, ScrollView , ActivityIndicator, Alert} from 'react-native'
+import { View, Text, Image, StyleSheet, Button, ScrollView, ActivityIndicator, Alert } from 'react-native'
 import { depositArtwork } from '../API/APIDeposit'
 import Geolocation from 'react-native-geolocation-service'
 
@@ -11,7 +11,7 @@ class ArtworkDetails extends React.Component {
     }
 
     componentDidMount() {
-          this.setState({
+        this.setState({
             isLoading: false
         })
     }
@@ -32,9 +32,9 @@ class ArtworkDetails extends React.Component {
             "Succès",
             "L'oeuvre " + this.props.navigation.state.params.artwork.name + " a été ajoutée à la map ! ",
             [
-                { text: "OK", onPress: () => this.props.navigation.navigate('Home')}
+                { text: "OK", onPress: () => this.props.navigation.navigate('Home') }
             ],
-            {cancelable : false}
+            { cancelable: false }
         )
     }
 
@@ -43,14 +43,14 @@ class ArtworkDetails extends React.Component {
             "Échec",
             "Une erreur s'est produite. L'oeuvre " + this.props.navigation.state.params.artwork.name + " n'a pas été ajoutée à la map.",
             [
-                { text: "OK", onPress: () => this.props.navigation.navigate('Home')}
+                { text: "OK", onPress: () => this.props.navigation.navigate('Home') }
             ],
-            {cancelable : false}
+            { cancelable: false }
         )
     }
 
     _onPress = (artwork) => {
-        Geolocation.getCurrentPosition((position)=>{
+        Geolocation.getCurrentPosition((position) => {
             console.log(position)
             depositArtwork(artwork.ArtworkId, position).then((response) => {
                 if (response.ok) {
@@ -61,27 +61,38 @@ class ArtworkDetails extends React.Component {
             })
         }, (error) => {
             this._createAlertError
-        }) 
+        })
     }
 
     render() {
         const artwork = this.props.navigation.state.params.artwork
         return (
             <View style={styles.main_container}>
-                {artwork.pictureLink == null? 
-                    <Image source={require('../assets/imagefiller.jpg')} style = {styles.image}/>
-                    : <Image source = {{uri : artwork.pictureLink}} style = {styles.image}/>
-                }                
+
+                {artwork.pictureLink == null ?
+                    <Image source={require('../assets/imagefiller.jpg')} style={styles.image} />
+                    : <Image source={{ uri: artwork.pictureLink }} style={styles.image} />
+                }
+
                 <ScrollView contentContainerStyle={styles.scroll_view}>
                     <View style={styles.text_container}>
                         <Text style={styles.name_text}>{artwork.name}</Text>
                         <Text style={styles.artist_text}>{artwork.artist}</Text>
                         <Text style={styles.year_text}>2020</Text>
                         <Text style={styles.more_info}>{artwork.more_info}</Text>
+
                     </View>
                     <Button title="Ajouter à la carte" color='orange' onPress={() => this._onPress(artwork)} />
+                    
                 </ScrollView>
+
+                <TouchableOpacity style={styles.cancelButton}>
+                        <Text style={styles.buttonText}>Signaler</Text>
+                    </TouchableOpacity>
+
                 {this._displayLoading()}
+
+                
             </View>
         )
     }
@@ -95,6 +106,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         alignSelf: 'stretch'
+    },
+    otherView: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        textAlignVertical: 'center',
     },
     image: {
         height: "45%",
@@ -128,14 +145,26 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: 'darkgrey'
     },
-    loading_container : {
-        position : 'absolute',
-        right : 0,
-        left : 0,
-        bottom : 0,
-        top : 100,
+    loading_container: {
+        position: 'absolute',
+        right: 0,
+        left: 0,
+        bottom: 0,
+        top: 100,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    cancelButton: {
+        height: 50,
+        width: 100,
+        backgroundColor: "red",
+        borderRadius: 15,
+    },
+    buttonText: {
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: "center",
+        color: "white",
     }
 
 })
