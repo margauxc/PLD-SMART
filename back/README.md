@@ -10,6 +10,11 @@ npm install
 npm start
 ```
 
+# Publish image
+sudo docker build -t arthurtndr/smart . && sudo docker push arthurtndr/smart
+
+# RUN in prod
+sudo docker run -p 3500:3500 arthurtndr/smart
 # Documentation
 
 https://www.npmjs.com/package/documentation

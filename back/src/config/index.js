@@ -1,5 +1,6 @@
 const TYPES = require('./artworkType')
-var dotenv = require('dotenv').config({ path: `./.env.${process.env.NODE_ENV}` })
+var defEnv = process.env.NODE_ENV || "development"
+var dotenv = require('dotenv').config({ path: "./.env."+defEnv })
 if (!dotenv) {
   // This error should crash whole process
 
