@@ -1,34 +1,70 @@
 import React from 'react'
-import { StyleSheet, View, Text, TouchableOpacity, TextInput } from 'react-native'
+import { StyleSheet, View, Text, TouchableOpacity, TextInput, Alert } from 'react-native'
 import Geolocation from 'react-native-geolocation-service'
 import {sendText} from '../API/APIAddText'
+import { depositArtwork } from '../API/APIDeposit'
 
 class AddText extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state = {name : "", searchedText : "",
-                      author : ""}
+        this.state = {
+            name : "",
+            searchedText : "",
+            author : ""
+        }
     }
 
-    _titleInputChanged(title){
+    _titleInputChanged(title) {
         this.setState({name : title})
     }
 
-    _textInputChanged(text){
+    _textInputChanged(text) {
         this.setState({searchedText : text})
     }
 
-    _nameInputChanged(name){
+    _nameInputChanged(name) {
         this.setState({author : name})
     }
-    
 
-    _sendText(){
+    _createAlertOK() {
+        Alert.alert(
+            "Succès",
+            "L'oeuvre " + this.state.name + " a été ajoutée à la map ! ",
+            [
+                { text: "OK", onPress: () => this.props.navigation.navigate('Home') }
+            ],
+            { cancelable: false }
+        )
+    }
+
+    _createAlertError() {
+        Alert.alert(
+            "Échec",
+            "Une erreur s'est produite. L'oeuvre " + this.state.name + " n'a pas été ajoutée à la map.",
+            [
+                { text: "OK" }
+            ],
+            { cancelable: false }
+        )
+    }
+    
+    _sendText() {
         Geolocation.getCurrentPosition((position => {
-            sendText(this.state.name, this.state.searchedText, this.state.author, this.props.navigation, position)
+            sendText(this.state.name, this.state.searchedText, this.state.author).then((response) => {
+                depositArtwork(response, position).then((response) => {
+                    if (response.ok) {
+                        this._createAlertOK()
+                    } else {
+                        this._createAlertError()
+                    }
+                }).catch((error) => {
+                    this._createAlertError()
+                })
+            }).catch((error) => {
+                this._createAlertError()
+            })
         }))
-        
     }
 
     render() {
