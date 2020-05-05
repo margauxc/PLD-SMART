@@ -26,6 +26,10 @@ module.exports = {
             expirationDate : {
                 type: DataTypes.DATE,
                 allowNull: false,
+            },
+            owner: {
+                type: DataTypes.STRING,
+                allowNull: false
             }
         })
 
