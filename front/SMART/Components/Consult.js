@@ -19,7 +19,6 @@ class Consult extends React.Component {
 
     _getArtworkDepositDetails(id) {
         getArtworkDeposit(id).then((data) => {
-            console.log("data = " + JSON.stringify(data))
             this.setState({artworkDeposit: data, isLoading: false})
         })
     }

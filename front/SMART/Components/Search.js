@@ -9,27 +9,30 @@ import {searchRequest, searchById} from '../API/APISearch'
 
 class Search extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state = {artworks : [], 
-                    searchedText : "",
-                    searchedCategory : "",
-                    isLoading : false,
-                    alreadySearched : false}
+        this.state = {
+            artworks : [], 
+            isLoading : false,
+            alreadySearched : false
+        }
+        this.searchedText = ""
+        this.searchedCategory = ""
     }
 
     _searchArtworks() {
         this.setState({isLoading : true})
-        searchRequest(this.state.searchedText, this.state.searchedCategory).then( (data) => {
+        searchRequest(this.searchedText, this.searchedCategory).then((data) => {
             this.setState({artworks : data, isLoading : false, alreadySearched : true})
         })
     }
-    _textInputChanged(text){
-        this.setState({searchedText : text})
+
+    _textInputChanged(text) {
+        this.searchedText = text
     }
 
-    _categoryPickerChanged(value){
-        this.setState({searchedCategory : value})
+    _categoryPickerChanged(value) {
+        this.searchedCategory = value
     }
 
     _displayDetail = (id) => {
@@ -49,7 +52,7 @@ class Search extends React.Component {
         }
       }
 
-    _displayNoResults(){
+    _displayNoResults() {
         if (this.state.isLoading == false && this.state.alreadySearched == true && this.state.artworks.length == 0){
             return(
                 <View style = {styles.no_result}>
@@ -60,7 +63,6 @@ class Search extends React.Component {
     }
 
     render() {
-        console.log('---- is Loading : ' + this.state.isLoading)
         return (
             <View style = {styles.main_container}>
                 <TextInput 
@@ -70,14 +72,14 @@ class Search extends React.Component {
                     onSubmitEditing = {()=>this._searchArtworks()}/>
                 <RNPickerSelect 
                     style = {pickerSelectStyles} 
-                    placeholder = {{}} 
+                    placeholder = {{}}
                     items = {categories} 
                     onValueChange = {value => this._categoryPickerChanged(value)} />
                 <FlatList 
                     data={this.state.artworks}
                     keyExtractor={(item) => item.ArtworkId.toString()}
                     renderItem={({item}) => 
-                        <ImageItem artwork={item} navigation = {this.props.navigation} displayDetail = {this._displayDetail}/>
+                        <ImageItem artwork={item} navigation={this.props.navigation} displayDetail={this._displayDetail}/>
                     }
                 />
                 {this._displayLoading()}

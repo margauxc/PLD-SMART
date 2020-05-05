@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
         top: 100,
         alignItems: 'center',
         justifyContent: 'center'
-    },
+    }
 
 })
 

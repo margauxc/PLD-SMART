@@ -8,29 +8,27 @@ class AddText extends React.Component {
 
     constructor(props) {
         super(props)
-        this.state = {
-            name : "",
-            searchedText : "",
-            author : ""
-        }
+        this.author = ""
+        this.name = ""
+        this.searchedText = ""
     }
 
     _titleInputChanged(title) {
-        this.setState({name : title})
+        this.name = title
     }
 
     _textInputChanged(text) {
-        this.setState({searchedText : text})
+        this.searchedText = text
     }
 
     _nameInputChanged(name) {
-        this.setState({author : name})
+        this.author = name
     }
 
     _createAlertOK() {
         Alert.alert(
             "Succès",
-            "L'oeuvre " + this.state.name + " a été ajoutée à la map ! ",
+            "L'oeuvre " + this.name + " a été ajoutée à la map ! ",
             [
                 { text: "OK", onPress: () => this.props.navigation.navigate('Home') }
             ],
@@ -41,7 +39,7 @@ class AddText extends React.Component {
     _createAlertError() {
         Alert.alert(
             "Échec",
-            "Une erreur s'est produite. L'oeuvre " + this.state.name + " n'a pas été ajoutée à la map.",
+            "Une erreur s'est produite. L'oeuvre " + this.name + " n'a pas été ajoutée à la map.",
             [
                 { text: "OK" }
             ],
@@ -51,7 +49,7 @@ class AddText extends React.Component {
     
     _sendText() {
         Geolocation.getCurrentPosition((position => {
-            sendText(this.state.name, this.state.searchedText, this.state.author).then((response) => {
+            sendText(this.name, this.searchedText, this.author).then((response) => {
                 depositArtwork(response, position).then((response) => {
                     if (response.ok) {
                         this._createAlertOK()
@@ -68,6 +66,7 @@ class AddText extends React.Component {
     }
 
     render() {
+        console.log("RENDER")
         return (
             <View style={styles.container}>
                 <Text style={styles.Text}>Nom de l'auteur</Text>
