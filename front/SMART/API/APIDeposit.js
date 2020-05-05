@@ -15,5 +15,7 @@ export function depositArtwork(artworkId, position) {
         }),
     }).then((response) => {
         return response
-    }).catch((error) => console.log(error)) //à gérer 
+    }).catch((error) => {
+        console.log(error)
+    }) //à gérer 
 }

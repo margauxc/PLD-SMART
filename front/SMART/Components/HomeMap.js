@@ -34,7 +34,6 @@ class Home extends React.Component {
 
     _getArtworkDeposits() {
         getArtworkDeposits().then((data) => {
-            console.log("data = " + JSON.stringify(data))
             this.setState({ artworkDeposits: data })
         })
     }

@@ -60,7 +60,7 @@ class ArtworkDetails extends React.Component {
                 }
             })
         }, (error) => {
-            this._createAlertError
+            this._createAlertError()
         })
     }
 
