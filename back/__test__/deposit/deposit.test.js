@@ -95,7 +95,6 @@ describe('report a deposit', () => {
         await utils.reportAndCheck(sessionAgent,depositObject.depositId,"b",false)
         await utils.reportAndCheck(sessionAgent,depositObject.depositId,"c",true)
         getResponse = await sessionAgent.get(getRouteFilled)
-        console.log(getResponse.body)
         expect(getResponse.body.isReported).toBe(true)
 
     })
