@@ -80,3 +80,23 @@ describe('get all deposits', () => {
         expect(response.body.length).toBe(1)
     })
 })
+describe('report a deposit', () => {
+    const route = "/reportDeposit"
+    const testRoute = base+route
+    test('report a deposit', async () => {
+        const sessionAgent = supertest.agent(app)
+        const depositObject = await utils.createAndGetDeposit(sessionAgent, mock["MUSIC"],"MUSIC")
+        var getRouteFilled = (base+"/:DepositId").replace(':DepositId',depositObject.depositId)
+        // the deposit isn't reported
+        var getResponse = await sessionAgent.get(getRouteFilled)
+        expect(getResponse.body.isReported).toBe(false)
+
+        await utils.reportAndCheck(sessionAgent,depositObject.depositId,"a",false)
+        await utils.reportAndCheck(sessionAgent,depositObject.depositId,"b",false)
+        await utils.reportAndCheck(sessionAgent,depositObject.depositId,"c",true)
+        getResponse = await sessionAgent.get(getRouteFilled)
+        console.log(getResponse.body)
+        expect(getResponse.body.isReported).toBe(true)
+
+    })
+})
