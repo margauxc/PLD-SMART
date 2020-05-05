@@ -30,9 +30,13 @@ function getOrInsertArtwork(data, requestCache) {
             finalArtWork = resMatch.dataValues
         } else {
             // insert an artwork
-            globalArtwork = await sb.artwork.insert(data)
-            data.ArtworkId = globalArtwork.id
-            var resSpecific = await sb[category].insert(data)
+            try{
+                globalArtwork = await sb.artwork.insert(data)
+                data.ArtworkId = globalArtwork.id
+                var resSpecific = await sb[category].insert(data)
+            } catch(err){
+                reject(err)
+            }
             // select fields to return
 
             finalArtWork = resSpecific.dataValues
@@ -74,11 +78,19 @@ module.exports = {
         const requestCache = await sb.searchRequest.insertEntry(hashRequest(request))
         return await getOrInsertArtwork(data,requestCache)
     },
-    getOrInsertAll : async (data,request) => {
+    getOrInsertAll : async (data, request) => {
+        const lenFullData = data.length
+        var cptError = 0
         const requestCache = await sb.searchRequest.insertEntry(hashRequest(request))
         const res = await Promise.all(data.map((oneArtwork) => {
-            return getOrInsertArtwork(oneArtwork,requestCache)
-        }))
+            return getOrInsertArtwork(oneArtwork,requestCache).catch((err) => {
+                cptError += 1
+            })
+        })).catch((err) => {
+            if (cptError == lenFullData) {
+                throw new ErrorHandler(500, "Impossible to add an artwork")
+            }
+        })
         return res
     },
     addFreeText : async (data) => {

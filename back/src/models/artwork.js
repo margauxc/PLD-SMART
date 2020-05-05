@@ -13,7 +13,7 @@ module.exports = {
             },
 
             name: {
-                type: DataTypes.STRING,
+                type: DataTypes.TEXT,
                 allowNull: false,
                 validate : {
                     notEmpty : true
