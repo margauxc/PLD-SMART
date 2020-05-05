@@ -80,3 +80,41 @@ describe('get all deposits', () => {
         expect(response.body.length).toBe(1)
     })
 })
+describe('get nearest', () => {
+    const route = ""
+    let testRoute = base+route
+    test('get deposit from coordinates', async () => {
+        const sessionAgent = supertest.agent(app)
+        const artwork = await utilsArtwork.createAndGetArtwork(mock["MUSIC"], "MUSIC")
+        const params1 = {
+            "artworkId": artwork.ArtworkId,
+            "lat": 43.004006,
+            "long": 6.198719,
+            "owner": "owner0"
+        }
+        const params2 = {
+            "artworkId": artwork.ArtworkId,
+            "lat": 43.004108,
+            "long": 6.199449,
+            "owner": "owner0"
+        }
+        const response = await sessionAgent.post(testRoute).send(params1)
+        expect(response.status).toBe(200)
+        const response2 = await sessionAgent.post(testRoute).send(params2)
+        expect(response2.status).toBe(200)
+
+        const paramsGet = {
+            "lat": 43,
+            "long": 6.14
+        }
+        testRoute+= `?lat=43.004132&long=6.199653&distance=200&limit=2`
+        // console.log(testRoute)
+        const responseGet = await sessionAgent.get(testRoute)
+        expect(responseGet.status).toBe(200)
+        expect(responseGet.body.length).toBe(2)
+        expect(responseGet.body[0].long).toBe(6.199449)
+        console.log(responseGet.body[0].distance)
+        expect(responseGet.body[1].long).toBe(6.198719)
+        console.log(responseGet.body[1].distance)
+    })
+})

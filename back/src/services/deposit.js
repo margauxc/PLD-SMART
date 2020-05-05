@@ -24,11 +24,12 @@ module.exports = {
     createDeposit : (params) => {
         return new Promise(async (resolve, reject) => {
             try{
-                validation.includeFields(params, ["artworkId"])
+                validation.includeFields(params, ["artworkId","owner", "lat", "long"])
                 var deposit = {
                     artworkId : params.artworkId,
                     lat : params.lat,
-                    long :  params.long
+                    long :  params.long,
+                    owner: params.owner
                 }  
                 const result = await som.deposit.createDeposit(deposit)
                 resolve(adapt(result))

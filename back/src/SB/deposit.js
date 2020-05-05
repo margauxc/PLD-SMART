@@ -19,7 +19,8 @@ module.exports = {
                 //? avec une minuscule ça marche pas mais ça serait mieux
                 ArtworkId: data.artworkId,
                 geoloc: { type: 'Point', coordinates: [data.lat, data.long]},
-                expirationDate: moment().add(1, 'days').format("YYYY-MM-DD HH:mm:ss")
+                expirationDate: moment().add(1, 'days').format("YYYY-MM-DD HH:mm:ss"),
+                owner: data.owner
             }
             var newDeposit = await models.Deposit.create(deposit).catch((err) => 
             {

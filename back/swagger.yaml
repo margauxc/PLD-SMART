@@ -80,6 +80,8 @@ components:
           type: string
         depositId:
           type: string
+        owner:
+          type: string
 
 paths:
   /artworkDeposits:
@@ -103,6 +105,7 @@ paths:
                 - artworkId
                 - lat
                 - long
+                - owner
               type: object
               properties:
                 artworkId: 
@@ -111,6 +114,8 @@ paths:
                   type: number
                 long:
                   type: number
+                owner:
+                  type: string
     get:
         tags:
         - "deposits"
