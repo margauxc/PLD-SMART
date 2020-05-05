@@ -86,10 +86,6 @@ class ArtworkDetails extends React.Component {
                     
                 </ScrollView>
 
-                <TouchableOpacity style={styles.cancelButton}>
-                        <Text style={styles.buttonText}>Signaler</Text>
-                    </TouchableOpacity>
-
                 {this._displayLoading()}
 
                 
@@ -154,18 +150,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    cancelButton: {
-        height: 50,
-        width: 100,
-        backgroundColor: "red",
-        borderRadius: 15,
-    },
-    buttonText: {
-        fontSize: 20,
-        fontWeight: "bold",
-        textAlign: "center",
-        color: "white",
-    }
 
 })
 
