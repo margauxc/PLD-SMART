@@ -60,7 +60,7 @@ class ArtworkDetails extends React.Component {
                 }
             })
         }, (error) => {
-            this._createAlertError
+            this._createAlertError()
         })
     }
 
@@ -85,10 +85,6 @@ class ArtworkDetails extends React.Component {
                     <Button title="Ajouter à la carte" color='orange' onPress={() => this._onPress(artwork)} />
                     
                 </ScrollView>
-
-                <TouchableOpacity style={styles.cancelButton}>
-                        <Text style={styles.buttonText}>Signaler</Text>
-                    </TouchableOpacity>
 
                 {this._displayLoading()}
 
@@ -154,18 +150,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-    cancelButton: {
-        height: 50,
-        width: 100,
-        backgroundColor: "red",
-        borderRadius: 15,
-    },
-    buttonText: {
-        fontSize: 20,
-        fontWeight: "bold",
-        textAlign: "center",
-        color: "white",
-    }
 
 })
 
