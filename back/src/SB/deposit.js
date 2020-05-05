@@ -56,7 +56,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             Logger.warn("passage dans sb")
             await models.Deposit.update(
-                {reported : reported+";"+nameReporter},
+                {reported : ";"+nameReporter},
                 {returning : true, where : {id : depositId}}
             ).then(function([ rowUpdate, [updatedDeposit] ]) {
                 Logger.warn("passage dans sb then")
