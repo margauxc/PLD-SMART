@@ -82,6 +82,10 @@ components:
           type: string
         owner:
           type: string
+        reported:
+          type: string
+        isReported:
+          type: boolean
 
 paths:
   /artworkDeposits:
@@ -169,6 +173,28 @@ paths:
       responses:
         '200':
           description: OK
+  /artworkDeposits/reportDeposit:
+    post:
+      tags: 
+      - "deposits"
+      summary: "report deposit by Id"
+      description: "report deposit by Id"
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - depositId
+                - nameReporter
+              type: object
+              properties:
+                depositId: 
+                  type: string
+                nameReporter:
+                  type: string
   /artworks:
     get:
       tags: 

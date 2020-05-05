@@ -5,7 +5,14 @@ const Logger = require("../loaders/logger")
 var moment = require('moment')
 const sequelize =  require ('sequelize')
 
-
+async function getReportedOfDeposit(depositId) {
+    var res = await models.Deposit.findOne({
+      where: {
+        id: depositId
+      }
+    })
+    return res.reported
+ }
 
 module.exports = {
 
@@ -52,6 +59,44 @@ module.exports = {
             ],
             limit: nbDeposit
         })
+    }, 
+
+    addReport: (nameReporter, depositId) => {
+        return new Promise(async (resolve, reject) => {
+            var reportedOld = await getReportedOfDeposit(depositId)
+            var newReported = ""
+            if(reportedOld == "") {
+                newReported = nameReporter
+            } else {
+                newReported = reportedOld+";"+nameReporter
+            }
+            await models.Deposit.update(
+                     {reported : newReported},
+                     {where : {id : depositId}}
+                 ).then(() => {
+                     resolve()
+                 }).catch( (err) => {
+                     reject(err)
+                 })
+             })
+    }, 
+    // returning : true, [ rowUpdate, [updatedDeposit] ], updatedDeposit
+
+    isReported: (depositId) => {
+        return new Promise( async (resolve, reject) => {
+            var reportedUpdate = await getReportedOfDeposit(depositId)
+            if (reportedUpdate.split(";").length == 3) {
+                models.Deposit.update(
+                    {isReported : true},
+                    {where : {id : depositId}}
+                    ).then((res) => {
+                        if(res == 0) {
+                            throw new ErrorHandler(404, "No deposit found")
+                        } else {resolve()}
+                    }).catch( (err) => {
+                        reject(err)
+                    })
+            } else {resolve()}
+        })
     }
-    
 }

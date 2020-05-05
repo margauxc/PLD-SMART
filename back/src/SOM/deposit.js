@@ -1,4 +1,5 @@
 const sb = require('../SB')
+Logger = require('../loaders/logger')
 
 module.exports = {
     getAll : () => {
@@ -15,5 +16,12 @@ module.exports = {
 
     getNearestDeposits: (long, lat, nbDeposits, distance) => {
         return sb.deposit.findNearest(long, lat, nbDeposits, distance)
+    },
+
+    addOneReport: async (nameReporter, depositId) => {
+        await sb.deposit.addReport(nameReporter,depositId)
+        return sb.deposit.isReported(depositId)
+        
+
     }
 }

@@ -3,6 +3,7 @@ const {models} = require('../models')
 const apimanager = require('../apimanager')
 const { ErrorHandler } = require('../helpers')
 const {validation} = require('../helpers')
+const Logger =require("../loaders/logger")
 /**
  * This is the artwork services
  */
@@ -66,5 +67,16 @@ module.exports = {
         }
         const result =  await som.deposit.getNearestDeposits(long, lat, nbDeposits, distance)
         return result.map(deposit => adapt(deposit))
+    }, 
+    addOneReport: (nameReporter, depositId) => {
+        //? async ?
+        return new Promise( async (resolve, reject) => {
+            try {
+                await som.deposit.addOneReport(nameReporter,depositId)
+                resolve()
+            } catch(error) {
+                reject(error)
+            }
+        })
     }
 }

@@ -30,6 +30,15 @@ module.exports = {
             owner: {
                 type: DataTypes.STRING,
                 allowNull: false
+            },
+            reported : {
+                type : DataTypes.STRING,
+                defaultValue : ''
+            },
+            isReported : {
+                type : DataTypes.BOOLEAN,
+                allowNull : false,
+                defaultValue : false
             }
         })
 
