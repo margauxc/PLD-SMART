@@ -2,8 +2,7 @@
 const { ErrorHandler } = require('../helpers')
 var Logger = require('../loaders/logger');
 const {TYPES} = require('../config')
-const MovieDB = require('node-themoviedb');
-const tmdb = new MovieDB(process.env.TMDB_SECRET);
+const tmdb = require('moviedb')(process.env.TMDB_SECRET);
 const API_TYPE = TYPES.MOVIE
 const POSTER_BASE = "https://image.tmdb.org/t/p/original"
 function convertMovie (movie) {
@@ -40,12 +39,22 @@ module.exports = {
                 language : 'en',
                 page : 1 
             }
-            tmdb.search.movies(params).then((data) => {
-                const response = JSON.parse(data.body)
-                resolve(response.results.map((movie) => convertMovie(movie)))
-            }).catch((err) => {
+            console.log(params)
+            var res = []
+            tmdb.searchMovie(params,(err,data) => {
                 Logger.error(err)
-                reject(err)
+                Logger.info(Object.keys(data.results))
+                const interResults = data.results.slice(5)
+                console.log(interResults)
+                Promise.all(interResults.map((movie) => {
+                    return new Promise((resoveIn,rejectIn) => {
+                        console.log(movie.id)
+                        tmdb.movieCredits({id : movie.id}, (err, fullInfo) => {
+                            Logger.info("fullInfo ",fullInfo)
+                            Logger.error(Object.keys(fullInfo))
+                        })
+                    })
+                }))
             })
         })
     },

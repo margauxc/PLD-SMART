@@ -17,7 +17,6 @@ module.exports = {
             requiredAPIs = apiList.filter((api) => {
                 return api.type == request.category})
         }
-        Logger.info(requiredAPIs)
         // make the calls
         let result = []
         await Promise.all(requiredAPIs.map( (api) => {
