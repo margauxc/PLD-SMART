@@ -6,7 +6,6 @@ var moment = require('moment')
 const sequelize =  require ('sequelize')
 
 
-
 module.exports = {
 
     getAll : () => {
@@ -55,10 +54,12 @@ module.exports = {
 
     addReport: (nameReporter, depositId) => {
         return new Promise(async (resolve, reject) => {
-            await model.deposit.update(
+            Logger.warn("passage dans sb")
+            await models.Deposit.update(
                 {reported : reported+";"+nameReporter},
                 {returning : true, where : {id : depositId}}
             ).then(function([ rowUpdate, [updatedDeposit] ]) {
+                Logger.warn("passage dans sb then")
                 resolve(updatedDeposit)
             }).catch( (err) => {
                 reject(err)
@@ -69,7 +70,7 @@ module.exports = {
     isReported: (updatedDeposit) => {
         return new Promise((resolve, reject) => {
             if (updatedDeposit.reported.split(";").length == 3) {
-                model.deposit.update(
+                models.Deposit.update(
                     {isReported : true},
                     {where : {id : updatedDeposit.id}}
                 ).then((res) => {

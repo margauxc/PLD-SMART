@@ -1,4 +1,5 @@
 const sb = require('../SB')
+Logger = require('../loaders/logger')
 
 module.exports = {
     getAll : () => {
@@ -18,7 +19,9 @@ module.exports = {
     },
 
     addOneReport: (nameReporter, depositId) => {
+        Logger.warn("passage dans som1")
         sb.deposit.addReport(nameReporter,depositId).then((response) => {
+            Logger.warn("passage dans som2")
             return sb.deposit.isReported(response)
         })
 

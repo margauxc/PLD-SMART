@@ -3,6 +3,7 @@ const {models} = require('../models')
 const apimanager = require('../apimanager')
 const { ErrorHandler } = require('../helpers')
 const {validation} = require('../helpers')
+const Logger =require("../loaders/logger")
 /**
  * This is the artwork services
  */
@@ -70,6 +71,7 @@ module.exports = {
         //? async ?
         return new Promise( (resolve, reject) => {
             try {
+                Logger.warn("passage dans service")
                 som.deposit.addOneReport(nameReporter,depositId)
                 resolve()
             } catch(error) {

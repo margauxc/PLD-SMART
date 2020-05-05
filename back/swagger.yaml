@@ -168,7 +168,7 @@ paths:
       responses:
         '200':
           description: OK
-  /reportDeposit:
+  /artworkDeposits/reportDeposit:
     post:
       tags: 
       - "deposits"

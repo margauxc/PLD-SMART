@@ -28,7 +28,8 @@ module.exports = {
                 allowNull: false,
             },
             reported : {
-                type : DataTypes.STRING
+                type : DataTypes.STRING,
+                defaultValue : ''
             },
             isReported : {
                 type : DataTypes.BOOLEAN,
