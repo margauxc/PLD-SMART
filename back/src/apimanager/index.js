@@ -23,7 +23,7 @@ module.exports = {
         await Promise.all(requiredAPIs.map( (api) => {
             return new Promise((resolve,reject) => {
                 api.search(request).then((resOneApi) => {
-                    result.push(...resOneApi)
+                    result.push(...resOneApi.slice(0,5))
                     resolve()
                 }).catch((err) => {
                     Logger.warn("call to api failed")
@@ -31,6 +31,8 @@ module.exports = {
                 })
             })
         }))
-        return(result)
+        return(result.sort((artwork1, artwork2)=>{
+            return artwork1.name.localeCompare(artwork2.name)
+        }))
     }
 };
