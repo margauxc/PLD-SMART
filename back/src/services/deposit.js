@@ -69,10 +69,9 @@ module.exports = {
     }, 
     addOneReport: (nameReporter, depositId) => {
         //? async ?
-        return new Promise( (resolve, reject) => {
+        return new Promise( async (resolve, reject) => {
             try {
-                Logger.warn("passage dans service")
-                som.deposit.addOneReport(nameReporter,depositId)
+                await som.deposit.addOneReport(nameReporter,depositId)
                 resolve()
             } catch(error) {
                 reject(error)

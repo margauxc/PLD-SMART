@@ -18,12 +18,10 @@ module.exports = {
         return sb.deposit.findNearest(long, lat, nbDeposits, distance)
     },
 
-    addOneReport: (nameReporter, depositId) => {
-        Logger.warn("passage dans som1")
-        sb.deposit.addReport(nameReporter,depositId).then((response) => {
-            Logger.warn("passage dans som2")
-            return sb.deposit.isReported(response)
-        })
+    addOneReport: async (nameReporter, depositId) => {
+        await sb.deposit.addReport(nameReporter,depositId)
+        return sb.deposit.isReported(depositId)
+        
 
     }
 }
