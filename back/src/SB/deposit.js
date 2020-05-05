@@ -38,7 +38,7 @@ module.exports = {
     },
 
     findNearest: (long, lat, nbDeposit, maxDistance) => {
-        const location = sequelize.literal(`ST_GeomFromText('POINT(${long} ${lat})')`);
+        const location = sequelize.literal(`ST_GeomFromText('POINT(${lat} ${long})')`);
         return models.Deposit.findAll({
             attributes: {
                 include: [
