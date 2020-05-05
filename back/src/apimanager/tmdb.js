@@ -6,7 +6,6 @@ const tmdb = require('moviedb')(process.env.TMDB_SECRET);
 const API_TYPE = TYPES.MOVIE
 const POSTER_BASE = "https://image.tmdb.org/t/p/original"
 function convertMovie (movie) {
-    console.log(movie)
     var resMovie = {}
     // artwork fields
     resMovie.name = movie.title
@@ -19,10 +18,17 @@ function convertMovie (movie) {
         resMovie.pictureLink = POSTER_BASE+movie.poster_path
 
     }
-    // MOVIE TYEP
+    // MOVIE TYPE
+    var director = movie.crew.filter((item) => {
+        return (item.job == "Director")
+    })
+    if (director.length != 0){
+        resMovie.director = director[0].name
+    }
     if( movie.overview) {
         resMovie.description = movie.overview
     }
+
     return resMovie
 }
 /*
@@ -39,22 +45,17 @@ module.exports = {
                 language : 'en',
                 page : 1 
             }
-            console.log(params)
-            var res = []
-            tmdb.searchMovie(params,(err,data) => {
-                Logger.error(err)
-                Logger.info(Object.keys(data.results))
-                const interResults = data.results.slice(5)
-                console.log(interResults)
-                Promise.all(interResults.map((movie) => {
-                    return new Promise((resoveIn,rejectIn) => {
-                        console.log(movie.id)
-                        tmdb.movieCredits({id : movie.id}, (err, fullInfo) => {
-                            Logger.info("fullInfo ",fullInfo)
-                            Logger.error(Object.keys(fullInfo))
+            tmdb.searchMovie(params, async (err,data) => {
+                const interResults = data.results.slice(0,5)
+                const res =  await Promise.all(interResults.map((movie) => {
+                    return new Promise((resolveIn,rejectIn) => {
+                        tmdb.movieCredits({id : movie.id}, (err, credits) => {
+                            var fullMovie = {...movie,...credits}
+                            resolveIn(convertMovie(fullMovie))
                         })
                     })
                 }))
+                resolve(res)
             })
         })
     },
