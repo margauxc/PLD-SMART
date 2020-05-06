@@ -1,8 +1,11 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, ActivityIndicator, TouchableOpacity, Alert } from 'react-native'
+import { StyleSheet, View, Text, Image, ActivityIndicator, TouchableOpacity, Alert, ScrollView, Linking, Button } from 'react-native'
 
 import { getArtworkDeposit } from '../API/APIGetArtworkDeposits'
 import { reportDeposit } from '../API/APIReport'
+import { standardizeArtwork } from '../Utils/StandardizeArtworks'
+
+import { linkText } from '../Utils/ExternalLink'
 
 
 class Consult extends React.Component {
@@ -19,7 +22,7 @@ class Consult extends React.Component {
         this._getArtworkDepositDetails(this.props.navigation.getParam('depositId'))
     }
 
-   
+
 
     _createAlertOK() {
         Alert.alert(
@@ -43,37 +46,31 @@ class Consult extends React.Component {
         )
     }
 
-    _reportDeposit(){
+    _reportDeposit() {
         reportDeposit(this.props.navigation.getParam('depositId'), "name").then((response) => {
-                if (response.ok) {
-                    this._createAlertOK()
-                } else {
-                    this._createAlertError()
-                }
-            }).catch((error) => {
+            if (response.ok) {
+                this._createAlertOK()
+            } else {
                 this._createAlertError()
-            });
+            }
+        }).catch((error) => {
+            this._createAlertError()
+        });
     }
 
     _getArtworkDepositDetails(id) {
         getArtworkDeposit(id).then((data) => {
-            this.setState({ artworkDeposit: data, isLoading: false })
+            var result = {}
+            result = standardizeArtwork(data)
+            result.createdAt = data.createdAt
+            result.owner = data.owner
+            this.setState({ artworkDeposit: result, isLoading: false })
         })
     }
 
-    _displayMusicAlbum() {
-        if (this.state.artworkDeposit.album !== null) {
-            return (
-                <Text style={styles.musicAlbumText}>Album : {this.state.artworkDeposit.album}</Text>
-            )
-        }
-    }
-
-    _displayMusicDescription() {
-        if (this.state.artworkDeposit.description !== null) {
-            return (
-                <Text>{this.state.artworkDeposit.description}</Text>
-            )
+    _displayLink = (artworkDeposit) => {
+        if ('url' in artworkDeposit && artworkDeposit.url != null && artworkDeposit.url.length > 0) {
+            return <Text style={{ color: 'blue', textDecorationLine: 'underline' }} onPress={() => Linking.openURL(artworkDeposit.url)}>{linkText[artworkDeposit.category]}</Text>
         }
     }
 
@@ -85,143 +82,86 @@ class Consult extends React.Component {
                 </View>
             )
         } else {
+
             var createdAt = new Date(this.state.artworkDeposit.createdAt)
-            if (this.state.artworkDeposit.category == "freeText") {
-                return (
-                    <View style={styles.mainContainer}>
+            const artworkDeposit = this.state.artworkDeposit
+            return (
+                <View style={styles.main_container}>
 
-                        <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
+                    <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
+
+                    {(artworkDeposit.category != "freeText") && (
+                        artworkDeposit.pictureLink == null ?
+                            <Image source={require('../assets/imagefiller.jpg')} style={styles.image} />
+                            : <Image source={{ uri: artworkDeposit.pictureLink }} style={styles.image} />
+
+                    )
+                    }
+
+                    <ScrollView contentContainerStyle={styles.scroll_view}>
+                        <View style={styles.text_container}>
+                            <Text style={styles.name_text}>{artworkDeposit.name}</Text>
+                            <Text style={styles.artist_text}>{artworkDeposit.artist}</Text>
+                            <Text style={styles.year_text}>{artworkDeposit.year}</Text>
+                            <Text style={styles.more_info}>{artworkDeposit.more_info}</Text>
+                            {this._displayLink(artworkDeposit)}
                         </View>
-
-                        <View style={styles.borderImage}>
-                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.author}</Text>
-                        </View>
-
-                        <Text style={{marginBottom : "5%"}}>{this.state.artworkDeposit.text}</Text>
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
-                                <Text style={styles.buttonText}>Signaler</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                )
-            } else if (this.state.artworkDeposit.category == "music") {
-                return (
-                    <View style={styles.mainContainer}>
-
-                        <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
-                        </View>
-
-                        <View style={styles.borderImage}>
-                            { this.state.artworkDeposit.pictureLink == null ?
-                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
-                                : <Image
-                                    style={styles.logo}
-                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
-                                />
-                            }
-                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.artist}</Text>
-                        </View>
-
-                        {this._displayMusicAlbum()}
-
-                        {this._displayMusicDescription()}
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
-                                <Text style={styles.buttonText}>Signaler</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                )
-            } else if(this.state.artworkDeposit.category == "movie") {
-                return (
-                    <View style={styles.mainContainer}>
-
-                        <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
-                        </View>
-
-                        <View style={styles.borderImage}>
-                            { this.state.artworkDeposit.pictureLink == null ?
-                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
-                                : <Image
-                                    style={styles.logo}
-                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
-                                />
-                            }
-                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.director}</Text>
-                        </View>
-
-                        <Text style={{width : "90%", marginBottom : "5%"}}>{this.state.artworkDeposit.description}</Text>
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
-                                <Text style={styles.buttonText}>Signaler</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                )
-            } else if(this.state.artworkDeposit.category == "museum") {
-                return (
-                    <View style={styles.mainContainer}>
-                        
-                        <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
-                        </View>
-
-                        <View style={styles.borderImage}>
-                            { this.state.artworkDeposit.pictureLink == null ?
-                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
-                                : <Image
-                                    style={styles.logo}
-                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
-                                />
-                            }
-                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.artist}</Text>
-                        </View>
-
-                        <Text>Classification : {this.state.artworkDeposit.classification}</Text>
-
-                        <Text>Medium : {this.state.artworkDeposit.medium}</Text>
-
-                        <Text style={{marginBottom : "5%"}}>{this.state.artworkDeposit.description}</Text>
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
-                                <Text style={styles.buttonText}>Signaler</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                )
-            }
+                        <Button title="Signaler cette oeuvre" color='red' onPress={() => { this._reportDeposit() }} />
+                    </ScrollView>
+                </View>
+            )
         }
     }
 }
 
 const styles = StyleSheet.create({
-    borderText: {
-        padding: "3%",
-        borderWidth: 1,
-        borderRadius: 10,
-        alignItems: "center"
+    main_container: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        alignSelf: 'stretch'
     },
-    borderImage: {
-        padding: "3%",
-        alignItems: "center"
-    },
-    dateText: {
-        fontSize: 20,
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    mainContainer: {
+    otherView: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        textAlignVertical: 'center',
     },
-    logo: {
-        width: 90,
-        height: 130,
+    dateText: {
+        fontSize: 25,
+        margin: '5%'
+    },
+    image: {
+        height: "45%",
+        aspectRatio: 1,
+        marginTop: 20,
+        marginBottom: 20
+    },
+    scroll_view: {
+        flexGrow: 1,
+        alignItems: 'center',
+        alignSelf: 'stretch',
+        padding: '10%'
+    },
+    text_container: {
+        alignItems: 'flex-start',
+        alignSelf: 'stretch',
+        marginBottom: 30
+    },
+    name_text: {
+        fontSize: 35,
+        color: 'orange'
+    },
+    artist_text: {
+        fontSize: 25
+    },
+    year_text: {
+        fontSize: 20,
+        color: 'darkgrey'
+    },
+    more_info: {
+        fontSize: 20,
+        color: 'darkgrey',
         marginBottom: 10
     },
     loadingContainer: {
@@ -229,26 +169,11 @@ const styles = StyleSheet.create({
         right: 0,
         left: 0,
         bottom: 0,
-        top: 0,
+        top: 100,
         alignItems: 'center',
         justifyContent: 'center'
-    },
-    musicAlbumText: {
-        marginBottom: 10
-    },
-    cancelButton: {
-        height: "5%",
-        width: "25%",
-        backgroundColor: "red",
-        borderRadius: 15,
-    },
-    buttonText: {
-        fontSize: 20,
-        fontWeight: "bold",
-        textAlign: "center",
-        color: "white",
-        
     }
+
 })
 
 export default Consult

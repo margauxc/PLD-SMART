@@ -11,7 +11,8 @@ const fields = {
         'name' : 'name',
         'artist' : 'director',
         'more_info' : 'description',
-        'pictureLink' : 'pictureLink'
+        'pictureLink' : 'pictureLink',
+        'url' : 'url'
     },
     'museum' : {
         'name' : 'name',
@@ -19,6 +20,11 @@ const fields = {
         'more_info' : 'medium',
         'pictureLink' : 'pictureLink',
         'url' : 'url'
+    },
+    'freeText' : {
+        'name' : 'name',
+        'artist' : 'author',
+        'more_info' : 'text'
     }
 }
 
@@ -26,6 +32,9 @@ export function standardizeArtwork(artwork){
     var result = {}
     result['ArtworkId'] = artwork.ArtworkId
     result['category'] = artwork.category
+    var date = new Date(artwork.date)
+    result['year'] = date.getFullYear()
+    console.log(date)
     const resultFields = ['name', 'artist', 'more_info', 'pictureLink', 'url']
     resultFields.forEach((field) => {
         result[field] = artwork[fields[artwork.category][field]]
