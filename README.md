@@ -1,7 +1,7 @@
 # SMART
 ## Pré-requis : 
-- Avoir installer nodejs
-- Avoir installer npm
+- Avoir installé nodejs
+- Avoir installé npm
 
 ## Lancer le projet :
 - Installer Android Studio en suivant les indications : https://reactnative.dev/docs/environment-setup
