@@ -1,8 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text, Alert } from 'react-native'
 import { withNavigationFocus } from 'react-navigation'
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
+import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps'
 import Geolocation from 'react-native-geolocation-service'
+import { getDistance } from 'geolib'
 
 import { getArtworkDeposits } from '../API/APIGetArtworkDeposits'
 
@@ -42,6 +43,27 @@ class HomeMap extends React.Component {
         this.setState({ latitude: Number(lat), longitude: Number(long) })
     }
 
+    _consultDeposit(id, lat, long) {
+        Geolocation.getCurrentPosition((position => {
+            const distance = getDistance(
+                { latitude: lat, longitude: long },
+                { latitude: Number(position.coords.latitude), longitude: Number(position.coords.longitude) }
+            )
+            if(distance < 50) {
+                this.props.navigation.navigate('Consult', { depositId: id })
+            } else {
+                Alert.alert(
+                    "Plus près !",
+                    "Vous devez être à proximité d'une oeuvre pour pouvoir la consulter.",
+                    [
+                        { text: "OK" }
+                    ],
+                    { cancelable: false }
+                )
+            }
+        }))
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -60,7 +82,7 @@ class HomeMap extends React.Component {
                         <Marker
                             key={marker.depositId}
                             coordinate={{ latitude: marker.lat, longitude: marker.long}}
-                            onPress={() => {this.props.navigation.navigate('Consult', { depositId: marker.depositId })}}
+                            onPress={() => this._consultDeposit(marker.depositId, marker.lat, marker.long)}
                         />
                     ))}
                 </MapView>
