@@ -3,6 +3,7 @@ const {models} = require('../models')
 const apimanager = require('../apimanager')
 const { ErrorHandler } = require('../helpers')
 const {validation} = require('../helpers')
+const Logger =require("../loaders/logger")
 /**
  * This is the artwork services
  */
@@ -46,11 +47,14 @@ module.exports = {
         })
     },
     getDeposit: (depositId) =>  {
-        return new Promise(async (resolve,reject) =>{
-            const deposit = adapt(await som.deposit.getDeposit(depositId))
-            // get associated artwork
-            const artwork = (await som.artwork.getArtwork(deposit.ArtworkId))
-            resolve({...deposit,...artwork})
+        return new Promise(async (resolve,reject) => {
+            som.deposit.getDeposit(depositId).then((deposit) => {
+                deposit = adapt(deposit)
+                // get associated artwork
+                som.artwork.getArtwork(deposit.ArtworkId).then((artwork) => {
+                    resolve({...deposit,...artwork})
+                }).catch((err) => reject(err))
+            }).catch((err) => reject(err))
         })
     },
     getNearestDeposits: async (long, lat, nbDeposits, distance) => {
@@ -66,5 +70,16 @@ module.exports = {
         }
         const result =  await som.deposit.getNearestDeposits(long, lat, nbDeposits, distance)
         return result.map(deposit => adapt(deposit))
+    }, 
+    addOneReport: (nameReporter, depositId) => {
+        //? async ?
+        return new Promise( async (resolve, reject) => {
+            try {
+                await som.deposit.addOneReport(nameReporter,depositId)
+                resolve()
+            } catch(error) {
+                reject(error)
+            }
+        })
     }
 }

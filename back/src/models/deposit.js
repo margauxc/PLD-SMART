@@ -30,7 +30,11 @@ module.exports = {
             owner: {
                 type: DataTypes.STRING,
                 allowNull: false
-            }
+            },
+            reported : {
+                type : DataTypes.STRING,
+                defaultValue : ''
+            },
         })
 
         return Subject;

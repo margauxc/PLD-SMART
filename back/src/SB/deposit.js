@@ -5,7 +5,13 @@ const Logger = require("../loaders/logger")
 var moment = require('moment')
 const sequelize =  require ('sequelize')
 
-
+async function getDeposit(depositId) {
+    return await models.Deposit.findOne({
+      where: {
+        id: depositId
+      }
+    })
+ }
 
 module.exports = {
 
@@ -24,17 +30,25 @@ module.exports = {
             }
             var newDeposit = await models.Deposit.create(deposit).catch((err) => 
             {
-                reject(new ErrorHandler(404,"no arrtwork with this ID"))
+                reject(new ErrorHandler(404,"no artwork with this ID"))
             })
             resolve(newDeposit)
         })
     },
 
     findById : (depositId) => {
-        return models.Deposit.findOne({
-            where : {
-                id : depositId
-            }
+        return new Promise((resolve,reject) => {
+            models.Deposit.findOne({
+                where : {
+                    id : depositId
+                }
+            }).then((res) => {
+                if(res == null) {
+                    reject(new ErrorHandler(404,"No deposit with this id"))
+                } else{
+                    resolve(res)
+                }
+            })
         })
     },
 
@@ -52,6 +66,38 @@ module.exports = {
             ],
             limit: nbDeposit
         })
+    }, 
+
+    addReport: (nameReporter, depositId) => {
+        return new Promise(async (resolve, reject) => {
+            var reportedOld = (await getDeposit(depositId)).reported
+            var newReported = ""
+            if(reportedOld == "") {
+                newReported = nameReporter
+            } else {
+                newReported = reportedOld+";"+nameReporter
+            }
+            await models.Deposit.update(
+                     {reported : newReported},
+                     {where : {id : depositId}}
+                 ).then(() => {
+                     resolve()
+                 }).catch( (err) => {
+                     reject(err)
+                 })
+             })
+    }, 
+    // returning : true, [ rowUpdate, [updatedDeposit] ], updatedDeposit
+
+    isReported: (depositId) => {
+        return new Promise( async (resolve, reject) => {
+            var deposit = await getDeposit(depositId)
+            const reportedUpdate = deposit.reported
+            if (reportedUpdate.split(";").length == 3) {
+                deposit.destroy().then(() => {
+                    resolve()
+                })
+            } else {resolve()}
+        })
     }
-    
 }
