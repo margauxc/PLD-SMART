@@ -20,6 +20,11 @@ const fields = {
         'more_info' : 'medium',
         'pictureLink' : 'pictureLink',
         'url' : 'url'
+    },
+    'freeText' : {
+        'name' : 'name',
+        'artist' : 'author',
+        'more_info' : 'text'
     }
 }
 
