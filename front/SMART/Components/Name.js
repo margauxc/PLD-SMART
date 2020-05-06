@@ -1,5 +1,6 @@
 import React from 'react'
 import {Button , View , Text} from 'react-native'
+import DefaultPreferences from 'react-native-default-preference'
 
 class Name extends React.Component{
 
@@ -8,6 +9,11 @@ class Name extends React.Component{
     }
 
     _onPress(){
+        DefaultPreferences.set('username', 'Manon').then(()=> {
+            DefaultPreferences.get('username').then((username) => {
+                console.log(username)
+            })
+        }).catch((error) => console.log(error))
         this.props.navigation.navigate("Home")
     }
 
