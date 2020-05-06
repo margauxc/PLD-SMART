@@ -64,7 +64,7 @@ class Consult extends React.Component {
             var result = {}
             result = standardizeArtwork(data)
             result.createdAt = data.createdAt
-            result.owner = result.owner
+            result.owner = data.owner
             console.log("result = ", result)
             this.setState({ artworkDeposit: result, isLoading: false })
         })
@@ -104,7 +104,7 @@ class Consult extends React.Component {
                         <View style={styles.text_container}>
                             <Text style={styles.name_text}>{artworkDeposit.name}</Text>
                             <Text style={styles.artist_text}>{artworkDeposit.artist}</Text>
-                            <Text style={styles.year_text}>2020</Text>
+                            <Text style={styles.year_text}>{artworkDeposit.year}</Text>
                             <Text style={styles.more_info}>{artworkDeposit.more_info}</Text>
                             {this._displayLink(artworkDeposit)}
                         </View>

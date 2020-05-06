@@ -86,7 +86,7 @@ class ArtworkDetails extends React.Component {
                     <View style={styles.text_container}>
                         <Text style={styles.name_text}>{artwork.name}</Text>
                         <Text style={styles.artist_text}>{artwork.artist}</Text>
-                        <Text style={styles.year_text}>2020</Text>
+                        <Text style={styles.year_text}>{artwork.year}</Text>
                         <Text style={styles.more_info}>{artwork.more_info}</Text>
                         {this._displayLink(artwork)}
                     </View>
