@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     artist_text : {
         fontSize : 16,
         flexWrap : 'wrap',
-        color : 'grey'
+        color : 'black'
     },
 
     description_text : {
