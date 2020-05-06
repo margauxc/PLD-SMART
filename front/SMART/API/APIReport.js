@@ -2,8 +2,6 @@ import baseUrl from './BaseUrl'
 
 export function reportDeposit(depositId, name) {
     const url = baseUrl + 'artworkDeposits/reportDeposit'
-    console.log(depositId);
-    console.log(name);
     return fetch(url, {
         method : 'POST',
         headers : {

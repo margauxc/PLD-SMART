@@ -20,7 +20,6 @@ class Name extends React.Component{
 
     _onChangeText = (text) => {
         this.username = text
-        console.log(this.username)
     }
 
     _submitUsername = () => {
