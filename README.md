@@ -15,3 +15,8 @@
 ## Informations utiles : 
 - Adresse de déploiement de l'API : http://35.181.59.227:3500
 - Accès à l'API : http://35.181.59.227:3500/api/api-docs
+
+- Pour lancer le serveur localement :
+    - Exécuter `npm install` puis `npm start`depuis le dossier `/back`
+    - Adresse de déploiement de l'API : `http://localhost:3000`
+    - Accès à la documentation de l'API : `http://localhost:3000/api/api-docs`
