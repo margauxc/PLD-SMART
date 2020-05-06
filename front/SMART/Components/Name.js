@@ -1,0 +1,24 @@
+import React from 'react'
+import {Button , View , Text} from 'react-native'
+
+class Name extends React.Component{
+
+    constructor(props){
+        super(props)
+    }
+
+    _onPress(){
+        this.props.navigation.navigate("Home")
+    }
+
+    render(){
+        return (
+            <View style = {{flex:1}}>
+                <Text>Ceci est la page Name</Text>
+                <Button title = "Go to Home" onPress = {() => this._onPress()}/>
+            </View>
+        )
+    }
+}
+
+export default Name

@@ -8,10 +8,15 @@ import ArtworkChoice from '../Components/ArtworkChoice'
 import AddText from '../Components/AddText'
 import Search from '../Components/Search'
 import ArtworkDetails from '../Components/ArtworkDetails'
-
+import Name from '../Components/Name'
 
 const screens = {
     
+    Name : {
+        screen : Name,
+        title : 'SMART'
+    },
+
     Home: {
         screen: HomeMap,
         navigationOptions: ({ navigation }) => {
