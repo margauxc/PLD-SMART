@@ -13,5 +13,5 @@
 - Run "react-native run-android"
 
 ## Informations utiles : 
-- Adresse de déploiement de l'API : https://35.181.59.227:3500
-- Accès à l'API : https://35.181.59.227:3500/api/api-docs
+- Adresse de déploiement de l'API : http://35.181.59.227:3500
+- Accès à l'API : http://35.181.59.227:3500/api/api-docs
