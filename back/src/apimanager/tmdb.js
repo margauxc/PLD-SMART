@@ -25,6 +25,12 @@ function convertMovie (movie) {
     if (director.length != 0){
         resMovie.director = director[0].name
     }
+    var selectedVideosResults = movie.resultsVideos.filter((item) => {
+        return (item.site=="YouTube" && (item.type=="Teaser" || item.type == "Trailer"))
+    })
+    if (selectedVideosResults.length != 0){
+        resMovie.url = "https://www.youtube.com/watch?v=:key".replace(":key",selectedVideosResults[0].key)
+    }
     if( movie.overview) {
         resMovie.description = movie.overview
     }
@@ -48,10 +54,13 @@ module.exports = {
             tmdb.searchMovie(params, async (err,data) => {
                 const interResults = data.results.slice(0,5)
                 const res =  await Promise.all(interResults.map((movie) => {
-                    return new Promise((resolveIn,rejectIn) => {
+                    return new Promise( (resolveIn,rejectIn) => {
                         tmdb.movieCredits({id : movie.id}, (err, credits) => {
                             var fullMovie = {...movie,...credits}
-                            resolveIn(convertMovie(fullMovie))
+                            tmdb.movieVideos({id : movie.id}, (err, videos) => {
+                                fullMovie.resultsVideos = videos.results
+                                resolveIn(convertMovie(fullMovie))
+                            })
                         })
                     })
                 }))

@@ -44,7 +44,6 @@
     "moviedb": "^0.2.10",
     "mysql2": "^2.1.0",
     "node-spotify-api": "^1.1.1",
-    "node-themoviedb": "^0.1.4",
     "nodemon": "latest",
     "reflect-metadata": "^0.1.12",
     "sequelize": "^5.21.5",
