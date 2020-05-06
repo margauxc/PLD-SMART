@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button , View , Text , TextInput , StyleSheet} from 'react-native'
+import {Button , View , Text , TextInput , StyleSheet , Image} from 'react-native'
 import DefaultPreferences from 'react-native-default-preference'
 
 class Name extends React.Component{
@@ -42,10 +42,13 @@ class Name extends React.Component{
         return (
             <View style = {styles.main_container}>
                 {this.state.usernameSet ? (
-                    <Text style = {styles.welcome_text}>Bienvenue {this.username} !</Text>
+                    <View style = {styles.main_container}>
+                        <Image source = {require('../assets/sm_art.png')} style = {styles.logo_big}/>
+                        <Text style = {styles.welcome_text}>Bienvenue {this.username} !</Text>
+                    </View>
                 ) : (
                     <View style = {styles.main_container}>
-                        <Text style = {styles.welcome_text}>Bienvenue dans SMART</Text>
+                        <Image source = {require('../assets/sm_art.png')} style = {styles.logo_small}/>
                         <Text style = {styles.name_text}>Pour commencer, entrez votre nom</Text>
                         <TextInput placeholder = 'Votre nom'
                                     textAlign = 'center' 
@@ -76,8 +79,15 @@ const styles = StyleSheet.create({
     },
     text_input : {
         fontSize : 16
+    },
+    logo_big : {
+        height : '10%',
+        resizeMode : 'contain'
+    },
+    logo_small : {
+        height : '7%',
+        resizeMode : 'contain'
     }
-
 })
 
 export default Name
