@@ -132,7 +132,7 @@ describe('report a deposit', () => {
         var getRouteFilled = (base+"/:DepositId").replace(':DepositId',depositObject.depositId)
         // the deposit isn't reported
         var getResponse = await sessionAgent.get(getRouteFilled)
-        expect(getResponse.body.isReported).toBe(false)
+        expect(getResponse.status).toBe(200)
 
         await utils.reportAndCheck(sessionAgent,depositObject.depositId,"a",false)
         await utils.reportAndCheck(sessionAgent,depositObject.depositId,"b",false)
