@@ -15,12 +15,9 @@ class HomeMap extends React.Component {
         this.state = {
             artworkDeposits: [],
             latitude: 0,
-            longitude: 0
+            longitude: 0,
+            coordsComputed : false
         }
-
-        Geolocation.getCurrentPosition((position => {
-            this._fillData(Number(position.coords.latitude), Number(position.coords.longitude));
-        }))
     }
 
     componentDidMount() {
@@ -43,7 +40,7 @@ class HomeMap extends React.Component {
     }
 
     _fillData(lat, long) {
-        this.setState({ latitude: Number(lat), longitude: Number(long) })
+        this.setState({ latitude: Number(lat), longitude: Number(long), coordsComputed : true })
     }
 
     _consultDeposit(id, lat, long) {
@@ -68,6 +65,11 @@ class HomeMap extends React.Component {
     }
 
     render() {
+        if(!this.state.coordsComputed){
+            Geolocation.getCurrentPosition((position => {
+                    this._fillData(Number(position.coords.latitude), Number(position.coords.longitude));
+            }))
+        }
         return (
             <View style={{flex: 1}}>
                 <MapView
