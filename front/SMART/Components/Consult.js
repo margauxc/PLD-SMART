@@ -57,6 +57,7 @@ class Consult extends React.Component {
 
     _getArtworkDepositDetails(id) {
         getArtworkDeposit(id).then((data) => {
+            console.log("data = " + JSON.stringify(data))
             this.setState({ artworkDeposit: data, isLoading: false })
         })
     }
@@ -91,7 +92,7 @@ class Consult extends React.Component {
                     <View style={styles.mainContainer}>
 
                         <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()}</Text>
+                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
                         </View>
 
                         <View style={styles.borderImage}>
@@ -111,14 +112,17 @@ class Consult extends React.Component {
                     <View style={styles.mainContainer}>
 
                         <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()}</Text>
+                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
                         </View>
 
                         <View style={styles.borderImage}>
-                            <Image
-                                style={styles.logo}
-                                source={{ uri: this.state.artworkDeposit.pictureLink }}
-                            />
+                            { this.state.artworkDeposit.pictureLink == null ?
+                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
+                                : <Image
+                                    style={styles.logo}
+                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
+                                />
+                            }
                             <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.artist}</Text>
                         </View>
 
@@ -132,10 +136,62 @@ class Consult extends React.Component {
 
                     </View>
                 )
-            } else { // TODO : les autres catégories
+            } else if(this.state.artworkDeposit.category == "movie") {
                 return (
                     <View style={styles.mainContainer}>
-                        <Text>TODO : les autres catégories</Text>
+
+                        <View style={styles.borderText}>
+                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
+                        </View>
+
+                        <View style={styles.borderImage}>
+                            { this.state.artworkDeposit.pictureLink == null ?
+                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
+                                : <Image
+                                    style={styles.logo}
+                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
+                                />
+                            }
+                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.director}</Text>
+                        </View>
+
+                        <Text>{this.state.artworkDeposit.description}</Text>
+
+                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
+                                <Text style={styles.buttonText}>Signaler</Text>
+                        </TouchableOpacity>
+
+                    </View>
+                )
+            } else if(this.state.artworkDeposit.category == "museum") {
+                return (
+                    <View style={styles.mainContainer}>
+                        
+                        <View style={styles.borderText}>
+                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
+                        </View>
+
+                        <View style={styles.borderImage}>
+                            { this.state.artworkDeposit.pictureLink == null ?
+                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
+                                : <Image
+                                    style={styles.logo}
+                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
+                                />
+                            }
+                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.artist}</Text>
+                        </View>
+
+                        <Text>Classification : {this.state.artworkDeposit.classification}</Text>
+
+                        <Text>Medium : {this.state.artworkDeposit.medium}</Text>
+
+                        <Text>{this.state.artworkDeposit.description}</Text>
+
+                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
+                                <Text style={styles.buttonText}>Signaler</Text>
+                        </TouchableOpacity>
+
                     </View>
                 )
             }
@@ -157,6 +213,7 @@ const styles = StyleSheet.create({
     dateText: {
         fontSize: 20,
         fontWeight: "bold",
+        textAlign: "center"
     },
     mainContainer: {
         flex: 1,

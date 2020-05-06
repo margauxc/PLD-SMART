@@ -60,7 +60,7 @@ const screens = {
     ArtworkDetails : {
         screen : ArtworkDetails,
         navigationOptions : {
-            title : "Ajouter une musique"
+            title : "Ajouter une oeuvre"
         }
     }
 }
