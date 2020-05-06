@@ -18,5 +18,5 @@
 
 - Pour lancer le serveur localement :
     - Exécuter `npm install` puis `npm start`depuis le dossier `/back`
-    - Adresse de déploiement de l'API : `http://localhost:3000`
-    - Accès à la documentation de l'API : `http://localhost:3000/api/api-docs`
+    - Adresse de déploiement de l'API : http://localhost:3000
+    - Accès à la documentation de l'API : http://localhost:3000/api/api-docs
