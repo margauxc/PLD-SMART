@@ -16,11 +16,11 @@ class Name extends React.Component{
     }
 
     _submitUsername = () => {
-        DefaultPreferences.set('username', this.username).then(() => {
-            DefaultPreferences.get('username').then((found) => {
-                console.log('found = ', found)
-            })
-        }).catch((error) => console.log(error))
+        if(this.username.length > 0 ){
+            DefaultPreferences.set('username', this.username).then(() => {
+                this.props.navigation.navigate("Home")
+            }).catch((error) => console.log(error))
+        }   
     }
 
     render(){
