@@ -13,18 +13,6 @@ const fields = {
         'more_info' : 'description',
         'pictureLink' : 'pictureLink'
     },
-    'painting' : {
-        'name' : 'name',
-        'artist' : 'artist',
-        'more_info' : 'medium',
-        'pictureLink' : 'pictureLink'
-    },
-    'sculpture' : {
-        'name' : 'name',
-        'artist' : 'artist',
-        'more_info' : 'medium',
-        'pictureLink' : 'pictureLink'
-    },
     'museum' : {
         'name' : 'name',
         'artist' : 'artist',
