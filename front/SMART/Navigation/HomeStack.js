@@ -14,7 +14,10 @@ const screens = {
     
     Name : {
         screen : Name,
-        title : 'SMART'
+        navigationOptions : {
+            headerShown : false,
+            headerMode : 'screen'
+        }
     },
 
     Home: {
