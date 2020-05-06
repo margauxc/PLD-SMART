@@ -65,7 +65,9 @@ class ArtworkDetails extends React.Component {
     }
 
     _displayLink = (artwork) => {
-        return <Text style = {{color : 'blue', textDecorationLine : 'underline'}} onPress = {() => Linking.openURL(artwork.url)}>{linkText[artwork.category]}</Text>
+        if('url' in artwork && artwork.url != null && artwork.url.length>0) {
+            return <Text style = {{color : 'blue', textDecorationLine : 'underline'}} onPress = {() => Linking.openURL(artwork.url)}>{linkText[artwork.category]}</Text>
+        }
     }
 
     render() {

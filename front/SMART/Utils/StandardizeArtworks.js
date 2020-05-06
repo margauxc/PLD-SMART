@@ -11,7 +11,8 @@ const fields = {
         'name' : 'name',
         'artist' : 'director',
         'more_info' : 'description',
-        'pictureLink' : 'pictureLink'
+        'pictureLink' : 'pictureLink',
+        'url' : 'url'
     },
     'museum' : {
         'name' : 'name',
