@@ -41,4 +41,13 @@ module.exports = (app) => {
         })
     })
     
+    route.post('/reportDeposit', (req, res, next) => {
+        const {depositId, nameReporter} = req.body
+        //! Si ca marche pas, c est parce que c est pas dans le meme ordre que le body
+        services.deposit.addOneReport(nameReporter, depositId).then(() => {
+            res.sendStatus(200)
+        }).catch((err) => {
+            next(err)
+        })
+    })
 };
