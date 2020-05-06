@@ -1,9 +1,11 @@
 const fields = {
     'music' : {
+        //standardized field : database field
         'name' : 'name',
         'artist' : 'artist',
         'more_info' : 'album',
-        'pictureLink' : 'pictureLink'
+        'pictureLink' : 'pictureLink',
+        'url' : 'url',
     },
     'movie' : {
         'name' : 'name',
@@ -27,14 +29,16 @@ const fields = {
         'name' : 'name',
         'artist' : 'artist',
         'more_info' : 'medium',
-        'pictureLink' : 'pictureLink'
+        'pictureLink' : 'pictureLink',
+        'url' : 'url'
     }
 }
 
 export function standardizeArtwork(artwork){
     var result = {}
     result['ArtworkId'] = artwork.ArtworkId
-    const resultFields = ['name', 'artist', 'more_info', 'pictureLink']
+    result['category'] = artwork.category
+    const resultFields = ['name', 'artist', 'more_info', 'pictureLink', 'url']
     resultFields.forEach((field) => {
         result[field] = artwork[fields[artwork.category][field]]
     })

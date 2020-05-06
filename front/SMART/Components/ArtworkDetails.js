@@ -1,7 +1,8 @@
 import React from 'react'
-import { View, Text, Image, StyleSheet, Button, ScrollView, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, Image, StyleSheet, Button, ScrollView, ActivityIndicator, Alert, Linking } from 'react-native'
 import { depositArtwork } from '../API/APIDeposit'
 import Geolocation from 'react-native-geolocation-service'
+import {linkText} from '../Utils/ExternalLink'
 
 class ArtworkDetails extends React.Component {
 
@@ -64,6 +65,11 @@ class ArtworkDetails extends React.Component {
         })
     }
 
+    _displayLink = (artwork) => {
+        console.log(artwork)
+        return <Text style = {{color : 'blue', textDecorationLine : 'underline'}} onPress = {() => Linking.openURL(artwork.url)}>{linkText[artwork.category]}</Text>
+    }
+
     render() {
         const artwork = this.props.navigation.state.params.artwork
         return (
@@ -80,10 +86,9 @@ class ArtworkDetails extends React.Component {
                         <Text style={styles.artist_text}>{artwork.artist}</Text>
                         <Text style={styles.year_text}>2020</Text>
                         <Text style={styles.more_info}>{artwork.more_info}</Text>
-
+                        {this._displayLink(artwork)}
                     </View>
                     <Button title="Ajouter à la carte" color='orange' onPress={() => this._onPress(artwork)} />
-                    
                 </ScrollView>
 
                 {this._displayLoading()}
@@ -139,7 +144,8 @@ const styles = StyleSheet.create({
     },
     more_info: {
         fontSize: 20,
-        color: 'darkgrey'
+        color: 'darkgrey',
+        marginBottom : 10
     },
     loading_container: {
         position: 'absolute',
