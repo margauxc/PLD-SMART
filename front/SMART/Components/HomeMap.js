@@ -6,7 +6,7 @@ import Geolocation from 'react-native-geolocation-service'
 
 import { getArtworkDeposits } from '../API/APIGetArtworkDeposits'
 
-class Home extends React.Component {
+class HomeMap extends React.Component {
 
     constructor(props) {
         super(props)
@@ -94,4 +94,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default withNavigationFocus(Home)
+export default withNavigationFocus(HomeMap)

@@ -3,9 +3,7 @@ import React from 'react'
 
 import Header from '../Shared/Header'
 import Consult from '../Components/Consult'
-import Home from '../Components/Home'
 import HomeMap from '../Components/HomeMap'
-
 import ArtworkChoice from '../Components/ArtworkChoice'
 import AddText from '../Components/AddText'
 import Search from '../Components/Search'
