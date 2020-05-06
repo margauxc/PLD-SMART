@@ -1,7 +1,9 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, ActivityIndicator, TouchableOpacity } from 'react-native'
+import { StyleSheet, View, Text, Image, ActivityIndicator, TouchableOpacity, Alert } from 'react-native'
 
 import { getArtworkDeposit } from '../API/APIGetArtworkDeposits'
+import { reportDeposit } from '../API/APIReport'
+
 
 class Consult extends React.Component {
 
@@ -15,6 +17,42 @@ class Consult extends React.Component {
 
     componentDidMount() {
         this._getArtworkDepositDetails(this.props.navigation.getParam('depositId'))
+    }
+
+   
+
+    _createAlertOK() {
+        Alert.alert(
+            "Succès",
+            "L'oeuvre a été signalée",
+            [
+                { text: "OK", onPress: () => this.props.navigation.navigate('Home') }
+            ],
+            { cancelable: false }
+        )
+    }
+
+    _createAlertError() {
+        Alert.alert(
+            "Échec",
+            "Une erreur s'est produite. L'oeuvre n'a pas été signalée",
+            [
+                { text: "OK" }
+            ],
+            { cancelable: false }
+        )
+    }
+
+    _reportDeposit(){
+        reportDeposit(this.props.navigation.getParam('depositId'), "name").then((response) => {
+                if (response.ok) {
+                    this._createAlertOK()
+                } else {
+                    this._createAlertError()
+                }
+            }).catch((error) => {
+                this._createAlertError()
+            });
     }
 
     _getArtworkDepositDetails(id) {
@@ -62,8 +100,8 @@ class Consult extends React.Component {
 
                         <Text style={{marginBottom : "5%"}}>{this.state.artworkDeposit.text}</Text>
 
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this.props.navigation.goBack() }}>
-                                <Text style={styles.buttonText}>Signaler le texte</Text>
+                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
+                                <Text style={styles.buttonText}>Signaler</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -88,8 +126,8 @@ class Consult extends React.Component {
 
                         {this._displayMusicDescription()}
 
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this.props.navigation.goBack() }}>
-                                <Text style={styles.buttonText}>Signaler le texte</Text>
+                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
+                                <Text style={styles.buttonText}>Signaler</Text>
                         </TouchableOpacity>
 
                     </View>
@@ -118,7 +156,7 @@ const styles = StyleSheet.create({
     },
     dateText: {
         fontSize: 20,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     mainContainer: {
         flex: 1,
@@ -144,7 +182,7 @@ const styles = StyleSheet.create({
     },
     cancelButton: {
         height: "5%",
-        width: "50%",
+        width: "25%",
         backgroundColor: "red",
         borderRadius: 15,
     },
