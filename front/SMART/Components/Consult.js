@@ -155,7 +155,7 @@ class Consult extends React.Component {
                             <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.director}</Text>
                         </View>
 
-                        <Text>{this.state.artworkDeposit.description}</Text>
+                        <Text style={{width : "90%", marginBottom : "5%"}}>{this.state.artworkDeposit.description}</Text>
 
                         <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
                                 <Text style={styles.buttonText}>Signaler</Text>
@@ -186,7 +186,7 @@ class Consult extends React.Component {
 
                         <Text>Medium : {this.state.artworkDeposit.medium}</Text>
 
-                        <Text>{this.state.artworkDeposit.description}</Text>
+                        <Text style={{marginBottom : "5%"}}>{this.state.artworkDeposit.description}</Text>
 
                         <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
                                 <Text style={styles.buttonText}>Signaler</Text>
