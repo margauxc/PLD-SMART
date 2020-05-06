@@ -23,7 +23,7 @@ class ImageItem extends React.Component {
                 <View style = {styles.text_box}>
                     <Text style = {styles.title_text} numberOfLines = {2}>{artwork.name}</Text>
                     <Text style = {styles.artist_text} numberOfLines = {2}>{artwork.artist}</Text>
-                    <Text style = {styles.description_text} numberOfLines = {3}>{artwork.description}</Text>
+                    <Text style = {styles.description_text} numberOfLines = {2}>{artwork.more_info}</Text>
                 </View>
             </TouchableOpacity>
         )

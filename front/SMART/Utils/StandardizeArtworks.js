@@ -7,7 +7,7 @@ const fields = {
     },
     'movie' : {
         'name' : 'name',
-        'artist' : 'artist',
+        'artist' : 'director',
         'more_info' : 'description',
         'pictureLink' : 'pictureLink'
     },
