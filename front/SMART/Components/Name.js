@@ -1,5 +1,5 @@
 import React from 'react'
-import {Button , View , Text} from 'react-native'
+import {Button , View , Text , TextInput} from 'react-native'
 import DefaultPreferences from 'react-native-default-preference'
 
 class Name extends React.Component{
@@ -8,6 +8,19 @@ class Name extends React.Component{
         super(props)
         this.state = {usernameSet : false}
         this.username = ""
+    }
+
+    _onChangeText = (text) => {
+        this.username = text
+        console.log(this.username)
+    }
+
+    _submitUsername = () => {
+        DefaultPreferences.set('username', this.username).then(() => {
+            DefaultPreferences.get('username').then((found) => {
+                console.log('found = ', found)
+            })
+        }).catch((error) => console.log(error))
     }
 
     render(){
@@ -24,7 +37,14 @@ class Name extends React.Component{
                 {this.state.usernameSet ? (
                     <Text>Bienvenue {this.username} !</Text>
                 ) : (
-                    <Text>Il faut entrer un nom</Text>
+                    <View style = {{flex : 1}}>
+                        <Text>Bienvenue dans SMART</Text>
+                        <Text>Pour commencer, entrez votre nom</Text>
+                        <TextInput placeholder = 'Votre nom' 
+                                    onChangeText = {(text) => this._onChangeText(text)}
+                                    onSubmitEditing = {() => this._submitUsername()}/>
+                        <Button title = 'Valider' onPress = {() => this._submitUsername()}/>
+                    </View>
                 )}
             </View>
         )
