@@ -66,7 +66,6 @@ class AddText extends React.Component {
     }
 
     render() {
-        console.log("RENDER")
         return (
             <View style={styles.container}>
                 <Text style={styles.Text}>Nom de l'auteur</Text>

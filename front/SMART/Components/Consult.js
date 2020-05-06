@@ -60,12 +60,10 @@ class Consult extends React.Component {
 
     _getArtworkDepositDetails(id) {
         getArtworkDeposit(id).then((data) => {
-            console.log("data = " + JSON.stringify(data))
             var result = {}
             result = standardizeArtwork(data)
             result.createdAt = data.createdAt
             result.owner = data.owner
-            console.log("result = ", result)
             this.setState({ artworkDeposit: result, isLoading: false })
         })
     }

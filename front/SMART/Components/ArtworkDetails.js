@@ -52,7 +52,6 @@ class ArtworkDetails extends React.Component {
 
     _onPress = (artwork) => {
         Geolocation.getCurrentPosition((position) => {
-            console.log(position)
             depositArtwork(artwork.ArtworkId, position).then((response) => {
                 if (response.ok) {
                     this._createAlertOK()
@@ -66,7 +65,6 @@ class ArtworkDetails extends React.Component {
     }
 
     _displayLink = (artwork) => {
-        console.log(artwork)
         if('url' in artwork && artwork.url != null && artwork.url.length>0) {
             return <Text style = {{color : 'blue', textDecorationLine : 'underline'}} onPress = {() => Linking.openURL(artwork.url)}>{linkText[artwork.category]}</Text>
         }
