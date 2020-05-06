@@ -10,6 +10,14 @@ class Name extends React.Component{
         this.username = ""
     }
 
+    componentDidUpdate(){
+        if(this.state.usernameSet){
+            setTimeout(() => {
+                this.props.navigation.navigate("Home")
+            }, 2000)
+        }
+    }
+
     _onChangeText = (text) => {
         this.username = text
         console.log(this.username)
