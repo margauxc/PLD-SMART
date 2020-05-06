@@ -23,6 +23,10 @@ module.exports = {
         expect(reportResponse.status).toBe(200)
         var getRouteFilled = (base+"/:DepositId").replace(':DepositId',depositId)
         var getResponse = await sessionAgent.get(getRouteFilled)
-        expect(getResponse.body.isReported).toBe(expectedReported)
+        var expectedStatus = 200
+        if(expectedReported){
+            expectedStatus = 404
+        }
+        expect(getResponse.status).toBe(expectedStatus)
     }
 }

@@ -47,11 +47,14 @@ module.exports = {
         })
     },
     getDeposit: (depositId) =>  {
-        return new Promise(async (resolve,reject) =>{
-            const deposit = adapt(await som.deposit.getDeposit(depositId))
-            // get associated artwork
-            const artwork = (await som.artwork.getArtwork(deposit.ArtworkId))
-            resolve({...deposit,...artwork})
+        return new Promise(async (resolve,reject) => {
+            som.deposit.getDeposit(depositId).then((deposit) => {
+                deposit = adapt(deposit)
+                // get associated artwork
+                som.artwork.getArtwork(deposit.ArtworkId).then((artwork) => {
+                    resolve({...deposit,...artwork})
+                }).catch((err) => reject(err))
+            }).catch((err) => reject(err))
         })
     },
     getNearestDeposits: async (long, lat, nbDeposits, distance) => {

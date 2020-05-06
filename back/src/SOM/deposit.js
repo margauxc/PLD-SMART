@@ -1,5 +1,5 @@
 const sb = require('../SB')
-Logger = require('../loaders/logger')
+var Logger = require('../loaders/logger')
 
 module.exports = {
     getAll : () => {
@@ -21,7 +21,6 @@ module.exports = {
     addOneReport: async (nameReporter, depositId) => {
         await sb.deposit.addReport(nameReporter,depositId)
         return sb.deposit.isReported(depositId)
-        
 
     }
 }

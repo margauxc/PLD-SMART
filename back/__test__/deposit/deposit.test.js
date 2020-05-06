@@ -67,6 +67,13 @@ describe('get one deposit', () => {
             expect(response.status).toBe(200)
         }
     })
+    test('get with wrong id', async() => {
+        const sessionAgent = supertest.agent(app)
+        var testRouteFilled = testRoute.replace(':DepositId',"pasunvraiid")
+        const response = await sessionAgent
+            .get(testRouteFilled)
+        expect(response.status).toBe(404)
+    })
 })
 describe('get all deposits', () => {
     const route = ""
@@ -113,9 +120,7 @@ describe('get nearest', () => {
         expect(responseGet.status).toBe(200)
         expect(responseGet.body.length).toBe(2)
         expect(responseGet.body[0].long).toBe(6.199449)
-        console.log(responseGet.body[0].distance)
         expect(responseGet.body[1].long).toBe(6.198719)
-        console.log(responseGet.body[1].distance)
     })
 })
 describe('report a deposit', () => {
@@ -133,7 +138,7 @@ describe('report a deposit', () => {
         await utils.reportAndCheck(sessionAgent,depositObject.depositId,"b",false)
         await utils.reportAndCheck(sessionAgent,depositObject.depositId,"c",true)
         getResponse = await sessionAgent.get(getRouteFilled)
-        expect(getResponse.body.isReported).toBe(true)
+        expect(getResponse.status).toBe(404)
 
     })
 })
