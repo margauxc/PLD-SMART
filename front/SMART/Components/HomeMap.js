@@ -33,9 +33,12 @@ class HomeMap extends React.Component {
     }
 
     _getArtworkDeposits() {
-        getArtworkDeposits().then((data) => {
-            this.setState({ artworkDeposits: data })
-        })
+        Geolocation.getCurrentPosition((position => {
+            const distance = 2000
+            getArtworkDeposits(Number(position.coords.latitude), Number(position.coords.longitude), distance).then((data) => {
+                this.setState({ artworkDeposits: data })
+            })
+        }))
     }
 
     _fillData(lat, long) {

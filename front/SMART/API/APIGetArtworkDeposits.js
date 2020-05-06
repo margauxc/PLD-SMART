@@ -1,14 +1,20 @@
 import baseUrl from './BaseUrl'
 
-export function getArtworkDeposits() {
+export function getArtworkDeposits(lat, long, distance) {
 
     const url = baseUrl + "artworkDeposits"
 
     return fetch(url, {
         method: 'GET',
         headers: {
-            'accept': 'application/json'
-        }
+            'accept': 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        parameters: JSON.stringify({
+            "lat": lat,
+            "long": long,
+            "distance": distance
+        })
     }).then((response) => {
         return response.json()
     }).then((json) => {
