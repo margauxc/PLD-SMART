@@ -35,11 +35,6 @@ module.exports = {
                 type : DataTypes.STRING,
                 defaultValue : ''
             },
-            isReported : {
-                type : DataTypes.BOOLEAN,
-                allowNull : false,
-                defaultValue : false
-            }
         })
 
         return Subject;
