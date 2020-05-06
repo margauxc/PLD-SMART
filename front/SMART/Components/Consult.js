@@ -115,10 +115,13 @@ class Consult extends React.Component {
                         </View>
 
                         <View style={styles.borderImage}>
-                            <Image
-                                style={styles.logo}
-                                source={{ uri: this.state.artworkDeposit.pictureLink }}
-                            />
+                            { this.state.artworkDeposit.pictureLink == null ?
+                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
+                                : <Image
+                                    style={styles.logo}
+                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
+                                />
+                            }
                             <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.artist}</Text>
                         </View>
 
@@ -132,10 +135,31 @@ class Consult extends React.Component {
 
                     </View>
                 )
-            } else { // TODO : les autres catégories
+            } else {
                 return (
                     <View style={styles.mainContainer}>
-                        <Text>TODO : les autres catégories</Text>
+
+                        <View style={styles.borderText}>
+                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()}</Text>
+                        </View>
+
+                        <View style={styles.borderImage}>
+                            { this.state.artworkDeposit.pictureLink == null ?
+                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
+                                : <Image
+                                    style={styles.logo}
+                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
+                                />
+                            }
+                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.artist}</Text>
+                        </View>
+
+                        
+
+                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
+                                <Text style={styles.buttonText}>Signaler</Text>
+                        </TouchableOpacity>
+
                     </View>
                 )
             }
