@@ -1,11 +1,11 @@
 import React from 'react'
-import { StyleSheet, View, Text, Image, ActivityIndicator, TouchableOpacity, Alert , ScrollView , Linking , Button} from 'react-native'
+import { StyleSheet, View, Text, Image, ActivityIndicator, TouchableOpacity, Alert, ScrollView, Linking, Button } from 'react-native'
 
 import { getArtworkDeposit } from '../API/APIGetArtworkDeposits'
 import { reportDeposit } from '../API/APIReport'
-import {standardizeArtwork} from '../Utils/StandardizeArtworks'
+import { standardizeArtwork } from '../Utils/StandardizeArtworks'
 
-import {linkText} from '../Utils/ExternalLink'
+import { linkText } from '../Utils/ExternalLink'
 
 
 class Consult extends React.Component {
@@ -22,7 +22,7 @@ class Consult extends React.Component {
         this._getArtworkDepositDetails(this.props.navigation.getParam('depositId'))
     }
 
-   
+
 
     _createAlertOK() {
         Alert.alert(
@@ -46,16 +46,16 @@ class Consult extends React.Component {
         )
     }
 
-    _reportDeposit(){
+    _reportDeposit() {
         reportDeposit(this.props.navigation.getParam('depositId'), "name").then((response) => {
-                if (response.ok) {
-                    this._createAlertOK()
-                } else {
-                    this._createAlertError()
-                }
-            }).catch((error) => {
+            if (response.ok) {
+                this._createAlertOK()
+            } else {
                 this._createAlertError()
-            });
+            }
+        }).catch((error) => {
+            this._createAlertError()
+        });
     }
 
     _getArtworkDepositDetails(id) {
@@ -65,14 +65,14 @@ class Consult extends React.Component {
             result = standardizeArtwork(data)
             result.createdAt = data.createdAt
             result.owner = result.owner
-            console.log("result = " , result)
+            console.log("result = ", result)
             this.setState({ artworkDeposit: result, isLoading: false })
         })
     }
 
     _displayLink = (artworkDeposit) => {
-        if('url' in artworkDeposit && artworkDeposit.url != null && artworkDeposit.url.length>0) {
-            return <Text style = {{color : 'blue', textDecorationLine : 'underline'}} onPress = {() => Linking.openURL(artworkDeposit.url)}>{linkText[artworkDeposit.category]}</Text>
+        if ('url' in artworkDeposit && artworkDeposit.url != null && artworkDeposit.url.length > 0) {
+            return <Text style={{ color: 'blue', textDecorationLine: 'underline' }} onPress={() => Linking.openURL(artworkDeposit.url)}>{linkText[artworkDeposit.category]}</Text>
         }
     }
 
@@ -87,150 +87,31 @@ class Consult extends React.Component {
 
             var createdAt = new Date(this.state.artworkDeposit.createdAt)
             const artworkDeposit = this.state.artworkDeposit
-            return(
-            <View style={styles.main_container}>
+            return (
+                <View style={styles.main_container}>
 
-                <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>    
+                    <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
 
-                {(artworkDeposit.category != "freeText") && (
-                    artworkDeposit.pictureLink == null ?
-                    <Image source={require('../assets/imagefiller.jpg')} style={styles.image} />
-                    : <Image source={{ uri: artworkDeposit.pictureLink }} style={styles.image} />
-                
-                )
-                }
+                    {(artworkDeposit.category != "freeText") && (
+                        artworkDeposit.pictureLink == null ?
+                            <Image source={require('../assets/imagefiller.jpg')} style={styles.image} />
+                            : <Image source={{ uri: artworkDeposit.pictureLink }} style={styles.image} />
 
-                <ScrollView contentContainerStyle={styles.scroll_view}>
-                    <View style={styles.text_container}>
-                        <Text style={styles.name_text}>{artworkDeposit.name}</Text>
-                        <Text style={styles.artist_text}>{artworkDeposit.artist}</Text>
-                        <Text style={styles.year_text}>2020</Text>
-                        <Text style={styles.more_info}>{artworkDeposit.more_info}</Text>
-                        {this._displayLink(artworkDeposit)}
-                    </View>
-                    <Button title="Signaler cette oeuvre" color = 'red' onPress={() => { this._reportDeposit() }}/>
-                </ScrollView>                
-            </View>
+                    )
+                    }
+
+                    <ScrollView contentContainerStyle={styles.scroll_view}>
+                        <View style={styles.text_container}>
+                            <Text style={styles.name_text}>{artworkDeposit.name}</Text>
+                            <Text style={styles.artist_text}>{artworkDeposit.artist}</Text>
+                            <Text style={styles.year_text}>2020</Text>
+                            <Text style={styles.more_info}>{artworkDeposit.more_info}</Text>
+                            {this._displayLink(artworkDeposit)}
+                        </View>
+                        <Button title="Signaler cette oeuvre" color='red' onPress={() => { this._reportDeposit() }} />
+                    </ScrollView>
+                </View>
             )
-
-
-
-
-
-
-
-
-
-
-            var createdAt = new Date(this.state.artworkDeposit.createdAt)
-            if (this.state.artworkDeposit.category == "freeText") {
-                return (
-                    <View style={styles.mainContainer}>
-
-                        <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
-                        </View>
-
-                        <View style={styles.borderImage}>
-                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.author}</Text>
-                        </View>
-
-                        <Text style={{marginBottom : "5%"}}>{this.state.artworkDeposit.text}</Text>
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
-                                <Text style={styles.buttonText}>Signaler</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                )
-            } else if (this.state.artworkDeposit.category == "music") {
-                return (
-                    <View style={styles.mainContainer}>
-
-                        <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
-                        </View>
-
-                        <View style={styles.borderImage}>
-                            { this.state.artworkDeposit.pictureLink == null ?
-                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
-                                : <Image
-                                    style={styles.logo}
-                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
-                                />
-                            }
-                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.artist}</Text>
-                        </View>
-
-                        {this._displayMusicAlbum()}
-
-                        {this._displayMusicDescription()}
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
-                                <Text style={styles.buttonText}>Signaler</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                )
-            } else if(this.state.artworkDeposit.category == "movie") {
-                return (
-                    <View style={styles.mainContainer}>
-
-                        <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
-                        </View>
-
-                        <View style={styles.borderImage}>
-                            { this.state.artworkDeposit.pictureLink == null ?
-                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
-                                : <Image
-                                    style={styles.logo}
-                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
-                                />
-                            }
-                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.director}</Text>
-                        </View>
-
-                        <Text style={{width : "90%", marginBottom : "5%"}}>{this.state.artworkDeposit.description}</Text>
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
-                                <Text style={styles.buttonText}>Signaler</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                )
-            } else if(this.state.artworkDeposit.category == "museum") {
-                return (
-                    <View style={styles.mainContainer}>
-                        
-                        <View style={styles.borderText}>
-                            <Text style={styles.dateText}>Ajoutée le {createdAt.getDate()}/{createdAt.getMonth() + 1}/{createdAt.getFullYear()} par {this.state.artworkDeposit.owner}</Text>
-                        </View>
-
-                        <View style={styles.borderImage}>
-                            { this.state.artworkDeposit.pictureLink == null ?
-                                <Image source={require('../assets/imagefiller.jpg')} style={styles.logo} />
-                                : <Image
-                                    style={styles.logo}
-                                    source={{ uri: this.state.artworkDeposit.pictureLink }}
-                                />
-                            }
-                            <Text style={styles.dateText}>{this.state.artworkDeposit.name} - {this.state.artworkDeposit.artist}</Text>
-                        </View>
-
-                        <Text>Classification : {this.state.artworkDeposit.classification}</Text>
-
-                        <Text>Medium : {this.state.artworkDeposit.medium}</Text>
-
-                        <Text style={{marginBottom : "5%"}}>{this.state.artworkDeposit.description}</Text>
-
-                        <TouchableOpacity style={styles.cancelButton} onPress={() => { this._reportDeposit() }}>
-                                <Text style={styles.buttonText}>Signaler</Text>
-                        </TouchableOpacity>
-
-                    </View>
-                )
-            }
         }
     }
 }
@@ -248,9 +129,9 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         textAlignVertical: 'center',
     },
-    dateText : {
-        fontSize : 25,
-        margin : '5%'
+    dateText: {
+        fontSize: 25,
+        margin: '5%'
     },
     image: {
         height: "45%",
@@ -283,7 +164,7 @@ const styles = StyleSheet.create({
     more_info: {
         fontSize: 20,
         color: 'darkgrey',
-        marginBottom : 10
+        marginBottom: 10
     },
     loadingContainer: {
         position: 'absolute',
