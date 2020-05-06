@@ -79,7 +79,7 @@ class Search extends React.Component {
                     data={this.state.artworks}
                     keyExtractor={(item) => item.ArtworkId.toString()}
                     renderItem={({item}) => 
-                        <ImageItem artwork={item} navigation={this.props.navigation} displayDetail={this._displayDetail}/>
+                        <ImageItem artwork={standardizeArtwork(item)} navigation={this.props.navigation} displayDetail={this._displayDetail}/>
                     }
                 />
                 {this._displayLoading()}
