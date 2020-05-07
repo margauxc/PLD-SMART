@@ -67,7 +67,8 @@ class HomeMap extends React.Component {
     render() {
         if(!this.state.coordsComputed){
             Geolocation.getCurrentPosition((position => {
-                    this._fillData(Number(position.coords.latitude), Number(position.coords.longitude));
+                    this._fillData(Number(position.coords.latitude), Number(position.coords.longitude))
+                    this._getArtworkDeposits()
             }))
         }
         return (
