@@ -1,0 +1,60 @@
+{
+  "name": "smart-back",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "env NODE_ENV=development nodemon --ignore sessions/",
+    "test": "env NODE_ENV=test jest --env node --runInBand --verbose",
+    "prod": "env NODE_ENV=production nodemon --ignore sessions/"
+  },
+  "jest": {
+    "setupFiles": [
+      "./__test__/config/jest.setup.js"
+    ],
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/__test__/**"
+    ]
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "node",
+    "express"
+  ],
+  "author": "Hexarboricole",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "crypto-random-string": "^3.2.0",
+    "documentation": "^12.2.0",
+    "dotenv": "^5.0.1",
+    "errorhandler": "^1.5.0",
+    "event-dispatch": "^0.4.1",
+    "eventemitter3": "^3.1.0",
+    "express": "^4.16.2",
+    "express-jwt": "^5.3.1",
+    "jsonwebtoken": "^8.2.0",
+    "moment": "^2.24.0",
+    "morgan": "^1.9.1",
+    "moviedb": "^0.2.10",
+    "mysql2": "^2.1.0",
+    "node-spotify-api": "^1.1.1",
+    "nodemon": "latest",
+    "reflect-metadata": "^0.1.12",
+    "sequelize": "^5.21.5",
+    "spotify": "^0.3.0",
+    "swagger-ui-express": "^4.1.4",
+    "winston": "^3.2.1",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "jest": "^24.1.0",
+    "prettier": "^1.17.0",
+    "supertest": "^4.0.2"
+  }
+}

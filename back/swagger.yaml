@@ -1,0 +1,292 @@
+openapi: 3.0.0
+info:
+  description: "API for sm'Art application"
+  version: "1.0.0"
+  title: "Smart"
+tags:
+- name: "base"
+  description: "This is great !"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+servers:
+  - url: http://localhost:3000/api
+    description: Optional server description, e.g. Main (production) server
+
+components:
+  schemas:
+    Category:
+      type: string
+      enum:
+      - music
+      - movie
+      - freeText
+      - museum
+      - painting
+      - sculpture
+    BasicArtwork:
+      type: object
+      properties:
+        id:
+          type: string
+        name: 
+          type: string
+        artists:
+          type: string
+        date: 
+          type: integer
+        link:
+          type: string
+        pictureLink:
+          type: string
+    CompleteArtwork:
+      oneOf:
+        - $ref: '#/components/schemas/MusicArtwork'
+    MusicArtwork:
+      allOf:
+      - $ref: '#/components/schemas/BasicArtwork'
+      - type: object
+        properties:
+          category: 
+            type: string
+            enum:
+             - music
+          album:
+            type: string
+          description:
+            type: string
+          singer:
+            type: string
+          composer:
+            type: string
+          author:
+            type: string
+    ArtworkDeposit:
+      type: object
+      properties:
+        lat:
+          type: number
+        long:
+          type: number
+        date:
+          type: string
+          format: date 
+        expirationDate:
+          type: string
+          format: date
+        numberOfViews:
+          type: integer
+        artworkId:
+          type: string
+        depositId:
+          type: string
+        owner:
+          type: string
+        reported:
+          type: string
+        isReported:
+          type: boolean
+
+paths:
+  /artworkDeposits:
+    post:
+      tags:
+      - "deposits"
+      summary: "create a new deposit for an artwork"
+      description: "create a new deposit for an artwork"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ArtworkDeposit"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - artworkId
+                - lat
+                - long
+                - owner
+              type: object
+              properties:
+                artworkId: 
+                  type: string
+                lat:
+                  type: number
+                long:
+                  type: number
+                owner:
+                  type: string
+    get:
+        tags:
+        - "deposits"
+        summary: "get all deposits"
+        description: "get all deposits active in the DB"
+        responses:
+          '200':
+            description: OK
+            content:
+              application/json:
+                schema:
+                  type: "array"
+                  items:
+                    $ref: "#/components/schemas/ArtworkDeposit"
+        parameters:
+          - name: long
+            in: query
+            description: "longitude (deg)"
+            schema:
+              type: number
+          - name: lat
+            in: query
+            description: "latitude (deg)"
+            schema:
+              type: number
+          - name: limit
+            in: query
+            description: "max number of results"
+            schema:
+              type: number
+              default: 1
+          - name: distance
+            in: query
+            description: "max distance (meters) between artwork deposit and specified point"
+            schema:
+              type: number
+              default: 100
+  /artworkDeposits/{depositId}:
+    get:
+      tags: 
+      - "deposits"
+      summary: "get artwork deposit by Id"
+      operationId: "getArworkDepositById"
+      parameters:
+      - name: "depositId"
+        in: "path"
+        description: "ID of deposit to return"
+        required: true 
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+  /artworkDeposits/reportDeposit:
+    post:
+      tags: 
+      - "deposits"
+      summary: "report deposit by Id"
+      description: "report deposit by Id"
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - depositId
+                - nameReporter
+              type: object
+              properties:
+                depositId: 
+                  type: string
+                nameReporter:
+                  type: string
+  /artworks:
+    get:
+      tags: 
+        - "artworks"
+      summary: "search for artworks"
+      operationId: "searchArtworks"
+      description: "search for artworks"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                   $ref: "#/components/schemas/CompleteArtwork"
+      parameters:
+        - name: category
+          in: query
+          description: "category of the artwork"
+          schema:
+            $ref: "#/components/schemas/Category"
+        - name: name
+          in: query
+          description: "name of the artwork"
+          schema:
+            type: string
+        - name: date
+          in: query
+          description: "date of creation for the artwork"
+          schema:
+            type: string
+            format: date
+        - name: artist
+          in: query
+          description: "who created the artwork"
+          schema:
+            type: string
+        - name: rawQuery
+          in: query
+          description: "direct seach for those terms"
+          schema:
+            type: string
+  /artworks/{artworkId}:
+    get:
+      tags: 
+      - "artworks"
+      summary: "get artwork by Id"
+      operationId: "getArworkById"
+      parameters:
+      - name: "artworkId"
+        in: "path"
+        description: "ID of artwork to return"
+        required: true 
+        schema:
+          type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompleteArtwork"
+  /artworks/text:
+    post:
+      tags:
+      - "artworks"
+      summary: "create a free text artwork"
+      description: "create a free text artwork"
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CompleteArtwork"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - name
+                - author
+                - text
+              type: object
+              properties:
+                name: 
+                  type: string
+                author:
+                  type: string
+                text:
+                  type: string
+externalDocs:
+  description: "template for everything here"
+  url: "https://editor.swagger.io/"
