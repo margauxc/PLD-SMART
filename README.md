@@ -13,7 +13,7 @@
 - Installer Android Studio en suivant les indications : https://reactnative.dev/docs/environment-setup
 - Lancer un projet vide (si nécessaire) pour pouvoir accéder à la fenêtre principale de Android Studio
 - Lancer le menu des machines virtuelles / émulateurs -> AVD Manager
-- Démarrer l'émulateur
+- Démarrer l'émulateur (choisir un émulateur sous Android 10)
 - Aller dans /front/SMART
 - Run "npm install"
 - Run "react-native run-android"
