@@ -1,4 +1,8 @@
 # SMART
+
+Lien vers la vidéo de présentation : https://www.youtube.com/watch?v=YfYdOvuh_EE&t=8s
+Lien vers la fiche de suivi des tâches : https://docs.google.com/spreadsheets/d/18l4H9BUBpmID2XaBfyqSFwKM3cICc-YkECsJnygQSJI/edit?usp=sharing
+
 ## Pré-requis : 
 - Avoir installé nodejs
 - Avoir installé npm
