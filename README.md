@@ -1,6 +1,8 @@
 # SMART
 
 ## Liens utiles
+- Lien vers les slides de présentation : https://docs.google.com/presentation/d/1WNYT_R-EQLnWoJaXQKpTlM5ElsRuW1jY3_92t-lfDbk/edit?usp=sharing
+
 - Lien vers la vidéo de présentation : https://www.youtube.com/watch?v=YfYdOvuh_EE&t=8s
 
 - Lien vers la fiche de suivi des tâches : https://docs.google.com/spreadsheets/d/18l4H9BUBpmID2XaBfyqSFwKM3cICc-YkECsJnygQSJI/edit?usp=sharing
